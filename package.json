@@ -1,6 +1,6 @@
 {
   "name": "react-noti",
-  "version": "0.1.0",
+  "version": "0.0.0-semantically-released",
   "description": "react-noti - Toast Notifications made easy",
   "main": "dist/react-noti.js",
   "module": "dist/react-noti.js",
@@ -19,11 +19,12 @@
     "build": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false webpack -p --progress --config webpack.config.umd.js",
     "build:examples": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false webpack -p --progress --config webpack.config.js",
     "analyze": "npm run build -- --env.analyze",
-    "analyze:lib": "npm run build:lib -- --env.analyze"
+    "analyze:lib": "npm run build:lib -- --env.analyze",
+    "commit": "git-cz"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:vitaliiburlaka/react-noti.git"
+    "url": "https://github.com/vitaliiburlaka/react-noti.git"
   },
   "files": [
     "dist",
@@ -67,6 +68,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
+    "cz-conventional-changelog": "^3.1.0",
     "doctoc": "^1.4.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
@@ -96,6 +98,7 @@
     "react-hot-loader": "^4.12.21",
     "resolve-url-loader": "^3.1.1",
     "sass-loader": "^8.0.2",
+    "semantic-release": "^17.0.7",
     "style-loader": "^1.2.1",
     "stylelint": "^13.3.3",
     "stylelint-config-prettier": "^8.0.1",
@@ -137,5 +140,10 @@
     "not dead",
     "not ie < 11",
     "not op_mini all"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

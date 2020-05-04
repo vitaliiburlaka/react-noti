@@ -1,0 +1,37 @@
+language: node_js
+
+cache: npm
+
+notifications:
+  email: false
+
+node_js:
+  - 10
+  - 12
+  - 14
+
+install: npm ci
+
+script:
+  - npm run coverage
+  - npm run build
+
+after_success: npx codecov
+
+branches:
+  only:
+    - master
+    - next
+
+jobs:
+  # Define the release stage that runs semantic-release
+  include:
+    - stage: release
+      node_js: lts/*
+      # Advanced: optionally overwrite your default `script` step to skip the tests
+      # script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release@17
