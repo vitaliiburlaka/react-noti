@@ -1,0 +1,104 @@
+// Buttons
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  line-height: 2em;
+  text-transform: capitalize;
+  background-color: $color-dp;
+  border: 0;
+  border-radius: 4px;
+  padding: 3px 16px;
+  margin: 8px;
+  min-width: 8rem;
+  transition: all 0.15s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+  }
+
+  &:first-child {
+    margin-left: initial;
+  }
+
+  &:last-child {
+    margin-right: initial;
+  }
+
+  &.btn-success {
+    background: $success-bg;
+  }
+
+  &.btn-info {
+    background: $info-bg;
+  }
+
+  &.btn-warning {
+    background: $warning-bg;
+  }
+
+  &.btn-error {
+    background: $error-bg;
+  }
+}
+
+// Links
+a {
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: 0.15em;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $color-dp;
+    box-shadow: 0 1px 0 0 currentColor;
+  }
+}
+
+// Checkbox
+input[type='checkbox'] {
+  position: relative;
+  top: 5px;
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  appearance: none;
+
+  &::before {
+    position: absolute;
+    content: '';
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ffae00;
+    border-radius: 3px;
+  }
+
+  &:checked {
+    &::before {
+      background-color: #ffae00;
+    }
+
+    &::after {
+      position: absolute;
+      top: -2px;
+      left: 4px;
+      content: 'L';
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+      transform: rotate(40deg) scaleX(-1);
+    }
+  }
+}

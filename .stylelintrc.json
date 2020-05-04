@@ -1,0 +1,16 @@
+{
+  "extends": "stylelint-prettier/recommended",
+  "rules": {
+    "prettier/prettier": true,
+    "block-no-empty": null,
+    "color-no-invalid-hex": true,
+    "declaration-colon-space-after": "always",
+    "max-empty-lines": 2,
+    "rule-empty-line-before": [
+      "always",
+      { "except": ["first-nested"], "ignore": ["after-comment"] }
+    ],
+    "block-opening-brace-space-before": "always",
+    "block-opening-brace-newline-before": "always"
+  }
+}
