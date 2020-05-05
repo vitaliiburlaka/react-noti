@@ -7,13 +7,18 @@
 
 ---
 
+[![Build Status][build-badge]][build]
+[![Code Coverage][coverage-badge]][coverage]
+[![version][version-badge]][package]
+[![downloads][downloads-badge]][npmcharts]
+[![MIT License][license-badge]][license]
+
 <img alt="ReactNoti toast notifications screenshot" src="assets/screenshot.png"/>
 
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -126,3 +131,16 @@ notify.dismiss()
 ## License
 
 [MIT](LICENSE)
+
+<!-- prettier-ignore-start -->
+[build-badge]: https://img.shields.io/travis/vitaliiburlaka/react-noti.svg
+[build]: https://travis-ci.org/vitaliiburlaka/react-noti
+[coverage-badge]: https://img.shields.io/codecov/c/github/vitaliiburlaka/react-noti.svg
+[coverage]: https://codecov.io/github/vitaliiburlaka/react-noti
+[version-badge]: https://img.shields.io/npm/v/react-noti.svg
+[package]: https://www.npmjs.com/package/react-noti
+[downloads-badge]: https://img.shields.io/npm/dm/react-noti.svg
+[npmcharts]: http://npmcharts.com/compare/react-noti
+[license-badge]: https://img.shields.io/npm/l/react-noti.svg
+[license]: https://github.com/vitaliiburlaka/react-noti/blob/master/LICENSE
+<!-- prettier-ignore-end -->
