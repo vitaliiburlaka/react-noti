@@ -1,5 +1,3 @@
-# react-noti
-
 <div align="center">
   <h1><img width="120" alt="react-noti" src="assets/react-noti-logo.png"/></h1>
   <p>Toast Notifications made simple.</p>
@@ -29,6 +27,10 @@
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Demo
+
+[A demo is worth a thousand words](https://vitaliiburlaka.github.io/react-noti)
 
 ## Installation
 

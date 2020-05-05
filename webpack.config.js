@@ -12,7 +12,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
-const publicPath = '/'
+const publicPath = process.env.PUBLIC_URL || ''
 const appBuild = path.resolve(__dirname, 'examples/build')
 const appSrc = path.resolve(__dirname, './examples/src')
 const libSrc = path.resolve(__dirname, './src')
@@ -330,6 +330,7 @@ module.exports = (env) => ({
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_PATH),
     }),
     isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
     isEnvDevelopment && new CaseSensitivePathsPlugin(),

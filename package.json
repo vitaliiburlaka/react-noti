@@ -17,7 +17,8 @@
     "lint:stylelint": "stylelint --ignore-path .gitignore --syntax scss **/*.scss",
     "lint:stylelint:fix": "stylelint --ignore-path .gitignore --syntax scss **/*.scss --fix",
     "build": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false webpack -p --progress --config webpack.config.umd.js",
-    "build:examples": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false webpack -p --progress --config webpack.config.js",
+    "build:examples": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false PUBLIC_URL=/react-noti/ webpack -p --progress --config webpack.config.js",
+    "deploy": "gh-pages -d ./examples/build",
     "analyze": "npm run build -- --env.analyze",
     "analyze:lib": "npm run build:lib -- --env.analyze",
     "commit": "git-cz"
@@ -36,7 +37,7 @@
   "bugs": {
     "url": "https://github.com/vitaliiburlaka/react-noti/issues"
   },
-  "homepage": "https://github.com/vitaliiburlaka/react-noti",
+  "homepage": "https://vitaliiburlaka.github.io/react-noti",
   "keywords": [
     "react",
     "notification",
@@ -80,6 +81,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "file-loader": "^6.0.0",
+    "gh-pages": "^2.2.0",
     "html-webpack-plugin": "^4.3.0",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",

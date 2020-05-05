@@ -69,11 +69,7 @@ function App() {
 
       <header className="App__header">
         <h1 className="logo">
-          <a
-            href="https://github.com/vitaliiburlaka/react-noti"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://vitaliiburlaka.github.io/react-noti">
             <img src={reactNotiLogo} alt="React Noti logo" />
           </a>
         </h1>
