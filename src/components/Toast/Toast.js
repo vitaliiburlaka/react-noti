@@ -28,6 +28,7 @@ function Toast({
   let timerID = useRef(null)
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
   const contentCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
+  const typeIconCls = `icon icon-${type}`
 
   const handleDismiss = () => {
     if (timerID) {
@@ -50,7 +51,7 @@ function Toast({
           role="img"
           aria-label={`alert ${type}`}
         >
-          <span className="icon">{iconsMap[type]}</span>
+          <span className={typeIconCls}>{iconsMap[type]}</span>
         </div>
       )}
 
