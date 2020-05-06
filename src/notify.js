@@ -10,7 +10,7 @@ class Notify {
     single: DEFAULTS.single,
   }
 
-  #onStoreChange = null
+  #onStoreChange = () => {}
 
   #createToast = ({
     type,

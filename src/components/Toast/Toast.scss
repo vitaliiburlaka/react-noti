@@ -103,7 +103,9 @@
       height: 9px;
 
       &.icon-close {
-        background: url('../../assets/close-16.svg');
+        background-image: url('../../assets/close-16.svg');
+        background-repeat: no-repeat;
+        background-position: center;
       }
     }
   }
