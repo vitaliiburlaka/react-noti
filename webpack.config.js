@@ -311,6 +311,7 @@ module.exports = (env) => ({
     new HtmlWebpackPlugin({
       inject: true,
       template: appIndexHtml,
+      favicon: './examples/public/favicon.ico',
       ...(isEnvProduction
         ? {
             minify: {
@@ -330,7 +331,7 @@ module.exports = (env) => ({
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_PATH),
+      'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
     }),
     isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
     isEnvDevelopment && new CaseSensitivePathsPlugin(),

@@ -83,13 +83,13 @@ input[type='checkbox'] {
     content: '';
     width: 15px;
     height: 15px;
-    border: 1px solid $color-yellow;
+    border: 1px solid $color-primary;
     border-radius: 3px;
   }
 
   &:checked {
     &::before {
-      background-color: $color-yellow;
+      background-color: $off-yellow;
     }
 
     &::after {
@@ -99,7 +99,7 @@ input[type='checkbox'] {
       content: 'L';
       font-size: 13px;
       font-weight: bold;
-      color: #fff;
+      color: $color-primary;
       transform: rotate(40deg) scaleX(-1);
     }
   }
