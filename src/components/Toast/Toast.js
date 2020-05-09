@@ -28,7 +28,7 @@ function Toast({
   let timerID = useRef(null)
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
   const contentCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
-  const typeIconCls = `icon icon-${type}`
+  const typeIconCls = `RN-icon icon-${type}`
 
   const handleDismiss = () => {
     if (timerID) {
@@ -66,7 +66,7 @@ function Toast({
         onClick={handleDismiss}
         data-testid="btn-dismiss"
       >
-        <span className="icon icon-close" />
+        <span className="RN-icon icon-close" />
       </button>
     </div>
   )
