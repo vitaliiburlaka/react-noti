@@ -1,5 +1,6 @@
+/* eslint-disable global-require */
 import path from 'path'
-import resolve from '@rollup/plugin-node-resolve'
+import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import url from '@rollup/plugin-url'
@@ -12,51 +13,136 @@ import pkg from './package.json'
 
 const indexJs = './src/index.js'
 
+const root = process.platform === 'win32' ? path.resolve('/') : '/'
+const external = (id) => !id.startsWith('.') && !id.startsWith(root)
+
 function kebabToPascalCase(str) {
-  return str.replace(/-([a-z])/g, (_, up) => up.toUpperCase())
+  return str
+    .replace(/(^\w|-\w)/g, (_, up) => up.toUpperCase())
+    .split('-')
+    .join('')
 }
+
+const getBabelOptions = ({ useESModules }) => ({
+  babelHelpers: 'runtime',
+  exclude: '**/node_modules/**',
+  plugins: [
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        regenerator: !useESModules,
+        useESModules,
+        version: require('@babel/runtime/package.json').version,
+      },
+    ],
+    ['transform-react-remove-prop-types', { mode: 'wrap' }],
+  ],
+})
 
 const commonPlugins = [
   url(),
+  svgr(),
   postcss({
-    extract: path.resolve(`dist/${pkg.name}.css`),
+    extract: `dist/${pkg.name}.css`,
     modules: false,
     use: ['sass'],
+    plugins: [
+      require('postcss-url')({
+        url: 'inline',
+      }),
+      require('postcss-preset-env')({
+        autoprefixer: {
+          flexbox: 'no-2009',
+        },
+        stage: 3,
+      }),
+    ],
   }),
   filesize(),
-  svgr(),
-  babel({ exclude: 'node_modules/**' }),
-  resolve(),
-  commonjs({ exclude: 'src/**' }),
-  terser(),
+  nodeResolve(),
 ]
 
 export default [
-  // browser-friendly UMD build
+  // CommonJS
   {
     input: indexJs,
-    external: ['react'],
+    external,
     output: {
-      name: kebabToPascalCase(pkg.name),
-      file: pkg.browser,
-      format: 'umd',
+      file: `./dist/${pkg.name}.cjs.js`,
+      format: 'cjs',
+      exports: 'named',
     },
-    plugins: commonPlugins,
+    plugins: [
+      ...commonPlugins,
+      babel(getBabelOptions({ useESModules: false })),
+      commonjs(),
+    ],
   },
 
-  // CommonJS (for Node) and ES module (for bundlers) build.
-  // (We could have three entries in the configuration array
-  // instead of two, but it's quicker to generate multiple
-  // builds from a single configuration where possible, using
-  // an array for the `output` option, where we can specify
-  // `file` and `format` for each target)
+  // ES
   {
     input: indexJs,
-    external: ['react'],
-    output: [
-      { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' },
+    external,
+    output: { file: `./dist/${pkg.name}.esm.js`, format: 'esm' },
+    plugins: [
+      ...commonPlugins,
+      babel(getBabelOptions({ useESModules: true })),
+      commonjs(),
     ],
-    plugins: commonPlugins,
+  },
+
+  // UMD Development
+  {
+    input: indexJs,
+    external,
+    output: {
+      file: `./dist/${pkg.name}.js`,
+      format: 'umd',
+      exports: 'named',
+      name: kebabToPascalCase(pkg.name),
+      globals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+    },
+    plugins: [
+      ...commonPlugins,
+      babel({
+        babelHelpers: 'bundled',
+        exclude: '**/node_modules/**',
+        plugins: [
+          ['transform-react-remove-prop-types', { removeImport: true }],
+        ],
+      }),
+      commonjs(),
+    ],
+  },
+
+  // UMD Production
+  {
+    input: indexJs,
+    external,
+    output: {
+      file: `./dist/${pkg.name}.min.js`,
+      format: 'umd',
+      exports: 'named',
+      name: kebabToPascalCase(pkg.name),
+      globals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+    },
+    plugins: [
+      ...commonPlugins,
+      babel({
+        babelHelpers: 'bundled',
+        exclude: '**/node_modules/**',
+        plugins: [
+          ['transform-react-remove-prop-types', { removeImport: true }],
+        ],
+      }),
+      commonjs(),
+      terser(),
+    ],
   },
 ]
