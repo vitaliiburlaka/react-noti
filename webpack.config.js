@@ -1,4 +1,3 @@
-/* eslint-disable object-shorthand */
 /* eslint-disable global-require */
 
 const path = require('path')
@@ -21,7 +20,7 @@ const appIndexHtml = 'examples/public/index.html'
 const isEnvProduction = process.env.NODE_ENV === 'production'
 const isEnvDevelopment = process.env.NODE_ENV === 'development'
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
-const imageInlineSizeLimit = 10000
+const IMAGE_INLINE_SIZE_LIMIT = 10000
 
 const pkg = require('./package.json')
 
@@ -117,7 +116,7 @@ module.exports = (env) => ({
     chunkFilename: isEnvProduction
       ? 'static/js/[name].[contenthash:8].chunk.js'
       : isEnvDevelopment && 'static/js/[name].chunk.js',
-    publicPath: publicPath,
+    publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: isEnvProduction
       ? (info) =>
@@ -197,6 +196,7 @@ module.exports = (env) => ({
   resolve: {
     modules: [path.resolve(__dirname, 'node_modules'), appSrc, libSrc],
     extensions: moduleFileExtensions.map((ext) => `.${ext}`),
+    alias: isEnvDevelopment ? { 'react-dom': '@hot-loader/react-dom' } : {},
   },
   module: {
     strictExportPresence: true,
@@ -224,6 +224,13 @@ module.exports = (env) => ({
         loader: require.resolve('babel-loader'),
         options: {
           compact: true,
+          plugins: [
+            isEnvDevelopment && 'react-hot-loader/babel',
+            isEnvProduction && [
+              'babel-plugin-transform-react-remove-prop-types',
+              { removeImport: true },
+            ],
+          ].filter(Boolean),
         },
       },
       {
@@ -275,7 +282,7 @@ module.exports = (env) => ({
           {
             loader: require.resolve('url-loader'),
             options: {
-              limit: imageInlineSizeLimit,
+              limit: IMAGE_INLINE_SIZE_LIMIT,
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
@@ -287,7 +294,7 @@ module.exports = (env) => ({
           {
             loader: require.resolve('url-loader'),
             options: {
-              limit: imageInlineSizeLimit,
+              limit: IMAGE_INLINE_SIZE_LIMIT,
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },

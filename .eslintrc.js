@@ -7,11 +7,15 @@ module.exports = {
   },
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 8,
+    ecmaVersion: 2018,
+    sourceType: 'module',
     ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-      impliedStrict: true,
-      classes: true,
+      jsx: true,
+    },
+  },
+  settings: {
+    react: {
+      version: 'detect',
     },
   },
   extends: ['airbnb', 'plugin:prettier/recommended', 'prettier/react'],
