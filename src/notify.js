@@ -70,13 +70,15 @@ class Notify {
   }
 
   dismiss = (id) => {
-    if (!id) {
-      // Dismisses all
-      this.#toasts.length = 0
-    } else {
-      this.#toasts = this.#toasts.filter((item) => item.id !== id)
-    }
+    if (!id) return // No ID no dismiss
 
+    this.#toasts = this.#toasts.filter((item) => item.id !== id)
+    this.#onStoreChange(this.#toasts)
+  }
+
+  closeAll = () => {
+    // Removes all notifications
+    this.#toasts.length = 0
     this.#onStoreChange(this.#toasts)
   }
 
