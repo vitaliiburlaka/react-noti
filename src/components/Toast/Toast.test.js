@@ -16,6 +16,8 @@ describe('<Toast />', () => {
     autoDismiss: DEFAULTS.autoDismiss,
     timeOut: DEFAULTS.timeOut,
     icons: DEFAULTS.icons,
+    pauseOnHover: DEFAULTS.pauseOnHover,
+    showProgress: DEFAULTS.showProgress,
   }
 
   it('renders without crashing', () => {
@@ -78,5 +80,65 @@ describe('<Toast />', () => {
     const { queryByRole } = render(<Toast {...props} />)
 
     expect(queryByRole('img')).toBeNull()
+  })
+
+  it('should show progress bar if showProgress prop set to TRUE', () => {
+    const props = {
+      ...defaultProps,
+      showProgress: true,
+    }
+
+    const { getByTestId } = render(<Toast {...props} />)
+
+    expect(getByTestId('ReactNoti-Toast-progress')).toBeInTheDocument()
+  })
+
+  it('should not dismiss Toast when mouse hovered on', () => {
+    const onDismissMockFn = jest.fn()
+    const props = {
+      ...defaultProps,
+      showProgress: true,
+      onDismiss: onDismissMockFn,
+    }
+    const { getByTestId } = render(<Toast {...props} />)
+
+    fireEvent.mouseEnter(getByTestId('ReactNoti-Toast'))
+    jest.runOnlyPendingTimers()
+
+    expect(onDismissMockFn).not.toHaveBeenCalled()
+  })
+
+  it('should dismiss Toast when mouse hover off', () => {
+    const onDismissMockFn = jest.fn()
+    const props = {
+      ...defaultProps,
+      showProgress: true,
+      onDismiss: onDismissMockFn,
+    }
+    const { getByTestId } = render(<Toast {...props} />)
+
+    fireEvent.mouseEnter(getByTestId('ReactNoti-Toast'))
+    jest.runOnlyPendingTimers()
+    fireEvent.mouseLeave(getByTestId('ReactNoti-Toast'))
+    jest.runOnlyPendingTimers()
+
+    expect(onDismissMockFn).toHaveBeenCalled()
+  })
+
+  it('should dismiss Toast when mouse hovered if pauseOnHover is FALSE', () => {
+    const onDismissMockFn = jest.fn()
+    const props = {
+      ...defaultProps,
+      pauseOnHover: false,
+      onDismiss: onDismissMockFn,
+    }
+    const { getByTestId } = render(<Toast {...props} />)
+
+    fireEvent.mouseEnter(getByTestId('ReactNoti-Toast'))
+    jest.runOnlyPendingTimers()
+    fireEvent.mouseLeave(getByTestId('ReactNoti-Toast'))
+    jest.runOnlyPendingTimers()
+
+    expect(onDismissMockFn).toHaveBeenCalled()
   })
 })

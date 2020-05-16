@@ -8,17 +8,20 @@ class Notify {
     autoDismiss: DEFAULTS.autoDismiss,
     timeOut: DEFAULTS.timeOut,
     single: DEFAULTS.single,
+    pauseOnHover: DEFAULTS.pauseOnHover,
+    showProgress: DEFAULTS.showProgress,
   }
 
   #onStoreChange = () => {}
 
-  #createToast = ({
-    type,
-    content,
-    title,
-    autoDismiss = this.#config.autoDismiss,
-    timeOut = this.#config.timeOut,
-  }) => {
+  #createToast = (type, content, options) => {
+    const {
+      title,
+      autoDismiss = this.#config.autoDismiss,
+      timeOut = this.#config.timeOut,
+      pauseOnHover = this.#config.pauseOnHover,
+      showProgress = this.#config.showProgress,
+    } = options
     return {
       id: generateUID(),
       type,
@@ -26,6 +29,8 @@ class Notify {
       title,
       autoDismiss,
       timeOut,
+      pauseOnHover,
+      showProgress,
     }
   }
 
@@ -40,50 +45,26 @@ class Notify {
     this.#onStoreChange(this.#toasts)
   }
 
-  success = (content, { title, autoDismiss, timeOut } = {}) => {
-    const toast = this.#createToast({
-      type: MSG_TYPE.SUCCESS,
-      content,
-      title,
-      autoDismiss,
-      timeOut,
-    })
+  success = (content, options = {}) => {
+    const toast = this.#createToast(MSG_TYPE.SUCCESS, content, options)
 
     this.#addToast(toast)
   }
 
-  info = (content, { title, autoDismiss, timeOut } = {}) => {
-    const toast = this.#createToast({
-      type: MSG_TYPE.INFO,
-      content,
-      title,
-      autoDismiss,
-      timeOut,
-    })
+  info = (content, options = {}) => {
+    const toast = this.#createToast(MSG_TYPE.INFO, content, options)
 
     this.#addToast(toast)
   }
 
-  warning = (content, { title, autoDismiss, timeOut } = {}) => {
-    const toast = this.#createToast({
-      type: MSG_TYPE.WARNING,
-      content,
-      title,
-      autoDismiss,
-      timeOut,
-    })
+  warning = (content, options = {}) => {
+    const toast = this.#createToast(MSG_TYPE.WARNING, content, options)
 
     this.#addToast(toast)
   }
 
-  error = (content, { title, autoDismiss, timeOut } = {}) => {
-    const toast = this.#createToast({
-      type: MSG_TYPE.ERROR,
-      content,
-      title,
-      autoDismiss,
-      timeOut,
-    })
+  error = (content, options = {}) => {
+    const toast = this.#createToast(MSG_TYPE.ERROR, content, options)
 
     this.#addToast(toast)
   }
@@ -99,12 +80,14 @@ class Notify {
     this.#onStoreChange(this.#toasts)
   }
 
-  configure({ autoDismiss, timeOut, single }) {
+  configure({ autoDismiss, timeOut, single, pauseOnHover, showProgress }) {
     this.#config = {
       ...this.#config,
       autoDismiss,
       timeOut,
       single,
+      pauseOnHover,
+      showProgress,
     }
   }
 

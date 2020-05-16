@@ -1,5 +1,5 @@
 import notify from '../notify'
-import { MSG_TYPE } from '../utils/constants'
+import { MSG_TYPE, DEFAULTS } from '../utils/constants'
 import { generateUID } from '../utils/helpers'
 
 jest.mock('../utils/helpers')
@@ -9,8 +9,10 @@ describe('notify', () => {
   const defaultToast = {
     title: undefined,
     type: undefined,
-    autoDismiss: true,
-    timeOut: 5000,
+    autoDismiss: DEFAULTS.autoDismiss,
+    timeOut: DEFAULTS.timeOut,
+    pauseOnHover: DEFAULTS.pauseOnHover,
+    showProgress: DEFAULTS.showProgress,
   }
 
   beforeAll(() => {

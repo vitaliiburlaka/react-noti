@@ -18,6 +18,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -91,6 +92,8 @@ export default App
 | `timeOut`     | `number`  | `5000`      | ✘        | The default time in ms for the all toast notifications in the container tray. Can be overridden individually.       |
 | `single`      | `boolean` | `false`     | ✘        | Single notification mode. Show only the last notification.                                                          |
 | `icons`       | `boolean` | `true`      | ✘        | Show default toast notifications icons or not.                                                                      |
+| `pauseOnHover`| `boolean` | `true`      | ✘        | Pause auto-dismissing countdown on mouse hover. Can be overridden individually.                                     |
+| `showProgress`| `boolean` | `false`     | ✘        | Show countdown progress-bar on toast notifications. Can be overridden individually.                                 |
 | `className`   | `string`  | `undefined` | ✘        | Adds a class to the ReactNoti container for custom styling.                                                         |
 
 ### `notify` toast options
@@ -101,11 +104,13 @@ export default App
 | `options`     | `object`              | `{}`        | ✘        | Options are listed bellow.                                                        |
 
 #### Optional `notify` methods parameters
-| Options       | Type                  | Default     | Description                                                                          |
-| ------------- | ----------------------| ----------- | ------------------------------------------------------------------------------------ |
-| `title`       | `string`              | `undefined` | Text string containing the title of the Toast notification.                          |
-| `autoDismiss` | `boolean`             | `true`      | Auto dismiss notification after the `timeOut`. Overrides global `ReactNoti` timeOut. |
-| `timeOut`     | `number`              | `5000`      | Time in ms for individual Toast in the tray. Overrides global `ReactNoti` timeOut    |
+| Options       | Type      | Default     | Description                                                                                    |
+| ------------- | ----------| ----------- | ---------------------------------------------------------------------------------------------- |
+| `title`       | `string`  | `undefined` | Text string containing the title of the Toast notification.                                    |
+| `autoDismiss` | `boolean` | `true`      | Auto dismiss notification after the `timeOut`. Overrides global `ReactNoti` autoDismiss.       |
+| `timeOut`     | `number`  | `5000`      | Time in ms for individual Toast in the tray. Overrides global `ReactNoti` timeOut.             |
+| `pauseOnHover`| `boolean` | `true`      | Pause auto-dismissing countdown on mouse hover. Overrides global `ReactNoti` pauseOnHover.     |
+| `showProgress`| `boolean` | `false`     | Show countdown progress-bar on toast notifications. Overrides global `ReactNoti` showProgress. |
 <!-- prettier-ignore-end -->
 
 :warning:️ _Toast options supersede ReactNoti container props_ :warning:

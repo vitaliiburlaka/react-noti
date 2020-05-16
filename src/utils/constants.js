@@ -20,4 +20,6 @@ export const DEFAULTS = {
   timeOut: 5000,
   single: false,
   icons: true,
+  pauseOnHover: true,
+  showProgress: false,
 }

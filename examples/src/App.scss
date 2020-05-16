@@ -112,6 +112,7 @@
 
   label {
     display: inline-block;
+    min-width: 140px;
 
     &:not(:last-child) {
       margin-right: 32px;
@@ -129,6 +130,8 @@
 
   &__props {
     section {
+      margin-bottom: 8px;
+
       &:nth-child(2) {
         display: flex;
         justify-content: space-between;
@@ -136,6 +139,10 @@
 
         input[type='text'] {
           width: 120px;
+
+          &:last-child {
+            margin-right: 0;
+          }
         }
       }
     }
