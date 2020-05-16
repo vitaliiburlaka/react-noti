@@ -1,5 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
+
+import { Timer } from '../../utils/helpers'
 
 import { ReactComponent as SuccessIcon } from '../../assets/checked.svg'
 import { ReactComponent as InfoIcon } from '../../assets/info.svg'
@@ -24,27 +26,58 @@ function Toast({
   timeOut,
   onDismiss,
   icons,
+  pauseOnHover,
+  showProgress,
 }) {
-  let timerID = useRef(null)
+  const timer = useRef()
+  const [isRunning, setIsRunning] = useState(autoDismiss)
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
   const contentCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
-  const typeIconCls = `icon icon-${type}`
+  const typeIconCls = `RN-icon icon-${type}`
+  const progressCls = `ReactNoti__Toast__progress ReactNoti__Toast__progress--${type}`
 
   const handleDismiss = () => {
-    if (timerID) {
-      clearTimeout(timerID)
-    }
     onDismiss(id)
   }
 
-  if (autoDismiss && timeOut > 0) {
-    timerID = setTimeout(() => {
-      onDismiss(id)
-    }, timeOut)
+  const startTimer = () => {
+    if (!autoDismiss || timeOut <= 0) return
+
+    timer.current = new Timer(handleDismiss, timeOut)
+    setIsRunning(true)
+  }
+
+  const clearTimer = () => {
+    if (timer.current) timer.current.clear()
+  }
+
+  useEffect(() => {
+    startTimer()
+
+    return () => {
+      clearTimer()
+    }
+  }, [])
+
+  const onMouseEnter = () => {
+    if (!pauseOnHover || !timer.current) return
+    timer.current.pause()
+    setIsRunning(false)
+  }
+
+  const onMouseLeave = () => {
+    if (!pauseOnHover || !timer.current) return
+    timer.current.resume()
+    setIsRunning(true)
   }
 
   return (
-    <div className={cls} data-testid="ReactNoti-Toast">
+    <div
+      className={cls}
+      data-testid="ReactNoti-Toast"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {icons && (
         <div
           className="ReactNoti__Toast__type"
@@ -66,8 +99,19 @@ function Toast({
         onClick={handleDismiss}
         data-testid="btn-dismiss"
       >
-        <span className="icon icon-close" />
+        <span className="RN-icon icon-close" />
       </button>
+
+      {autoDismiss && showProgress === true && (
+        <div
+          className={progressCls}
+          data-testid="ReactNoti-Toast-progress"
+          style={{
+            animation: `rnShrinkWidth ${timeOut}ms linear`,
+            animationPlayState: isRunning ? 'running' : 'paused',
+          }}
+        />
+      )}
     </div>
   )
 }
@@ -85,6 +129,8 @@ Toast.propTypes = {
   timeOut: PropTypes.number.isRequired,
   icons: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
+  pauseOnHover: PropTypes.bool.isRequired,
+  showProgress: PropTypes.bool.isRequired,
 }
 
 export default Toast

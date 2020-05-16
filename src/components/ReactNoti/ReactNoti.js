@@ -13,6 +13,8 @@ function ReactNoti({
   timeOut = DEFAULTS.timeOut,
   single = DEFAULTS.single,
   icons = DEFAULTS.icons,
+  pauseOnHover = DEFAULTS.pauseOnHover,
+  showProgress = DEFAULTS.showProgress,
   className,
 }) {
   const [toasts, setToasts] = useState([])
@@ -31,6 +33,8 @@ function ReactNoti({
     autoDismiss,
     timeOut,
     single,
+    pauseOnHover,
+    showProgress,
   })
 
   useEffect(() => {
@@ -53,6 +57,8 @@ function ReactNoti({
               autoDismiss={t.autoDismiss}
               timeOut={t.timeOut}
               icons={icons}
+              pauseOnHover={t.pauseOnHover}
+              showProgress={showProgress}
               onDismiss={notify.dismiss}
             />
           ))}
@@ -68,6 +74,8 @@ ReactNoti.propTypes = {
   timeOut: PropTypes.number,
   single: PropTypes.bool,
   icons: PropTypes.bool,
+  pauseOnHover: PropTypes.bool,
+  showProgress: PropTypes.bool,
   className: PropTypes.string,
 }
 

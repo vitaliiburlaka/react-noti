@@ -1,5 +1,5 @@
 import notify from '../notify'
-import { MSG_TYPE } from '../utils/constants'
+import { MSG_TYPE, DEFAULTS } from '../utils/constants'
 import { generateUID } from '../utils/helpers'
 
 jest.mock('../utils/helpers')
@@ -9,8 +9,10 @@ describe('notify', () => {
   const defaultToast = {
     title: undefined,
     type: undefined,
-    autoDismiss: true,
-    timeOut: 5000,
+    autoDismiss: DEFAULTS.autoDismiss,
+    timeOut: DEFAULTS.timeOut,
+    pauseOnHover: DEFAULTS.pauseOnHover,
+    showProgress: DEFAULTS.showProgress,
   }
 
   beforeAll(() => {
@@ -21,10 +23,10 @@ describe('notify', () => {
 
   beforeEach(() => {
     generateUID.mockImplementation(() => 'aaa-bbb')
+    notify.closeAll()
   })
   afterEach(() => {
-    // Dismisses all previous notifications
-    notify.dismiss()
+    handleStoreChangeMockFn.mockClear()
   })
 
   it('should call handleStoreChange with new SUCCESS toast on notify.success() call', () => {
@@ -77,5 +79,19 @@ describe('notify', () => {
     notify.error('Error')
 
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([newToast])
+  })
+
+  it('should remove toast and call handleStoreChange if notify.dismiss() was called with toast ID', () => {
+    notify.success('Success')
+
+    notify.dismiss('aaa-bbb')
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
+  })
+
+  it('should NOT remove toast notify.dismiss() was called without toast ID', () => {
+    notify.dismiss()
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
   })
 })

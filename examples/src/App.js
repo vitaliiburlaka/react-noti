@@ -1,3 +1,4 @@
+// import/no-named-as-default
 import { hot } from 'react-hot-loader/root'
 import React, { useState } from 'react'
 
@@ -21,6 +22,8 @@ function App() {
   const [icons, setIcons] = useState(true) // default
   const [isSingle, setIsSingle] = useState(false) // default
   const [timeOut, setTimeOut] = useState(5000) // default
+  const [pauseOnHover, setPauseOnHover] = useState(true) // default
+  const [showProgress, setShowProgress] = useState(false) // default
 
   const handlePositionChange = ({ target }) => {
     setPosition(target.value)
@@ -65,6 +68,8 @@ function App() {
         single={isSingle}
         icons={icons}
         timeOut={timeOut * 1}
+        pauseOnHover={pauseOnHover}
+        showProgress={showProgress}
       />
 
       <header className="App__header">
@@ -169,6 +174,29 @@ function App() {
                     onChange={() => setIsSingle(!isSingle)}
                   />{' '}
                   <code>single</code>
+                </label>
+              </section>
+              <section className="row-control">
+                <label htmlFor="pauseOnHover">
+                  <input
+                    id="pauseOnHover"
+                    type="checkbox"
+                    name="pauseOnHover"
+                    checked={pauseOnHover}
+                    onChange={() => setPauseOnHover(!pauseOnHover)}
+                  />{' '}
+                  <code>pauseOnHover</code>
+                </label>
+
+                <label htmlFor="showProgress">
+                  <input
+                    id="showProgress"
+                    type="checkbox"
+                    name="showProgress"
+                    checked={showProgress}
+                    onChange={() => setShowProgress(!showProgress)}
+                  />{' '}
+                  <code>showProgress</code>
                 </label>
               </section>
             </div>

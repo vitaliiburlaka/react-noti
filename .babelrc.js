@@ -1,6 +1,5 @@
-const isEnvProduction = process.env.NODE_ENV === 'production'
+'use strict'
 
-// eslint-disable-next-line func-names
 module.exports = function (api) {
   api.cache(true)
 
@@ -19,16 +18,11 @@ module.exports = function (api) {
       '@babel/preset-react',
     ],
     plugins: [
-      !isEnvProduction && 'react-hot-loader/babel',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
+      ['transform-react-remove-prop-types', { removeImport: true }],
     ].filter(Boolean),
     env: {
-      production: {
-        plugins: [
-          ['babel-plugin-transform-react-remove-prop-types', { mode: 'wrap' }],
-        ],
-      },
       test: {
         presets: [[
           '@babel/preset-env',

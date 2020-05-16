@@ -41,7 +41,7 @@
     background-color: $error-bg;
   }
 
-  .icon {
+  .RN-icon {
     display: inline-block;
     color: currentColor;
     fill: currentColor;
@@ -98,7 +98,7 @@
       opacity: 1;
     }
 
-    .icon {
+    .RN-icon {
       width: 9px;
       height: 9px;
 
@@ -108,5 +108,40 @@
         background-position: center;
       }
     }
+  }
+
+  &__progress {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+
+    &--success {
+      background-color: darken($success-bg, 20%);
+    }
+
+    &--info {
+      background-color: darken($info-bg, 20%);
+    }
+
+    &--warning {
+      background-color: darken($warning-bg, 20%);
+    }
+
+    &--error {
+      background-color: darken($error-bg, 20%);
+    }
+  }
+}
+
+@keyframes rnShrinkWidth {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
   }
 }
