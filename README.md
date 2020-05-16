@@ -119,7 +119,9 @@ const Img = ({ src }) => <span><img width={48} src={src} /></span>
 const options = {
   title: 'Toast title'
   autoDismiss: true,
-  timeOut: 3000,
+  timeOut: 5000,
+  pauseOnHover: true,
+  showProgress: false
 }
 
 // Success.
