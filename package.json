@@ -115,6 +115,7 @@
     "sass-loader": "^8.0.2",
     "semantic-release": "^17.0.7",
     "style-loader": "^1.2.1",
+    "styled-components": "^5.1.1",
     "stylelint": "^13.3.3",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-prettier": "^1.1.2",
@@ -127,7 +128,8 @@
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "styled-components": "^5.x.x"
   },
   "lint-staged": {
     "*.{js,jsx}": [
