@@ -1,4 +1,3 @@
-// import/no-named-as-default
 import { hot } from 'react-hot-loader/root'
 import React, { useState } from 'react'
 import ReactNoti, { notify, POSITION } from '../../src/index'
