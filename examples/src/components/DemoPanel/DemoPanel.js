@@ -2,8 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { POSITION } from '../../../../src/index'
 
-import { StyledButton, StyledCheckbox } from '../../styled'
-import { StyledDemoPanel } from './DemoPanel.styled'
+import Checkbox from '../Checkbox'
+import { StyledButton } from '../../styled'
+import {
+  StyledDemoPanel,
+  StyledDemoHeader,
+  StyledDemoButtons,
+  StyledDemoProps,
+} from './DemoPanel.styled'
 
 import { MSG_TYPE } from '../../constants'
 
@@ -26,17 +32,16 @@ function DemoPanel({
 }) {
   return (
     <StyledDemoPanel className="DemoPanel">
-      <div className="DemoPanel__header">
-        <h2 className="react-noti">react-noti</h2>
-        <div className="big-text">Notifications made easy.</div>
-      </div>
+      <StyledDemoHeader>
+        <h2>react-noti</h2>
+        <div>Notifications made easy.</div>
+      </StyledDemoHeader>
 
       <div className="DemoPanel__content">
-        <div className="DemoPanel__buttons">
+        <StyledDemoButtons>
           {Object.keys(MSG_TYPE).map((k) => (
             <StyledButton
               key={MSG_TYPE[k]}
-              className={`btn btn-${MSG_TYPE[k]}`}
               type="button"
               kind={MSG_TYPE[k]}
               onClick={() => handleOnClick(MSG_TYPE[k])}
@@ -44,11 +49,11 @@ function DemoPanel({
               {MSG_TYPE[k]}
             </StyledButton>
           ))}
-        </div>
+        </StyledDemoButtons>
 
-        <div className="DemoPanel__props">
+        <StyledDemoProps>
           <h3>Props</h3>
-          <section className="row-control">
+          <section>
             <label htmlFor="position">
               <code>position</code>{' '}
               <select
@@ -77,11 +82,10 @@ function DemoPanel({
             </label>
           </section>
 
-          <section className="row-control">
+          <section>
             <label htmlFor="autoDismiss">
-              <StyledCheckbox
+              <Checkbox
                 id="autoDismiss"
-                type="checkbox"
                 name="autoDismiss"
                 checked={autoDismiss}
                 onChange={handleAutoDismissChange}
@@ -90,22 +94,18 @@ function DemoPanel({
             </label>
 
             <label htmlFor="icons">
-              <span className="checkbox">
-                <StyledCheckbox
-                  id="icons"
-                  type="checkbox"
-                  name="icons"
-                  checked={icons}
-                  onChange={handleIconsChange}
-                />
-              </span>{' '}
+              <Checkbox
+                id="icons"
+                name="icons"
+                checked={icons}
+                onChange={handleIconsChange}
+              />{' '}
               <code>icons</code>
             </label>
 
             <label htmlFor="single">
-              <StyledCheckbox
+              <Checkbox
                 id="single"
-                type="checkbox"
                 name="single"
                 checked={isSingle}
                 onChange={handleIsSingleChange}
@@ -113,11 +113,10 @@ function DemoPanel({
               <code>single</code>
             </label>
           </section>
-          <section className="row-control">
+          <section>
             <label htmlFor="pauseOnHover">
-              <StyledCheckbox
+              <Checkbox
                 id="pauseOnHover"
-                type="checkbox"
                 name="pauseOnHover"
                 checked={pauseOnHover}
                 onChange={handlePauseOnHoverChange}
@@ -126,9 +125,8 @@ function DemoPanel({
             </label>
 
             <label htmlFor="showProgress">
-              <StyledCheckbox
+              <Checkbox
                 id="showProgress"
-                type="checkbox"
                 name="showProgress"
                 checked={showProgress}
                 onChange={handleShowProgressChange}
@@ -136,7 +134,7 @@ function DemoPanel({
               <code>showProgress</code>
             </label>
           </section>
-        </div>
+        </StyledDemoProps>
       </div>
     </StyledDemoPanel>
   )

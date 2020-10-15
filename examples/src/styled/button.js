@@ -31,14 +31,6 @@ const StyledButton = styled.button`
     cursor: not-allowed;
     filter: grayscale(100%);
   }
-
-  &:first-child {
-    margin-left: initial;
-  }
-
-  &:last-child {
-    margin-right: initial;
-  }
 `
 
 export default StyledButton

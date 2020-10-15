@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader/root'
 import React, { useState } from 'react'
-import ReactNoti, { notify, POSITION } from '../../src/index'
+import { ReactNoti, notify, POSITION } from '../../src/index'
 
 import StyledApp from './App.styled'
 import Header from './components/Header'
@@ -31,22 +31,22 @@ function App() {
   const handleOnClick = (type) => {
     switch (type) {
       case MSG_TYPE.SUCCESS:
-        notify.success('Lorem ipsum dolor sit amet', {
+        notify.success('Good job mate! Keep it going', {
           title: 'Success!',
         })
         break
       case MSG_TYPE.INFO:
-        notify.info('Con, laborum animi.', {
+        notify.info('Everything seems going fine', {
           title: 'Info!',
         })
         break
       case MSG_TYPE.WARNING:
-        notify.warning('Ipsum con corporis similique eligendi', {
+        notify.warning('Be careful on your journey up there', {
           title: 'Warning!',
         })
         break
       case MSG_TYPE.ERROR:
-        notify.error('Veniam dolor repudiandae cumque!', {
+        notify.error('Oops... Something went wrong', {
           title: 'Error!',
         })
         break
