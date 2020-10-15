@@ -6,7 +6,16 @@ import { StyledLink } from '../../styled'
 function Footer() {
   return (
     <StyledFooter className="Footer">
-      © {new Date().getFullYear()} Vitalii Burlaka
+      <span>
+        © {new Date().getFullYear()} Vitalii Burlaka | Designed by{' '}
+        <a
+          href="https://www.behance.net/tetianaburlaka"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Tetiana Burlaka
+        </a>
+      </span>
       <div className="footer-links">
         <StyledLink
           href="https://github.com/vitaliiburlaka"
