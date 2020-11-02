@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import Toast from '../Toast/Toast'
+import Toast from '../Toast'
 import notify from '../../notify'
 import { POSITION, DEFAULTS } from '../../utils/constants'
-
-import './ReactNoti.scss'
+import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
 function ReactNoti({
   position = DEFAULTS.position,
@@ -44,9 +43,9 @@ function ReactNoti({
   }, [])
 
   return (
-    <div className={cls}>
+    <StyledReactNoti className={cls}>
       {toasts.length > 0 && (
-        <div className={trayCls}>
+        <StyledTray className={trayCls} position={position}>
           {toasts.map((t) => (
             <Toast
               key={t.id}
@@ -62,9 +61,9 @@ function ReactNoti({
               onDismiss={notify.dismiss}
             />
           ))}
-        </div>
+        </StyledTray>
       )}
-    </div>
+    </StyledReactNoti>
   )
 }
 

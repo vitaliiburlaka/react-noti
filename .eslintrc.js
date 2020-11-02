@@ -38,6 +38,6 @@ module.exports = {
       },
     ],
     'react/require-default-props': 'off',
-    'react/state-in-constructor': [1, 'never']
+    'react/state-in-constructor': [1, 'never'],
   },
 }
