@@ -128,8 +128,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.8.0 || ^17.0.x",
+    "react-dom": "^16.8.0 || || ^17.0.x",
     "styled-components": "^5.x.x"
   },
   "lint-staged": {
