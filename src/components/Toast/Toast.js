@@ -12,7 +12,7 @@ import {
   StyledToast,
   StyledType,
   StyledBody,
-  StyledRNIcon,
+  StyledIcon,
   StyledBtnDismiss,
   StyledProgress,
 } from './Toast.styled'
@@ -38,6 +38,7 @@ function Toast({
 }) {
   const timer = useRef()
   const [isRunning, setIsRunning] = useState(autoDismiss)
+  // TODO: Remove class names in future versions as those are obsolete now with styled-components
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
   const bodyCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
   const typeIconCls = `RN-icon icon-${type}`
@@ -92,7 +93,7 @@ function Toast({
           role="img"
           aria-label={`alert ${type}`}
         >
-          <StyledRNIcon className={typeIconCls}>{iconsMap[type]}</StyledRNIcon>
+          <StyledIcon className={typeIconCls}>{iconsMap[type]}</StyledIcon>
         </StyledType>
       )}
 
@@ -107,7 +108,7 @@ function Toast({
         onClick={handleDismiss}
         data-testid="btn-dismiss"
       >
-        <StyledRNIcon className="RN-icon icon-close" />
+        <StyledIcon className="RN-icon icon-close" />
       </StyledBtnDismiss>
 
       {autoDismiss && showProgress === true && (

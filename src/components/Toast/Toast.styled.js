@@ -30,7 +30,7 @@ export const StyledToast = styled.div`
   }
 `
 // Icon
-export const StyledRNIcon = styled.span`
+export const StyledIcon = styled.span`
   display: inline-block;
   color: currentColor;
   fill: currentColor;
