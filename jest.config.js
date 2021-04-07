@@ -1,5 +1,9 @@
 module.exports = {
-  collectCoverageFrom: ['src/**/*.+(js|jsx|ts|tsx)'],
+  collectCoverageFrom: [
+    'src/**/*.+(js|jsx|ts|tsx)',
+    '!src/**/*.styled.+(js|jsx|ts|tsx)',
+    '!src/styles/*.+(js|jsx|ts|tsx)',
+  ],
   testEnvironment: 'jsdom',
   testURL: 'http://localhost',
   transform: {

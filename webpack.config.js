@@ -22,8 +22,6 @@ const isEnvDevelopment = process.env.NODE_ENV === 'development'
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
 const IMAGE_INLINE_SIZE_LIMIT = 10000
 
-const pkg = require('./package.json')
-
 const webpackDevServerConfig = require('./webpackDevServer.config')
 
 const moduleFileExtensions = [
@@ -112,9 +110,7 @@ module.exports = (env) => ({
     pathinfo: isEnvDevelopment,
     filename: isEnvProduction
       ? 'static/js/[name].[contenthash:8].js'
-      : isEnvDevelopment && 'static/js/bundle.js',
-    // TODO: remove this when upgrading to webpack 5
-    futureEmitAssets: true,
+      : isEnvDevelopment && 'static/js/[name].bundle.js',
     chunkFilename: isEnvProduction
       ? 'static/js/[name].[contenthash:8].chunk.js'
       : isEnvDevelopment && 'static/js/[name].chunk.js',
@@ -125,9 +121,6 @@ module.exports = (env) => ({
           path.relative(appSrc, info.absoluteResourcePath).replace(/\\/g, '/')
       : isEnvDevelopment &&
         ((info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
-    // Prevents conflicts when multiple webpack runtimes (from different apps)
-    // are used on the same page.
-    jsonpFunction: `webpackJsonp${pkg.name}`,
   },
   optimization: {
     minimize: isEnvProduction,
@@ -156,8 +149,6 @@ module.exports = (env) => ({
         },
         // Use multi-process to improve the build speed
         parallel: true,
-        cache: true,
-        sourceMap: shouldUseSourceMap,
       }),
       // This is only used in production mode
       new OptimizeCSSAssetsPlugin({
@@ -228,7 +219,7 @@ module.exports = (env) => ({
       {
         test: cssRegex,
         exclude: cssModuleRegex,
-        loader: getStyleLoaders({
+        use: getStyleLoaders({
           importLoaders: 1,
           sourceMap: shouldUseSourceMap,
         }),
@@ -246,7 +237,7 @@ module.exports = (env) => ({
       {
         test: sassRegex,
         exclude: sassModuleRegex,
-        loader: getStyleLoaders(
+        use: getStyleLoaders(
           {
             importLoaders: 3,
             sourceMap: shouldUseSourceMap,
@@ -347,8 +338,4 @@ module.exports = (env) => ({
       }),
   ].filter(Boolean),
   devServer: isEnvDevelopment ? webpackDevServerConfig : {},
-  node: {
-    Buffer: false,
-    process: false,
-  },
 })

@@ -18,7 +18,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  extends: ['airbnb', 'plugin:prettier/recommended', 'prettier/react'],
+  extends: ['airbnb', 'plugin:prettier/recommended', 'prettier'],
   plugins: ['prettier', 'react-hooks'],
   rules: {
     'no-console': 'off',
