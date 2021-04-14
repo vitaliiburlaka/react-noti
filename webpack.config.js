@@ -95,6 +95,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 
 module.exports = (env) => ({
   mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
+  target: isEnvDevelopment ? 'web' : 'browserslist',
   // Stop compilation early in production
   bail: isEnvProduction,
   // eslint-disable-next-line no-nested-ternary
