@@ -36,8 +36,8 @@
 ## Installation
 
 ```bash
-$ npm install react-noti
-$ yarn add react-noti
+$ npm install react-noti styled-components@5
+$ yarn add react-noti styled-components@5
 ```
 
 ## Usage
