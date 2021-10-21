@@ -43,10 +43,9 @@ $ yarn add react-noti
 ## Usage
 
 ```js
-import React from 'react';
+import React from 'react'
 // POSITION is a helper variable that provides available position values to avoid typos
-import ReactNoti { notify, POSITION } from 'react-noti'
-import 'react-noti/dist/react-noti.css'
+import { ReactNoti, notify, POSITION } from 'react-noti'
 
 function App() {
   const handleSuccessClick = () => {
@@ -56,10 +55,16 @@ function App() {
     notify.info('Info message', { title: 'Title here' })
   }
   const handleWarningClick = () => {
-    notify.warning('Warning message', { title: 'Do not auto dismiss', autoDismiss: false })
+    notify.warning('Warning message', {
+      title: 'Do not auto dismiss',
+      autoDismiss: false,
+    })
   }
   const handleErrorClick = () => {
-    notify.error('Error message', { title: 'Close after 9000ms', timeOut: 9000 })
+    notify.error('Error message', {
+      title: 'Close after 9000ms',
+      timeOut: 9000,
+    })
   }
 
   return (
