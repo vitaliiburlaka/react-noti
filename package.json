@@ -120,9 +120,6 @@
     "semantic-release": "^18.0.0",
     "style-loader": "^3.3.0",
     "styled-components": "^5.3.3",
-    "stylelint": "^13.13.1",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-prettier": "^1.2.0",
     "terser-webpack-plugin": "^5.2.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.59.1",
@@ -141,9 +138,6 @@
     ],
     "*.{md,json,yml,yaml,css}": [
       "prettier --write"
-    ],
-    "*.scss": [
-      "stylelint --syntax scss --fix"
     ],
     "README.md": [
       "doctoc --maxlevel 4 --notitle"
