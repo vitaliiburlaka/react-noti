@@ -17,7 +17,7 @@ function App() {
   const [isSingle, setIsSingle] = useState(false) // default
   const [timeOut, setTimeOut] = useState(5000) // default
   const [pauseOnHover, setPauseOnHover] = useState(true) // default
-  const [showProgress, setShowProgress] = useState(false) // default
+  const [showProgress, setShowProgress] = useState(true) // default
 
   const handlePositionChange = ({ target }) => setPosition(target.value)
   const handleTimeOutChange = ({ target }) => setTimeOut(target.value)

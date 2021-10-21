@@ -97,7 +97,7 @@ export default App
 | `single`      | `boolean` | `false`     | ✘        | Single notification mode. Show only the last notification.                                                          |
 | `icons`       | `boolean` | `true`      | ✘        | Show default toast notifications icons or not.                                                                      |
 | `pauseOnHover`| `boolean` | `true`      | ✘        | Pause auto-dismissing countdown on mouse hover. Can be overridden individually.                                     |
-| `showProgress`| `boolean` | `false`     | ✘        | Show countdown progress-bar on toast notifications. Can be overridden individually.                                 |
+| `showProgress`| `boolean` | `true`     | ✘        | Show countdown progress-bar on toast notifications. Can be overridden individually.                                 |
 | `className`   | `string`  | `undefined` | ✘        | Adds a class to the ReactNoti container for custom styling.                                                         |
 
 ### `notify` toast options

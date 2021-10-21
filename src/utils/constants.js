@@ -14,12 +14,12 @@ export const POSITION = {
   BOTTOM_LEFT: 'bottom-left',
 }
 
-export const DEFAULTS = {
+export const defaultOptions = {
   position: POSITION.TOP_RIGHT,
   autoDismiss: true,
   timeOut: 5000,
   single: false,
   icons: true,
   pauseOnHover: true,
-  showProgress: false,
+  showProgress: true,
 }

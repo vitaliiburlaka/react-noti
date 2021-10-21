@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 
 import Toast from '../Toast'
 import notify from '../../notify'
-import { POSITION, DEFAULTS } from '../../utils/constants'
+import { POSITION, defaultOptions } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
 function ReactNoti({
-  position = DEFAULTS.position,
-  autoDismiss = DEFAULTS.autoDismiss,
-  timeOut = DEFAULTS.timeOut,
-  single = DEFAULTS.single,
-  icons = DEFAULTS.icons,
-  pauseOnHover = DEFAULTS.pauseOnHover,
-  showProgress = DEFAULTS.showProgress,
+  position = defaultOptions.position,
+  autoDismiss = defaultOptions.autoDismiss,
+  timeOut = defaultOptions.timeOut,
+  single = defaultOptions.single,
+  icons = defaultOptions.icons,
+  pauseOnHover = defaultOptions.pauseOnHover,
+  showProgress = defaultOptions.showProgress,
   className,
 }) {
   const [toasts, setToasts] = useState([])
