@@ -1,8 +1,8 @@
-import notify from '../notify'
-import { MSG_TYPE, DEFAULTS } from '../utils/constants'
-import { generateUID } from '../utils/helpers'
+import notify from './notify'
+import { MSG_TYPE, DEFAULTS } from './utils/constants'
+import { generateUID } from './utils/helpers'
 
-jest.mock('../utils/helpers')
+jest.mock('./utils/helpers')
 
 describe('notify', () => {
   const handleStoreChangeMockFn = jest.fn()
