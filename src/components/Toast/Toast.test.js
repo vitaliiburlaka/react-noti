@@ -3,7 +3,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
 import Toast from './Toast'
-import { DEFAULTS } from '../../utils/constants'
+import { defaultOptions } from '../../utils/constants'
 
 jest.useFakeTimers()
 
@@ -13,11 +13,11 @@ describe('<Toast />', () => {
     content: 'Hello',
     type: 'success',
     onDismiss: () => {},
-    autoDismiss: DEFAULTS.autoDismiss,
-    timeOut: DEFAULTS.timeOut,
-    icons: DEFAULTS.icons,
-    pauseOnHover: DEFAULTS.pauseOnHover,
-    showProgress: DEFAULTS.showProgress,
+    autoDismiss: defaultOptions.autoDismiss,
+    timeOut: defaultOptions.timeOut,
+    icons: defaultOptions.icons,
+    pauseOnHover: defaultOptions.pauseOnHover,
+    showProgress: defaultOptions.showProgress,
   }
 
   it('renders without crashing', () => {
