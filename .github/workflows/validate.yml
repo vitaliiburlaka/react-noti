@@ -55,7 +55,7 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'vitaliiburlaka/react-noti' &&
-      contains('refs/heads/main,refs/heads/beta,refs/heads/next,refs/heads/alpha',
+      contains('refs/heads/master,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
     steps:
       - name: 🛑 Cancel Previous Runs
