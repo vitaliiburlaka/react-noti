@@ -1,15 +1,15 @@
-import { MSG_TYPE, DEFAULTS } from './utils/constants'
+import { MSG_TYPE, defaultOptions } from './utils/constants'
 import { generateUID } from './utils/helpers'
 
 class Notify {
   #toasts = []
 
   #config = {
-    autoDismiss: DEFAULTS.autoDismiss,
-    timeOut: DEFAULTS.timeOut,
-    single: DEFAULTS.single,
-    pauseOnHover: DEFAULTS.pauseOnHover,
-    showProgress: DEFAULTS.showProgress,
+    autoDismiss: defaultOptions.autoDismiss,
+    timeOut: defaultOptions.timeOut,
+    single: defaultOptions.single,
+    pauseOnHover: defaultOptions.pauseOnHover,
+    showProgress: defaultOptions.showProgress,
   }
 
   #onStoreChange = () => {}

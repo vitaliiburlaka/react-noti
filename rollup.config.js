@@ -103,6 +103,7 @@ export default [
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
+        'styled-components': 'styled',
       },
     },
     plugins: [
@@ -130,6 +131,7 @@ export default [
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
+        'styled-components': 'styled',
       },
     },
     plugins: [

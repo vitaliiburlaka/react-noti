@@ -36,17 +36,16 @@
 ## Installation
 
 ```bash
-$ npm install react-noti
-$ yarn add react-noti
+$ npm install react-noti styled-components@5
+$ yarn add react-noti styled-components@5
 ```
 
 ## Usage
 
 ```js
-import React from 'react';
+import React from 'react'
 // POSITION is a helper variable that provides available position values to avoid typos
-import ReactNoti { notify, POSITION } from 'react-noti'
-import 'react-noti/dist/react-noti.css'
+import { ReactNoti, notify, POSITION } from 'react-noti'
 
 function App() {
   const handleSuccessClick = () => {
@@ -56,10 +55,16 @@ function App() {
     notify.info('Info message', { title: 'Title here' })
   }
   const handleWarningClick = () => {
-    notify.warning('Warning message', { title: 'Do not auto dismiss', autoDismiss: false })
+    notify.warning('Warning message', {
+      title: 'Do not auto dismiss',
+      autoDismiss: false,
+    })
   }
   const handleErrorClick = () => {
-    notify.error('Error message', { title: 'Close after 9000ms', timeOut: 9000 })
+    notify.error('Error message', {
+      title: 'Close after 9000ms',
+      timeOut: 9000,
+    })
   }
 
   return (
@@ -92,7 +97,7 @@ export default App
 | `single`      | `boolean` | `false`     | ✘        | Single notification mode. Show only the last notification.                                                          |
 | `icons`       | `boolean` | `true`      | ✘        | Show default toast notifications icons or not.                                                                      |
 | `pauseOnHover`| `boolean` | `true`      | ✘        | Pause auto-dismissing countdown on mouse hover. Can be overridden individually.                                     |
-| `showProgress`| `boolean` | `false`     | ✘        | Show countdown progress-bar on toast notifications. Can be overridden individually.                                 |
+| `showProgress`| `boolean` | `true`     | ✘        | Show countdown progress-bar on toast notifications. Can be overridden individually.                                 |
 | `className`   | `string`  | `undefined` | ✘        | Adds a class to the ReactNoti container for custom styling.                                                         |
 
 ### `notify` toast options

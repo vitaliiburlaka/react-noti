@@ -8,7 +8,14 @@ import { ReactComponent as InfoIcon } from '../../assets/info.svg'
 import { ReactComponent as WarningIcon } from '../../assets/warning.svg'
 import { ReactComponent as ErrorIcon } from '../../assets/cancel.svg'
 
-import './Toast.scss'
+import {
+  StyledToast,
+  StyledType,
+  StyledBody,
+  StyledIcon,
+  StyledBtnDismiss,
+  StyledProgress,
+} from './Toast.styled'
 
 const iconsMap = {
   success: <SuccessIcon />,
@@ -31,8 +38,9 @@ function Toast({
 }) {
   const timer = useRef()
   const [isRunning, setIsRunning] = useState(autoDismiss)
+  // TODO: Remove class names in future versions as those are obsolete now with styled-components
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
-  const contentCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
+  const bodyCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
   const typeIconCls = `RN-icon icon-${type}`
   const progressCls = `ReactNoti__Toast__progress ReactNoti__Toast__progress--${type}`
 
@@ -72,47 +80,49 @@ function Toast({
   }
 
   return (
-    <div
+    <StyledToast
       className={cls}
       data-testid="ReactNoti-Toast"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      type={type}
     >
       {icons && (
-        <div
+        <StyledType
           className="ReactNoti__Toast__type"
           role="img"
           aria-label={`alert ${type}`}
         >
-          <span className={typeIconCls}>{iconsMap[type]}</span>
-        </div>
+          <StyledIcon className={typeIconCls}>{iconsMap[type]}</StyledIcon>
+        </StyledType>
       )}
 
-      <div className={contentCls}>
+      <StyledBody className={bodyCls} icons={icons}>
         {title && <strong className="ReactNoti__Toast__title">{title}</strong>}
         <section className="ReactNoti__Toast__content">{content}</section>
-      </div>
+      </StyledBody>
 
-      <button
+      <StyledBtnDismiss
         className="ReactNoti__Toast__btn-dismiss"
         type="button"
         onClick={handleDismiss}
         data-testid="btn-dismiss"
       >
-        <span className="RN-icon icon-close" />
-      </button>
+        <StyledIcon className="RN-icon icon-close" />
+      </StyledBtnDismiss>
 
       {autoDismiss && showProgress === true && (
-        <div
+        <StyledProgress
           className={progressCls}
           data-testid="ReactNoti-Toast-progress"
+          kind={type}
           style={{
             animation: `rnShrinkWidth ${timeOut}ms linear`,
             animationPlayState: isRunning ? 'running' : 'paused',
           }}
         />
       )}
-    </div>
+    </StyledToast>
   )
 }
 

@@ -1,7 +1,5 @@
 import notify from './notify'
 import { POSITION } from './utils/constants'
-import ReactNoti from './components/ReactNoti/ReactNoti'
+import ReactNoti from './components/ReactNoti'
 
-export { notify, POSITION }
-
-export default ReactNoti
+export { ReactNoti, notify, POSITION }

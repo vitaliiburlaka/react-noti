@@ -1,4 +1,4 @@
-import { generateUID, Timer } from '../helpers'
+import { generateUID, Timer } from './helpers'
 
 describe('helpers', () => {
   describe('generateUID()', () => {

@@ -18,7 +18,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  extends: ['airbnb', 'plugin:prettier/recommended', 'prettier/react'],
+  extends: ['airbnb', 'plugin:prettier/recommended', 'prettier'],
   plugins: ['prettier', 'react-hooks'],
   rules: {
     'no-console': 'off',
@@ -38,6 +38,6 @@ module.exports = {
       },
     ],
     'react/require-default-props': 'off',
-    'react/state-in-constructor': [1, 'never']
+    'react/state-in-constructor': [1, 'never'],
   },
 }

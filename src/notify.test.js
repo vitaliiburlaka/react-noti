@@ -1,18 +1,18 @@
-import notify from '../notify'
-import { MSG_TYPE, DEFAULTS } from '../utils/constants'
-import { generateUID } from '../utils/helpers'
+import notify from './notify'
+import { MSG_TYPE, defaultOptions } from './utils/constants'
+import { generateUID } from './utils/helpers'
 
-jest.mock('../utils/helpers')
+jest.mock('./utils/helpers')
 
 describe('notify', () => {
   const handleStoreChangeMockFn = jest.fn()
   const defaultToast = {
     title: undefined,
     type: undefined,
-    autoDismiss: DEFAULTS.autoDismiss,
-    timeOut: DEFAULTS.timeOut,
-    pauseOnHover: DEFAULTS.pauseOnHover,
-    showProgress: DEFAULTS.showProgress,
+    autoDismiss: defaultOptions.autoDismiss,
+    timeOut: defaultOptions.timeOut,
+    pauseOnHover: defaultOptions.pauseOnHover,
+    showProgress: defaultOptions.showProgress,
   }
 
   beforeAll(() => {
