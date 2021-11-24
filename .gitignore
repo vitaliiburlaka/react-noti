@@ -10,3 +10,4 @@ fixtures/
 *.sublime-workspace
 .vscode
 .idea
+.eslintcache
