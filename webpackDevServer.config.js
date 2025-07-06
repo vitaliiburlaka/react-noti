@@ -9,7 +9,9 @@ module.exports = {
   },
   compress: true,
   hot: true,
-  https: protocol === 'https',
+  server: {
+    type: protocol,
+  },
   port: 9000,
   historyApiFallback: {
     disableDotRule: true,

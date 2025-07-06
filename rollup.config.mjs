@@ -1,15 +1,16 @@
-/* eslint-disable global-require */
 import path from 'path'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import url from '@rollup/plugin-url'
 import postcss from 'rollup-plugin-postcss'
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
 import filesize from 'rollup-plugin-filesize'
 import svgr from '@svgr/rollup'
-
-import pkg from './package.json'
+import postcssUrl from 'postcss-url'
+import postcssPresetEnv from 'postcss-preset-env'
+import babelRuntimePkg from '@babel/runtime/package.json' assert { type: 'json' };
+import pkg from './package.json' assert { type: 'json' };
 
 const indexJs = './src/index.js'
 
@@ -32,7 +33,7 @@ const getBabelOptions = ({ useESModules }) => ({
       {
         regenerator: !useESModules,
         useESModules,
-        version: require('@babel/runtime/package.json').version,
+        version: babelRuntimePkg.version,
       },
     ],
     ['transform-react-remove-prop-types', { mode: 'wrap' }],
@@ -47,10 +48,10 @@ const commonPlugins = [
     modules: false,
     use: ['sass'],
     plugins: [
-      require('postcss-url')({
+      postcssUrl({
         url: 'inline',
       }),
-      require('postcss-preset-env')({
+      postcssPresetEnv({
         autoprefixer: {
           flexbox: 'no-2009',
         },
