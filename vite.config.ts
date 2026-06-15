@@ -6,11 +6,7 @@ import svgr from 'vite-plugin-svgr'
 export default defineConfig({
   plugins: [
     svgr(),
-    react({
-      babel: {
-        plugins: ['@emotion/babel-plugin'],
-      },
-    }),
+    react(),
     dts({
       include: ['src'],
       insertTypesEntry: true,

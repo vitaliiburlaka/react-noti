@@ -4,14 +4,7 @@ import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
   root: 'examples',
-  plugins: [
-    svgr(),
-    react({
-      babel: {
-        plugins: ['@emotion/babel-plugin'],
-      },
-    }),
-  ],
+  plugins: [svgr(), react()],
   base: '/react-noti/',
   build: {
     outDir: 'build',
