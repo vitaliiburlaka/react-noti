@@ -23,6 +23,31 @@ removed from the DOM. Use CSS custom properties (--noti-bg-success etc.)
 to theme colours and other design tokens, or the new classNames prop to
 apply custom CSS classes to individual toast slots.
 
+# [4.0.0](https://github.com/vitaliiburlaka/react-noti/compare/v3.0.0...v4.0.0) (2026-06-15)
+
+
+* feat!: replace BEM class names with CSS custom properties and classNames API ([0358ff4](https://github.com/vitaliiburlaka/react-noti/commit/0358ff45cbe6acee08865736145bb77c88e9af55))
+
+
+### Bug Fixes
+
+* **a11y:** add aria-live to container; aria-label to dismiss button; aria-hidden to icons ([25f70a2](https://github.com/vitaliiburlaka/react-noti/commit/25f70a2e4ffb73e6415eac4f91515b006d850e51))
+* move notify.configure() to useEffect; guard Timer.pause() against negative remainingTime ([a241848](https://github.com/vitaliiburlaka/react-noti/commit/a241848e7f93e9d678bbc57c6e198f1a36fd49a8))
+* widen content type to ReactNode; export MSG_TYPE and ReactNotiProps; make dismiss id required ([02996d2](https://github.com/vitaliiburlaka/react-noti/commit/02996d2043694decda5f606e7f94957c0b06fd2f))
+
+
+### Performance Improvements
+
+* memo Toast; stabilise handleStoreChange with useCallback ([29ef24d](https://github.com/vitaliiburlaka/react-noti/commit/29ef24d95cac38a4abfab31f5ea89fad15921a11))
+
+
+### BREAKING CHANGES
+
+* all ReactNoti__* and RN-icon CSS class names have been
+removed from the DOM. Use CSS custom properties (--noti-bg-success etc.)
+to theme colours and other design tokens, or the new classNames prop to
+apply custom CSS classes to individual toast slots.
+
 # [3.0.0](https://github.com/vitaliiburlaka/react-noti/compare/v2.0.0...v3.0.0) (2026-06-15)
 
 
