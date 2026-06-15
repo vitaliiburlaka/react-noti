@@ -31,14 +31,6 @@ export const StyledToast = styled('div', {
   overflow: hidden;
   box-shadow: var(--react-noti-shadow, 0 3px 9px rgba(0, 0, 0, 0.175));
 
-  /* IE 11 min-height bug workaround */
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    &::after {
-      content: '';
-      min-height: inherit;
-    }
-  }
-
   &:not(:last-child) {
     margin-bottom: 8px;
   }

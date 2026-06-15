@@ -1,5 +1,5 @@
 export function generateUID(): string {
-  const first = (Math.random() * 46656).toString(36).slice(-3)
+  const first = (Math.random() * 46656).toString(36).slice(-3) // 46656 = 36^3
   const second = Date.now().toString(36)
 
   return `${first}-${second}`
