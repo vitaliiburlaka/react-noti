@@ -119,6 +119,8 @@ export const StyledProgress = styled('div', {
   height: 4px;
   width: 100%;
   background-color: ${({ kind }) =>
-    kind ? `var(--react-noti-progress-${kind}, ${colors[`${kind}Dark`]})` : '#fff'};
+    kind
+      ? `var(--react-noti-progress-${kind}, ${colors[`${kind}Dark`]})`
+      : '#fff'};
   animation: ${rnShrinkWidth} ${({ duration }) => duration}ms linear;
 `

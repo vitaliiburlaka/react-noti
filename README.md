@@ -114,9 +114,17 @@ function App() {
       <ReactNoti position={POSITION.TOP_RIGHT} />
 
       <button onClick={() => notify.success('Done!')}>Success</button>
-      <button onClick={() => notify.info('FYI', { title: 'Note' })}>Info</button>
-      <button onClick={() => notify.warning('Be careful', { autoDismiss: false })}>Warning</button>
-      <button onClick={() => notify.error('Oops', { timeOut: 9000 })}>Error</button>
+      <button onClick={() => notify.info('FYI', { title: 'Note' })}>
+        Info
+      </button>
+      <button
+        onClick={() => notify.warning('Be careful', { autoDismiss: false })}
+      >
+        Warning
+      </button>
+      <button onClick={() => notify.error('Oops', { timeOut: 9000 })}>
+        Error
+      </button>
     </div>
   )
 }
@@ -164,7 +172,9 @@ export default App
 ```tsx
 // Pass a React element as content
 const Avatar = ({ src }: { src: string }) => (
-  <span><img width={48} src={src} alt="" /></span>
+  <span>
+    <img width={48} src={src} alt="" />
+  </span>
 )
 
 notify.success('Plain text toast')
@@ -186,14 +196,14 @@ All design tokens are exposed as CSS custom properties. Override them in plain C
 /* global */
 :root {
   --react-noti-bg-success: #1a7f4b;
-  --react-noti-bg-error:   #9c1c1c;
-  --react-noti-radius:     8px;
+  --react-noti-bg-error: #9c1c1c;
+  --react-noti-radius: 8px;
 }
 
 /* scoped to part of your app */
 .dark-theme {
   --react-noti-bg-success: #1a7f4b;
-  --react-noti-color:      #f0f0f0;
+  --react-noti-color: #f0f0f0;
 }
 ```
 
@@ -224,11 +234,11 @@ Apply your own CSS classes to the container or every toast:
 <ReactNoti
   className="my-container"
   classNames={{
-    toast:    'my-toast',
-    body:     'my-body',
-    title:    'my-title',
-    content:  'my-content',
-    dismiss:  'my-dismiss',
+    toast: 'my-toast',
+    body: 'my-body',
+    title: 'my-title',
+    content: 'my-content',
+    dismiss: 'my-dismiss',
     progress: 'my-progress',
   }}
 />
@@ -252,14 +262,14 @@ All public types are exported from `react-noti`:
 
 ```ts
 import type {
-  Position,       // Union of all valid position strings
-  MsgType,        // 'success' | 'info' | 'warning' | 'error'
-  ToastOptions,   // Per-toast option overrides
-  ToastItem,      // Shape of a toast in the internal store
-  NotifyConfig,   // Shape of the global notify configuration
-  RegisterOptions,// Argument to notify.register()
+  Position, // Union of all valid position strings
+  MsgType, // 'success' | 'info' | 'warning' | 'error'
+  ToastOptions, // Per-toast option overrides
+  ToastItem, // Shape of a toast in the internal store
+  NotifyConfig, // Shape of the global notify configuration
+  RegisterOptions, // Argument to notify.register()
   NotiClassNames, // Slot class names for ReactNoti classNames prop
-  ToastType,      // Alias for MsgType (deprecated — prefer MsgType)
+  ToastType, // Alias for MsgType (deprecated — prefer MsgType)
 } from 'react-noti'
 ```
 
@@ -276,11 +286,7 @@ interface ToastButtonProps {
 }
 
 function ToastButton({ type, message, options }: ToastButtonProps) {
-  return (
-    <button onClick={() => notify[type](message, options)}>
-      {type}
-    </button>
-  )
+  return <button onClick={() => notify[type](message, options)}>{type}</button>
 }
 
 // Position values are strongly typed
