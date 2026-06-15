@@ -15,6 +15,7 @@ export default defineConfig({
         'src/**/*.styled.{ts,tsx}',
         'src/styles/**',
         'src/__mocks__/**',
+        'examples/**',
       ],
     },
   },

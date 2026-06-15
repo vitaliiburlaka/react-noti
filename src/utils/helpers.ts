@@ -25,11 +25,11 @@ export class Timer {
   }
 
   clear = (): void => {
-    if (this.timerId) clearTimeout(this.timerId)
+    clearTimeout(this.timerId)
   }
 
   pause = (): void => {
-    if (this.timerId) clearTimeout(this.timerId)
+    clearTimeout(this.timerId)
     this.remainingTime -= Date.now() - this.startTime
   }
 

@@ -4,6 +4,12 @@ import { generateUID } from './utils/helpers'
 
 vi.mock('./utils/helpers')
 
+describe('notify before register', () => {
+  it('does not throw when called before register()', () => {
+    expect(() => notify.success('pre-register')).not.toThrow()
+  })
+})
+
 describe('notify', () => {
   const handleStoreChangeMockFn = vi.fn()
   const defaultToast = {
