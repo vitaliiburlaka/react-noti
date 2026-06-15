@@ -109,7 +109,7 @@ function Toast({
   return (
     <StyledToast
       className={classNames.toast}
-      data-testid="noti-toast"
+      data-testid="react-noti-toast"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       type={type}
@@ -129,7 +129,7 @@ function Toast({
         className={classNames.dismiss}
         type="button"
         onClick={handleDismiss}
-        data-testid="noti-dismiss"
+        data-testid="react-noti-dismiss"
       >
         <StyledIcon />
       </StyledBtnDismiss>
@@ -137,7 +137,7 @@ function Toast({
       {autoDismiss && showProgress === true && (
         <StyledProgress
           className={classNames.progress}
-          data-testid="noti-progress"
+          data-testid="react-noti-progress"
           kind={type}
           duration={timeOut}
           style={{

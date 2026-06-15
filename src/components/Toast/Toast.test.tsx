@@ -36,7 +36,7 @@ describe('<Toast />', () => {
 
     const { getByTestId } = render(<Toast {...props} />)
 
-    fireEvent.click(getByTestId('noti-dismiss'))
+    fireEvent.click(getByTestId('react-noti-dismiss'))
 
     vi.runOnlyPendingTimers()
 
@@ -88,7 +88,7 @@ describe('<Toast />', () => {
 
     const { getByTestId } = render(<Toast {...props} />)
 
-    expect(getByTestId('noti-progress')).toBeInTheDocument()
+    expect(getByTestId('react-noti-progress')).toBeInTheDocument()
   })
 
   it('should not dismiss Toast when mouse hovered on', () => {
@@ -100,7 +100,7 @@ describe('<Toast />', () => {
     }
     const { getByTestId } = render(<Toast {...props} />)
 
-    fireEvent.mouseEnter(getByTestId('noti-toast'))
+    fireEvent.mouseEnter(getByTestId('react-noti-toast'))
     vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).not.toHaveBeenCalled()
@@ -115,9 +115,9 @@ describe('<Toast />', () => {
     }
     const { getByTestId } = render(<Toast {...props} />)
 
-    fireEvent.mouseEnter(getByTestId('noti-toast'))
+    fireEvent.mouseEnter(getByTestId('react-noti-toast'))
     vi.runOnlyPendingTimers()
-    fireEvent.mouseLeave(getByTestId('noti-toast'))
+    fireEvent.mouseLeave(getByTestId('react-noti-toast'))
     vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalled()
@@ -132,9 +132,9 @@ describe('<Toast />', () => {
     }
     const { getByTestId } = render(<Toast {...props} />)
 
-    fireEvent.mouseEnter(getByTestId('noti-toast'))
+    fireEvent.mouseEnter(getByTestId('react-noti-toast'))
     vi.runOnlyPendingTimers()
-    fireEvent.mouseLeave(getByTestId('noti-toast'))
+    fireEvent.mouseLeave(getByTestId('react-noti-toast'))
     vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalled()

@@ -185,35 +185,35 @@ All design tokens are exposed as CSS custom properties. Override them in plain C
 ```css
 /* global */
 :root {
-  --noti-bg-success: #1a7f4b;
-  --noti-bg-error:   #9c1c1c;
-  --noti-radius:     8px;
+  --react-noti-bg-success: #1a7f4b;
+  --react-noti-bg-error:   #9c1c1c;
+  --react-noti-radius:     8px;
 }
 
 /* scoped to part of your app */
 .dark-theme {
-  --noti-bg-success: #1a7f4b;
-  --noti-color:      #f0f0f0;
+  --react-noti-bg-success: #1a7f4b;
+  --react-noti-color:      #f0f0f0;
 }
 ```
 
 <!-- prettier-ignore-start -->
 | Variable | Default | Description |
 | -------- | ------- | ----------- |
-| `--noti-color` | `#1e1f20` | Toast text colour |
-| `--noti-bg-success` | `#daf5e5` | Success toast background |
-| `--noti-bg-info` | `#d9eaf1` | Info toast background |
-| `--noti-bg-warning` | `#fff0de` | Warning toast background |
-| `--noti-bg-error` | `#ffe7e2` | Error toast background |
-| `--noti-progress-success` | `#8adfad` | Success progress bar colour |
-| `--noti-progress-info` | `#8ec1d6` | Info progress bar colour |
-| `--noti-progress-warning` | `#ffc278` | Warning progress bar colour |
-| `--noti-progress-error` | `#ff937c` | Error progress bar colour |
-| `--noti-radius` | `4px` | Toast border-radius |
-| `--noti-shadow` | `0 3px 9px rgba(0,0,0,.175)` | Toast box-shadow |
-| `--noti-font-family` | `'Open Sans', sans-serif` | Font family |
-| `--noti-font-size` | `14px` | Toast body font size |
-| `--noti-z-index` | `4000` | Tray stacking order |
+| `--react-noti-color` | `#1e1f20` | Toast text colour |
+| `--react-noti-bg-success` | `#daf5e5` | Success toast background |
+| `--react-noti-bg-info` | `#d9eaf1` | Info toast background |
+| `--react-noti-bg-warning` | `#fff0de` | Warning toast background |
+| `--react-noti-bg-error` | `#ffe7e2` | Error toast background |
+| `--react-noti-progress-success` | `#8adfad` | Success progress bar colour |
+| `--react-noti-progress-info` | `#8ec1d6` | Info progress bar colour |
+| `--react-noti-progress-warning` | `#ffc278` | Warning progress bar colour |
+| `--react-noti-progress-error` | `#ff937c` | Error progress bar colour |
+| `--react-noti-radius` | `4px` | Toast border-radius |
+| `--react-noti-shadow` | `0 3px 9px rgba(0,0,0,.175)` | Toast box-shadow |
+| `--react-noti-font-family` | `'Open Sans', sans-serif` | Font family |
+| `--react-noti-font-size` | `14px` | Toast body font size |
+| `--react-noti-z-index` | `4000` | Tray stacking order |
 <!-- prettier-ignore-end -->
 
 ### className props
