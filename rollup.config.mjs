@@ -1,4 +1,5 @@
 import path from 'path'
+import { createRequire } from 'module'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
@@ -9,10 +10,13 @@ import filesize from 'rollup-plugin-filesize'
 import svgr from '@svgr/rollup'
 import postcssUrl from 'postcss-url'
 import postcssPresetEnv from 'postcss-preset-env'
-import babelRuntimePkg from '@babel/runtime/package.json' assert { type: 'json' };
-import pkg from './package.json' assert { type: 'json' };
 
-const indexJs = './src/index.js'
+const require = createRequire(import.meta.url)
+const babelRuntimePkg = require('@babel/runtime/package.json')
+const pkg = require('./package.json')
+
+const indexJs = './src/index.ts'
+const extensions = ['.ts', '.tsx', '.mjs', '.js', '.jsx']
 
 const root = process.platform === 'win32' ? path.resolve('/') : '/'
 const external = (id) => !id.startsWith('.') && !id.startsWith(root)
@@ -27,6 +31,7 @@ function kebabToPascalCase(str) {
 const getBabelOptions = ({ useESModules }) => ({
   babelHelpers: 'runtime',
   exclude: '**/node_modules/**',
+  extensions,
   plugins: [
     [
       '@babel/plugin-transform-runtime',
@@ -36,7 +41,6 @@ const getBabelOptions = ({ useESModules }) => ({
         version: babelRuntimePkg.version,
       },
     ],
-    ['transform-react-remove-prop-types', { mode: 'wrap' }],
   ],
 })
 
@@ -60,8 +64,15 @@ const commonPlugins = [
     ],
   }),
   filesize(),
-  nodeResolve(),
+  nodeResolve({ extensions }),
 ]
+
+const umdGlobals = {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  '@emotion/react': 'emotionReact',
+  '@emotion/styled': 'emotionStyled',
+}
 
 export default [
   // CommonJS
@@ -101,20 +112,14 @@ export default [
       format: 'umd',
       exports: 'named',
       name: kebabToPascalCase(pkg.name),
-      globals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-        'styled-components': 'styled',
-      },
+      globals: umdGlobals,
     },
     plugins: [
       ...commonPlugins,
       babel({
         babelHelpers: 'bundled',
         exclude: '**/node_modules/**',
-        plugins: [
-          ['transform-react-remove-prop-types', { removeImport: true }],
-        ],
+        extensions,
       }),
       commonjs(),
     ],
@@ -129,20 +134,14 @@ export default [
       format: 'umd',
       exports: 'named',
       name: kebabToPascalCase(pkg.name),
-      globals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-        'styled-components': 'styled',
-      },
+      globals: umdGlobals,
     },
     plugins: [
       ...commonPlugins,
       babel({
         babelHelpers: 'bundled',
         exclude: '**/node_modules/**',
-        plugins: [
-          ['transform-react-remove-prop-types', { removeImport: true }],
-        ],
+        extensions,
       }),
       commonjs(),
       terser(),

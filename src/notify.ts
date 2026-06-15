@@ -1,7 +1,7 @@
 import { MSG_TYPE, defaultOptions } from './utils/constants'
 import { generateUID } from './utils/helpers'
 
-export type ToastType = typeof MSG_TYPE[keyof typeof MSG_TYPE]
+export type ToastType = (typeof MSG_TYPE)[keyof typeof MSG_TYPE]
 
 export interface ToastOptions {
   title?: string | undefined

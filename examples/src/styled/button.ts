@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 import colors from '../styles/colors'
 
-type ColorKind = keyof typeof colors;
+type ColorKind = keyof typeof colors
 
 interface StyledButtonProps {
   kind?: ColorKind
 }
-
 
 const StyledButton = styled.button<StyledButtonProps>`
   display: inline-block;

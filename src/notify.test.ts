@@ -22,7 +22,7 @@ describe('notify', () => {
   })
 
   beforeEach(() => {
-    (generateUID as jest.Mock).mockImplementation(() => 'aaa-bbb')
+    ;(generateUID as jest.Mock).mockImplementation(() => 'aaa-bbb')
     notify.closeAll()
   })
   afterEach(() => {

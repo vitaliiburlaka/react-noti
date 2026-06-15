@@ -20,7 +20,9 @@ export const StyledReactNoti = styled.div`
 
 type PositionType = (typeof POSITION)[keyof typeof POSITION]
 
-function getPositionStyles(position?: PositionType): FlattenSimpleInterpolation | {} {
+function getPositionStyles(
+  position?: PositionType
+): FlattenSimpleInterpolation | {} {
   switch (position) {
     case POSITION.TOP_CENTER:
       return css`

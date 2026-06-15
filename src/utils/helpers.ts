@@ -9,9 +9,13 @@ type TimerCallback = () => void
 
 export class Timer {
   private timerId: ReturnType<typeof setTimeout> | undefined
+
   private startTime: number
+
   private remainingTime: number
+
   private callback: TimerCallback
+
   private delay: number
 
   constructor(callback: TimerCallback, delay: number) {

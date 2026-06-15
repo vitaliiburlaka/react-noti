@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 const path = require('path')
 const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -215,17 +213,13 @@ module.exports = function (env) {
               },
             },
             {
-              test: /\.(js|mjs|jsx)$/,
+              test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: [appSrc, libSrc],
               loader: require.resolve('babel-loader'),
               options: {
                 compact: true,
                 plugins: [
                   isEnvDevelopment && require.resolve('react-refresh/babel'),
-                  isEnvProduction && [
-                    'babel-plugin-transform-react-remove-prop-types',
-                    { removeImport: true },
-                  ],
                 ].filter(Boolean),
               },
             },
@@ -278,7 +272,7 @@ module.exports = function (env) {
               // Exclude `js` files to keep "css" loader working as it injects
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
-              // by webpacks internal loaders.
+              // by webpack's internal loaders.
               exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               type: 'asset/resource',
             },
