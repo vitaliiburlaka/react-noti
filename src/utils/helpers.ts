@@ -16,11 +16,8 @@ export class Timer {
 
   private callback: TimerCallback
 
-  private delay: number
-
   constructor(callback: TimerCallback, delay: number) {
     this.callback = callback
-    this.delay = delay
     this.startTime = Date.now()
     this.remainingTime = delay
 
