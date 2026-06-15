@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "types": ["jest", "node"],
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "noEmit": true,
+    "outDir": "dist",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*", "examples/src/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/__mocks__/**/*",
+    "**/build/**/*",
+    "**/dist/**/*"
+  ]
+}

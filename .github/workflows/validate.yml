@@ -16,40 +16,44 @@ jobs:
     if: ${{ !contains(github.head_ref, 'all-contributors') }}
     strategy:
       matrix:
-        node: [12, 14, 16]
+        node: [18, 20, 22]
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v2
+      - name: Setup Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      - name: 📥 Install dependencies
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
+      - name: Install dependencies
+        run: npm install --no-package-lock
         env:
-          HUSKY_SKIP_INSTALL: true
+          HUSKY: 0
 
-      - name: ▶️ Run lint script
+      - name: Lint
         run: npm run lint
 
-      - name: ▶️ Run build script
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
         run: npm run build
 
-      - name: ▶️ Run test coverage script
+      - name: Test with coverage
         run: npm run coverage
 
-      - name: ⬆️ Upload coverage report
-        uses: codecov/codecov-action@v2
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+        continue-on-error: true
 
   release:
     needs: main
@@ -58,42 +62,29 @@ jobs:
       contains('refs/heads/master,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v2
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 20
 
-      - name: 📥 Install dependencies
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
+      - name: Install dependencies
+        run: npm install --no-package-lock
         env:
-          HUSKY_SKIP_INSTALL: true
+          HUSKY: 0
 
-      - name: 🏗 Run build script
+      - name: Build
         run: npm run build
 
-      - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 17
-          branches: |
-            [
-              '+([0-9])?(.{+([0-9]),x}).x',
-              'master',
-              'next',
-              'next-major',
-              {name: 'beta', prerelease: true},
-              {name: 'alpha', prerelease: true}
-            ]
+      - name: Release
+        uses: cycjimmy/semantic-release-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

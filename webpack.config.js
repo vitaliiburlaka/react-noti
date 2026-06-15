@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 const path = require('path')
 const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -16,7 +14,7 @@ const publicPath = process.env.PUBLIC_URL || ''
 const appBuild = path.resolve(__dirname, 'examples/build')
 const appSrc = path.resolve(__dirname, './examples/src')
 const libSrc = path.resolve(__dirname, './src')
-const appIndexJs = './examples/src/index.js'
+const appIndexJs = './examples/src/index.tsx'
 const appIndexHtml = 'examples/public/index.html'
 const isEnvProduction = process.env.NODE_ENV === 'production'
 const isEnvDevelopment = process.env.NODE_ENV === 'development'
@@ -33,6 +31,8 @@ const moduleFileExtensions = [
   'json',
   'web.jsx',
   'jsx',
+  'ts',
+  'tsx',
 ]
 
 // Style files regexes
@@ -213,17 +213,13 @@ module.exports = function (env) {
               },
             },
             {
-              test: /\.(js|mjs|jsx)$/,
+              test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: [appSrc, libSrc],
               loader: require.resolve('babel-loader'),
               options: {
                 compact: true,
                 plugins: [
                   isEnvDevelopment && require.resolve('react-refresh/babel'),
-                  isEnvProduction && [
-                    'babel-plugin-transform-react-remove-prop-types',
-                    { removeImport: true },
-                  ],
                 ].filter(Boolean),
               },
             },
@@ -276,7 +272,7 @@ module.exports = function (env) {
               // Exclude `js` files to keep "css" loader working as it injects
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
-              // by webpacks internal loaders.
+              // by webpack's internal loaders.
               exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               type: 'asset/resource',
             },
