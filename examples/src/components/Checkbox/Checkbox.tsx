@@ -9,7 +9,6 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
 function Checkbox({ checked, ...rest }: CheckboxProps) {
   return (
     <StyledCheckbox checked={checked}>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input type="checkbox" checked={checked} {...rest} />
     </StyledCheckbox>
   )

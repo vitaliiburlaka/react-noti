@@ -1,19 +1,9 @@
 import js from '@eslint/js'
-import { FlatCompat } from '@eslint/eslintrc'
 import pluginPrettier from 'eslint-plugin-prettier'
 import pluginReactHooks from 'eslint-plugin-react-hooks'
 import pluginReact from 'eslint-plugin-react'
 import tseslint from 'typescript-eslint'
-import { fileURLToPath } from 'url'
-import path from 'path'
 import globals from 'globals'
-
-// eslint-disable-next-line no-underscore-dangle
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
 
 export default [
   {
@@ -27,7 +17,6 @@ export default [
     ],
   },
   js.configs.recommended,
-  ...compat.extends('airbnb', 'plugin:prettier/recommended', 'prettier'),
   ...tseslint.configs.recommended.map((c) => ({
     ...c,
     files: ['**/*.{ts,tsx}'],
@@ -57,17 +46,9 @@ export default [
     },
     rules: {
       'no-console': 'off',
-      'arrow-parens': ['error', 'always'],
       'prettier/prettier': 'error',
-      'import/no-extraneous-dependencies': [
-        1,
-        {
-          devDependencies: true,
-        },
-      ],
-      'import/extensions': 'off',
-      'import/no-unresolved': 'off',
       'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       'react/jsx-filename-extension': [
         1,
         {
@@ -75,7 +56,6 @@ export default [
         },
       ],
       'react/require-default-props': 'off',
-      'react/state-in-constructor': [1, 'never'],
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',

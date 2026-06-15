@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { render, fireEvent } from '@testing-library/react'
 
 import Toast from './Toast'
