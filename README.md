@@ -36,14 +36,18 @@
 ## Installation
 
 ```bash
-$ npm install react-noti styled-components@5
-$ yarn add react-noti styled-components@5
+$ npm install react-noti @emotion/react @emotion/styled
+$ yarn add react-noti @emotion/react @emotion/styled
 ```
+
+React 19 (or later) is required. TypeScript declarations ship with the
+package — the public types (`MsgType`, `Position`, `ToastItem`,
+`ToastOptions`, `NotifyConfig`, `ToastType`, `RegisterOptions`) can be
+imported from `react-noti` directly.
 
 ## Usage
 
-```js
-import React from 'react'
+```jsx
 // POSITION is a helper variable that provides available position values to avoid typos
 import { ReactNoti, notify, POSITION } from 'react-noti'
 
@@ -114,7 +118,7 @@ export default App
 | `autoDismiss` | `boolean` | `true`      | Auto dismiss notification after the `timeOut`. Overrides global `ReactNoti` autoDismiss.       |
 | `timeOut`     | `number`  | `5000`      | Time in ms for individual Toast in the tray. Overrides global `ReactNoti` timeOut.             |
 | `pauseOnHover`| `boolean` | `true`      | Pause auto-dismissing countdown on mouse hover. Overrides global `ReactNoti` pauseOnHover.     |
-| `showProgress`| `boolean` | `false`     | Show countdown progress-bar on toast notifications. Overrides global `ReactNoti` showProgress. |
+| `showProgress`| `boolean` | `true`      | Show countdown progress-bar on toast notifications. Overrides global `ReactNoti` showProgress. |
 <!-- prettier-ignore-end -->
 
 :warning:️ _Toast options supersede ReactNoti container props_ :warning:
@@ -147,8 +151,8 @@ notify.closeAll()
 [MIT](LICENSE)
 
 <!-- prettier-ignore-start -->
-[build-badge]: https://img.shields.io/travis/vitaliiburlaka/react-noti.svg
-[build]: https://travis-ci.org/vitaliiburlaka/react-noti
+[build-badge]: https://github.com/vitaliiburlaka/react-noti/actions/workflows/validate.yml/badge.svg
+[build]: https://github.com/vitaliiburlaka/react-noti/actions/workflows/validate.yml
 [coverage-badge]: https://img.shields.io/codecov/c/github/vitaliiburlaka/react-noti.svg
 [coverage]: https://codecov.io/github/vitaliiburlaka/react-noti
 [version-badge]: https://img.shields.io/npm/v/react-noti.svg
