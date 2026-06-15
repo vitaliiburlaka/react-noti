@@ -123,20 +123,39 @@ describe('<Toast />', () => {
     expect(onDismissMockFn).toHaveBeenCalled()
   })
 
-  it('should dismiss Toast when mouse hovered if pauseOnHover is FALSE', () => {
+  it('should dismiss Toast on hover when pauseOnHover is FALSE', () => {
     const onDismissMockFn = vi.fn()
     const props = {
       ...defaultProps,
       pauseOnHover: false,
       onDismiss: onDismissMockFn,
     }
-    const { getByTestId } = render(<Toast {...props} />)
+    render(<Toast {...props} />)
 
-    fireEvent.mouseEnter(getByTestId('react-noti-toast'))
-    vi.runOnlyPendingTimers()
-    fireEvent.mouseLeave(getByTestId('react-noti-toast'))
+    // Timer is not paused on hover, so it fires after the first runOnlyPendingTimers
+    fireEvent.mouseEnter(
+      document.querySelector('[data-testid="react-noti-toast"]')!
+    )
     vi.runOnlyPendingTimers()
 
-    expect(onDismissMockFn).toHaveBeenCalled()
+    expect(onDismissMockFn).toHaveBeenCalledWith(props.id)
+  })
+
+  it('should apply classNames to toast slots', () => {
+    const props = {
+      ...defaultProps,
+      classNames: {
+        toast: 'custom-toast',
+        body: 'custom-body',
+        dismiss: 'custom-dismiss',
+        progress: 'custom-progress',
+      },
+    }
+    const { container } = render(<Toast {...props} />)
+
+    expect(container.querySelector('.custom-toast')).toBeInTheDocument()
+    expect(container.querySelector('.custom-body')).toBeInTheDocument()
+    expect(container.querySelector('.custom-dismiss')).toBeInTheDocument()
+    expect(container.querySelector('.custom-progress')).toBeInTheDocument()
   })
 })

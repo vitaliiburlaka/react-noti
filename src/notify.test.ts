@@ -104,4 +104,26 @@ describe('notify', () => {
       expect.objectContaining({ id: 'aaa-bbb' }),
     ])
   })
+
+  it('should clear all toasts and call handleStoreChange on notify.closeAll()', () => {
+    notify.success('A')
+    notify.success('B')
+    handleStoreChangeMockFn.mockClear()
+
+    notify.closeAll()
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
+  })
+
+  it('should apply configure() options to subsequently created toasts', () => {
+    notify.configure({ timeOut: 1000 })
+
+    notify.success('Configured')
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({ timeOut: 1000 }),
+    ])
+
+    notify.configure({ timeOut: defaultOptions.timeOut })
+  })
 })
