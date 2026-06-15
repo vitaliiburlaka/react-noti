@@ -32,7 +32,7 @@ export default [
     files: ['**/*.{ts,tsx}'],
   })),
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
+    files: ['**/*.{js,jsx,ts,tsx,mjs}'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -92,7 +92,11 @@ export default [
     },
   },
   {
-    files: ['**/*.test.{ts,tsx,js,jsx}', 'src/setupTests.ts', 'src/__mocks__/**'],
+    files: [
+      '**/*.test.{ts,tsx,js,jsx}',
+      'src/setupTests.ts',
+      'src/__mocks__/**',
+    ],
     languageOptions: {
       globals: {
         ...globals.jest,

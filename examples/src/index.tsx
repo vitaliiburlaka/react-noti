@@ -1,13 +1,19 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { Global } from '@emotion/react'
 
-import GlobalStyle from './styles/global-styles'
+import globalStyles from './styles/global-styles'
 import App from './App'
 
-createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root')
+if (!container) {
+  throw new Error('Root container `#root` not found in index.html')
+}
+
+createRoot(container).render(
   <React.StrictMode>
     <>
-      <GlobalStyle />
+      <Global styles={globalStyles} />
       <App />
     </>
   </React.StrictMode>

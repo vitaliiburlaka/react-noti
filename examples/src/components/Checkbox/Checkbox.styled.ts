@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 import colors from '../../styles/colors'
 

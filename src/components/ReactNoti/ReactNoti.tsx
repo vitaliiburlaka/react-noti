@@ -28,7 +28,7 @@ export function ReactNoti({
   className,
 }: ReactNotiProps) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
-  // TODO: Remove class names in future versions as those are obsolete now with styled-components
+  // TODO: Remove class names in a future major; obsolete now that styles come from emotion.
   const cls = `ReactNoti ${className || ''}`.trim()
   const trayCls = `ReactNoti__Tray ReactNoti__Tray--${position}`
 

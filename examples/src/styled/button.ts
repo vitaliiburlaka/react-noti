@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import colors from '../styles/colors'
 
 type ColorKind = keyof typeof colors

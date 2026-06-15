@@ -51,7 +51,7 @@ function Toast({
 }: ToastProps) {
   const timer = useRef<any>(null)
   const [isRunning, setIsRunning] = useState(autoDismiss)
-  // TODO: Remove class names in future versions as those are obsolete now with styled-components
+  // TODO: Remove class names in a future major; obsolete now that styles come from emotion.
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
   const bodyCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
   const typeIconCls = `RN-icon icon-${type}`

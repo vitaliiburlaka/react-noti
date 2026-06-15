@@ -69,9 +69,11 @@ const commonPlugins = [
 
 const umdGlobals = {
   react: 'React',
+  'react/jsx-runtime': 'React',
   'react-dom': 'ReactDOM',
   '@emotion/react': 'emotionReact',
   '@emotion/styled': 'emotionStyled',
+  '@emotion/styled/base': 'emotionStyled',
 }
 
 export default [

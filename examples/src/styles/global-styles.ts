@@ -1,8 +1,8 @@
-import { createGlobalStyle } from 'styled-components'
+import { css } from '@emotion/react'
 
 import colors from './colors'
 
-const GlobalStyle = createGlobalStyle`
+const globalStyles = css`
   *,
   *::before,
   *::after {
@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #fdfaf6;
   }
 
-  ${'' /* Remove top margins from headings */}
+  /* Remove top margins from headings */
   h1,
   h2,
   h3,
@@ -76,12 +76,12 @@ const GlobalStyle = createGlobalStyle`
     transition: all 0.2s ease;
 
     &:hover {
-      color: ${colors.deepPurple};
+      color: ${colors.deppPurple};
       box-shadow: 0 1px 0 0 currentColor;
     }
   }
 
-  ${'' /* Forms */}
+  /* Forms */
   fieldset {
     border: 0;
     padding: 0;
@@ -126,14 +126,17 @@ const GlobalStyle = createGlobalStyle`
     -webkit-appearance: none;
     appearance: none;
 
-    ${'' /* Custom arrow */}
-    background-image: linear-gradient(45deg, transparent 50%, ${
-      colors.primary
-    } 50%),
+    /* Custom arrow */
+    background-image:
+      linear-gradient(45deg, transparent 50%, ${colors.primary} 50%),
       linear-gradient(135deg, ${colors.primary} 50%, transparent 50%);
-    background-position: calc(100% - 15px) calc(1em - 1px),
+    background-position:
+      calc(100% - 15px) calc(1em - 1px),
       calc(100% - 10px) calc(1em - 1px);
-    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    background-size:
+      5px 5px,
+      5px 5px,
+      1px 1.5em;
     background-repeat: no-repeat;
 
     &:hover {
@@ -142,4 +145,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-export default GlobalStyle
+export default globalStyles

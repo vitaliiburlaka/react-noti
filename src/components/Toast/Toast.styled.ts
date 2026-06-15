@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 import colors from '../../styles/colors'
 import closeIconSrc from '../../assets/close-16.svg'
