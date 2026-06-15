@@ -30,7 +30,10 @@ export class Timer {
 
   pause = (): void => {
     clearTimeout(this.timerId)
-    this.remainingTime -= Date.now() - this.startTime
+    this.remainingTime = Math.max(
+      0,
+      this.remainingTime - (Date.now() - this.startTime)
+    )
   }
 
   resume = (): void => {

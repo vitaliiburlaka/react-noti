@@ -41,18 +41,18 @@ export function ReactNoti({
     [position]
   )
 
-  notify.configure({
-    autoDismiss,
-    timeOut,
-    single,
-    pauseOnHover,
-    showProgress,
-  })
+  useEffect(() => {
+    notify.configure({
+      autoDismiss,
+      timeOut,
+      single,
+      pauseOnHover,
+      showProgress,
+    })
+  }, [autoDismiss, timeOut, single, pauseOnHover, showProgress])
 
   useEffect(() => {
-    notify.register({
-      handleStoreChange,
-    })
+    notify.register({ handleStoreChange })
   }, [handleStoreChange])
 
   return (
