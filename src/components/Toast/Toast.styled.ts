@@ -5,7 +5,7 @@ import colors from '../../styles/colors'
 import closeIconSrc from '../../assets/close-16.svg'
 import type { MsgType } from '../../utils/constants'
 
-export const rnShrinkWidth = keyframes`
+const rnShrinkWidth = keyframes`
   from {
     width: 100%;
   }
@@ -109,8 +109,8 @@ export const StyledBtnDismiss = styled.button`
 
 // Progress bar
 export const StyledProgress = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'kind',
-})<{ kind?: MsgType }>`
+  shouldForwardProp: (prop) => prop !== 'kind' && prop !== 'duration',
+})<{ kind?: MsgType; duration: number }>`
   position: absolute;
   right: 0;
   bottom: 0;
@@ -118,4 +118,5 @@ export const StyledProgress = styled('div', {
   height: 4px;
   width: 100%;
   background-color: ${({ kind }) => (kind ? colors[`${kind}Dark`] : '#fff')};
+  animation: ${rnShrinkWidth} ${({ duration }) => duration}ms linear;
 `
