@@ -56,7 +56,11 @@ export function ReactNoti({
   }, [handleStoreChange])
 
   return (
-    <StyledReactNoti className={className}>
+    <StyledReactNoti
+      className={className}
+      aria-live="polite"
+      aria-atomic="false"
+    >
       {toasts.length > 0 && (
         <StyledTray position={position}>
           {toasts.map((t) => (

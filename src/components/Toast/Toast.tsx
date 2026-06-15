@@ -116,7 +116,7 @@ function Toast({
     >
       {icons && (
         <StyledType role="img" aria-label={`alert ${type}`}>
-          <StyledIcon>{iconsMap[type]}</StyledIcon>
+          <StyledIcon aria-hidden="true">{iconsMap[type]}</StyledIcon>
         </StyledType>
       )}
 
@@ -128,10 +128,11 @@ function Toast({
       <StyledBtnDismiss
         className={classNames.dismiss}
         type="button"
+        aria-label="Dismiss notification"
         onClick={handleDismiss}
         data-testid="react-noti-dismiss"
       >
-        <StyledIcon />
+        <StyledIcon aria-hidden="true" />
       </StyledBtnDismiss>
 
       {autoDismiss && showProgress === true && (
