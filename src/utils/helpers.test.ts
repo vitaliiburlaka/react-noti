@@ -17,6 +17,7 @@ describe('helpers', () => {
       const spy = jest.spyOn(window, 'setTimeout')
       const callbackMockFn = jest.fn()
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const timer = new Timer(callbackMockFn, 3000)
       jest.runOnlyPendingTimers()
 

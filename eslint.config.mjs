@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 import globals from 'globals'
 
+// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const compat = new FlatCompat({
@@ -76,6 +77,8 @@ export default [
       'react/require-default-props': 'off',
       'react/state-in-constructor': [1, 'never'],
       'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
     },
   },
   {

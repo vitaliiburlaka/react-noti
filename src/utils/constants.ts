@@ -3,7 +3,9 @@ export const MSG_TYPE = {
   INFO: 'info',
   WARNING: 'warning',
   ERROR: 'error',
-}
+} as const
+
+export type MsgType = (typeof MSG_TYPE)[keyof typeof MSG_TYPE]
 
 export const POSITION = {
   TOP_CENTER: 'top-center',
@@ -12,7 +14,9 @@ export const POSITION = {
   BOTTOM_CENTER: 'bottom-center',
   BOTTOM_RIGHT: 'bottom-right',
   BOTTOM_LEFT: 'bottom-left',
-}
+} as const
+
+export type Position = (typeof POSITION)[keyof typeof POSITION]
 
 export const defaultOptions = {
   position: POSITION.TOP_RIGHT,
@@ -22,4 +26,4 @@ export const defaultOptions = {
   icons: true,
   pauseOnHover: true,
   showProgress: true,
-}
+} as const

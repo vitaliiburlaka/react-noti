@@ -7,8 +7,7 @@ jest.mock('./utils/helpers')
 describe('notify', () => {
   const handleStoreChangeMockFn = jest.fn()
   const defaultToast = {
-    title: undefined,
-    type: undefined,
+    title: '',
     autoDismiss: defaultOptions.autoDismiss,
     timeOut: defaultOptions.timeOut,
     pauseOnHover: defaultOptions.pauseOnHover,

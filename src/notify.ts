@@ -1,10 +1,11 @@
-import { MSG_TYPE, defaultOptions } from './utils/constants'
+import { MSG_TYPE, defaultOptions, type MsgType } from './utils/constants'
 import { generateUID } from './utils/helpers'
 
-export type ToastType = (typeof MSG_TYPE)[keyof typeof MSG_TYPE]
+// Kept as an alias for the previously exported name; prefer MsgType going forward.
+export type ToastType = MsgType
 
 export interface ToastOptions {
-  title?: string | undefined
+  title?: string
   autoDismiss?: boolean
   timeOut?: number
   pauseOnHover?: boolean
@@ -13,7 +14,7 @@ export interface ToastOptions {
 
 export interface ToastItem extends Required<ToastOptions> {
   id: string
-  type: ToastType
+  type: MsgType
   content: string
 }
 
@@ -40,10 +41,11 @@ class Notify {
     showProgress: defaultOptions.showProgress,
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private onStoreChange: (toasts: ToastItem[]) => void = () => {}
 
   private createToast(
-    type: ToastType,
+    type: MsgType,
     content: string,
     options: ToastOptions = {}
   ): ToastItem {

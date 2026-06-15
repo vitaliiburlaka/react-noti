@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import { useEffect, useState } from 'react'
 
 import Toast from '../Toast'
-import notify, { ToastItem } from '../../notify'
-import { POSITION, defaultOptions } from '../../utils/constants'
+import notify, { type ToastItem } from '../../notify'
+import { defaultOptions, type Position } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
 interface ReactNotiProps {
-  position?: string // POSITION
+  position?: Position
   autoDismiss?: boolean
   timeOut?: number
   single?: boolean
@@ -77,17 +76,6 @@ export function ReactNoti({
       )}
     </StyledReactNoti>
   )
-}
-
-ReactNoti.propTypes = {
-  position: PropTypes.oneOf(Object.values(POSITION)),
-  autoDismiss: PropTypes.bool,
-  timeOut: PropTypes.number,
-  single: PropTypes.bool,
-  icons: PropTypes.bool,
-  pauseOnHover: PropTypes.bool,
-  showProgress: PropTypes.bool,
-  className: PropTypes.string,
 }
 
 export default ReactNoti

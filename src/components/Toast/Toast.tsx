@@ -1,7 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react'
-import PropTypes from 'prop-types'
+import {
+  useEffect,
+  useState,
+  useRef,
+  type ReactNode,
+  type ReactElement,
+} from 'react'
 
 import { Timer } from '../../utils/helpers'
+import type { MsgType } from '../../utils/constants'
 
 import { ReactComponent as SuccessIcon } from '../../assets/checked.svg'
 import { ReactComponent as InfoIcon } from '../../assets/info.svg'
@@ -17,7 +23,7 @@ import {
   StyledProgress,
 } from './Toast.styled'
 
-const iconsMap = {
+const iconsMap: Record<MsgType, ReactElement> = {
   success: <SuccessIcon />,
   info: <InfoIcon />,
   warning: <WarningIcon />,
@@ -26,9 +32,9 @@ const iconsMap = {
 
 interface ToastProps {
   id: string
-  content: string | number | React.ReactElement
+  content: ReactNode
   title?: string
-  type: string
+  type: MsgType
   autoDismiss: boolean
   timeOut: number
   onDismiss: (id: string) => void
@@ -49,7 +55,7 @@ function Toast({
   pauseOnHover,
   showProgress,
 }: ToastProps) {
-  const timer = useRef<any>(null)
+  const timer = useRef<Timer | null>(null)
   const [isRunning, setIsRunning] = useState(autoDismiss)
   // TODO: Remove class names in a future major; obsolete now that styles come from emotion.
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
@@ -137,23 +143,6 @@ function Toast({
       )}
     </StyledToast>
   )
-}
-
-Toast.propTypes = {
-  id: PropTypes.string.isRequired,
-  content: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.element,
-  ]).isRequired,
-  title: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  autoDismiss: PropTypes.bool.isRequired,
-  timeOut: PropTypes.number.isRequired,
-  icons: PropTypes.bool.isRequired,
-  onDismiss: PropTypes.func.isRequired,
-  pauseOnHover: PropTypes.bool.isRequired,
-  showProgress: PropTypes.bool.isRequired,
 }
 
 export default Toast

@@ -2,9 +2,12 @@ import styled from '@emotion/styled'
 
 import colors from '../../styles/colors'
 import closeIconSrc from '../../assets/close-16.svg'
+import type { MsgType } from '../../utils/constants'
 
 // Root
-export const StyledToast = styled.div`
+export const StyledToast = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'type',
+})<{ type?: MsgType }>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -49,7 +52,9 @@ export const StyledType = styled.div`
   overflow: hidden;
 `
 
-export const StyledBody = styled.div`
+export const StyledBody = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'icons',
+})<{ icons: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -93,7 +98,9 @@ export const StyledBtnDismiss = styled.button`
 `
 
 // Progress bar
-export const StyledProgress = styled.div`
+export const StyledProgress = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'kind',
+})<{ kind?: MsgType }>`
   position: absolute;
   right: 0;
   bottom: 0;

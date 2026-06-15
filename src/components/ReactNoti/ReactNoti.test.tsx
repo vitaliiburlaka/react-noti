@@ -42,7 +42,7 @@ describe('<ReactNoti />', () => {
     })
 
     const [firstToast] = getAllByTestId('ReactNoti-Toast')
-    expect(firstToast.querySelector('section').textContent).toEqual(
+    expect(firstToast.querySelector('section')?.textContent).toEqual(
       MSG_TYPE.INFO
     )
   })

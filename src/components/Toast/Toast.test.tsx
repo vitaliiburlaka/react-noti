@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
 import Toast from './Toast'
-import { defaultOptions } from '../../utils/constants'
+import { MSG_TYPE, defaultOptions } from '../../utils/constants'
 
 jest.useFakeTimers()
 
@@ -11,7 +10,7 @@ describe('<Toast />', () => {
   const defaultProps = {
     id: '12345',
     content: 'Hello',
-    type: 'success',
+    type: MSG_TYPE.SUCCESS,
     onDismiss: () => {},
     autoDismiss: defaultOptions.autoDismiss,
     timeOut: defaultOptions.timeOut,
