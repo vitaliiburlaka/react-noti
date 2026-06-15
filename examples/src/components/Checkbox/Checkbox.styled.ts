@@ -8,7 +8,9 @@ interface StyledCheckboxProps {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const StyledCheckbox = styled.span<StyledCheckboxProps>`
+export const StyledCheckbox = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'checked',
+})<StyledCheckboxProps>`
   display: inline-block;
   position: relative;
   /* top: 5px; */

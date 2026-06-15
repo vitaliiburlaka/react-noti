@@ -21,6 +21,7 @@ import {
   StyledIcon,
   StyledBtnDismiss,
   StyledProgress,
+  rnShrinkWidth,
 } from './Toast.styled'
 
 const iconsMap: Record<MsgType, ReactElement> = {
@@ -136,7 +137,7 @@ function Toast({
           data-testid="ReactNoti-Toast-progress"
           kind={type}
           style={{
-            animation: `rnShrinkWidth ${timeOut}ms linear`,
+            animation: `${rnShrinkWidth} ${timeOut}ms linear`,
             animationPlayState: isRunning ? 'running' : 'paused',
           }}
         />

@@ -7,7 +7,9 @@ interface StyledButtonProps {
   kind?: ColorKind
 }
 
-const StyledButton = styled.button<StyledButtonProps>`
+const StyledButton = styled('button', {
+  shouldForwardProp: (prop) => prop !== 'kind',
+})<StyledButtonProps>`
   display: inline-block;
   cursor: pointer;
   color: #fff;

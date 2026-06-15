@@ -79,7 +79,9 @@ interface StyledTrayProps {
   position?: PositionType
 }
 
-export const StyledTray = styled.div<StyledTrayProps>`
+export const StyledTray = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'position',
+})<StyledTrayProps>`
   position: fixed;
   left: 50%;
   transform: translateX(-50%);

@@ -1,8 +1,18 @@
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/react'
 
 import colors from '../../styles/colors'
 import closeIconSrc from '../../assets/close-16.svg'
 import type { MsgType } from '../../utils/constants'
+
+export const rnShrinkWidth = keyframes`
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+`
 
 // Root
 export const StyledToast = styled('div', {
@@ -108,14 +118,4 @@ export const StyledProgress = styled('div', {
   height: 4px;
   width: 100%;
   background-color: ${({ kind }) => (kind ? colors[`${kind}Dark`] : '#fff')};
-
-  @keyframes rnShrinkWidth {
-    from {
-      width: 100%;
-    }
-
-    to {
-      width: 0%;
-    }
-  }
 `
