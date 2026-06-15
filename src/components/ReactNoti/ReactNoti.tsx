@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import Toast from '../Toast'
+import Toast, { type NotiClassNames } from '../Toast'
 import notify, { type ToastItem } from '../../notify'
 import { defaultOptions, type Position } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
@@ -14,6 +14,7 @@ interface ReactNotiProps {
   pauseOnHover?: boolean
   showProgress?: boolean
   className?: string
+  classNames?: NotiClassNames
 }
 
 export function ReactNoti({
@@ -25,11 +26,9 @@ export function ReactNoti({
   pauseOnHover = defaultOptions.pauseOnHover,
   showProgress = defaultOptions.showProgress,
   className,
+  classNames,
 }: ReactNotiProps) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
-  // TODO: Remove class names in a future major; obsolete now that styles come from emotion.
-  const cls = `ReactNoti ${className || ''}`.trim()
-  const trayCls = `ReactNoti__Tray ReactNoti__Tray--${position}`
 
   const handleStoreChange = (newToasts: ToastItem[]) => {
     const [pos] = position.split('-')
@@ -55,9 +54,9 @@ export function ReactNoti({
   }, [])
 
   return (
-    <StyledReactNoti className={cls}>
+    <StyledReactNoti className={className}>
       {toasts.length > 0 && (
-        <StyledTray className={trayCls} position={position}>
+        <StyledTray position={position}>
           {toasts.map((t) => (
             <Toast
               key={t.id}
@@ -71,6 +70,7 @@ export function ReactNoti({
               pauseOnHover={t.pauseOnHover}
               showProgress={showProgress}
               onDismiss={notify.dismiss}
+              classNames={classNames}
             />
           ))}
         </StyledTray>

@@ -27,6 +27,9 @@
   - [`ReactNoti` container](#reactnoti-container)
   - [`notify` toast options](#notify-toast-options)
     - [Optional `notify` methods parameters](#optional-notify-methods-parameters)
+- [Customization](#customization)
+  - [CSS custom properties](#css-custom-properties)
+  - [className props](#classname-props)
 - [TypeScript types](#typescript-types)
 - [License](#license)
 
@@ -136,6 +139,7 @@ export default App
 | `pauseOnHover` | `boolean` | `true`        | ✘        | Pause the dismiss timer while the cursor is over a toast. |
 | `showProgress` | `boolean` | `true`        | ✘        | Show a progress bar counting down to dismiss. |
 | `className`    | `string`  | `undefined`   | ✘        | Extra CSS class added to the container element. |
+| `classNames`   | `NotiClassNames` | `undefined` | ✘   | Per-slot CSS classes for toast internals (see [Customization](#customization)). |
 
 ### `notify` toast options
 
@@ -172,6 +176,76 @@ notify.error('Something failed', { title: 'Error', pauseOnHover: false })
 notify.closeAll()
 ```
 
+## Customization
+
+### CSS custom properties
+
+All design tokens are exposed as CSS custom properties. Override them in plain CSS — no Emotion knowledge required.
+
+```css
+/* global */
+:root {
+  --noti-bg-success: #1a7f4b;
+  --noti-bg-error:   #9c1c1c;
+  --noti-radius:     8px;
+}
+
+/* scoped to part of your app */
+.dark-theme {
+  --noti-bg-success: #1a7f4b;
+  --noti-color:      #f0f0f0;
+}
+```
+
+<!-- prettier-ignore-start -->
+| Variable | Default | Description |
+| -------- | ------- | ----------- |
+| `--noti-color` | `#1e1f20` | Toast text colour |
+| `--noti-bg-success` | `#daf5e5` | Success toast background |
+| `--noti-bg-info` | `#d9eaf1` | Info toast background |
+| `--noti-bg-warning` | `#fff0de` | Warning toast background |
+| `--noti-bg-error` | `#ffe7e2` | Error toast background |
+| `--noti-progress-success` | `#8adfad` | Success progress bar colour |
+| `--noti-progress-info` | `#8ec1d6` | Info progress bar colour |
+| `--noti-progress-warning` | `#ffc278` | Warning progress bar colour |
+| `--noti-progress-error` | `#ff937c` | Error progress bar colour |
+| `--noti-radius` | `4px` | Toast border-radius |
+| `--noti-shadow` | `0 3px 9px rgba(0,0,0,.175)` | Toast box-shadow |
+| `--noti-font-family` | `'Open Sans', sans-serif` | Font family |
+| `--noti-font-size` | `14px` | Toast body font size |
+| `--noti-z-index` | `4000` | Tray stacking order |
+<!-- prettier-ignore-end -->
+
+### className props
+
+Apply your own CSS classes to the container or every toast:
+
+```tsx
+<ReactNoti
+  className="my-container"
+  classNames={{
+    toast:    'my-toast',
+    body:     'my-body',
+    title:    'my-title',
+    content:  'my-content',
+    dismiss:  'my-dismiss',
+    progress: 'my-progress',
+  }}
+/>
+```
+
+<!-- prettier-ignore-start -->
+| Prop | Slot |
+| ---- | ---- |
+| `className` | Root wrapper `<div>` |
+| `classNames.toast` | Individual toast element |
+| `classNames.body` | Toast body (text area) |
+| `classNames.title` | Toast title `<strong>` |
+| `classNames.content` | Toast content `<section>` |
+| `classNames.dismiss` | Dismiss button |
+| `classNames.progress` | Progress bar |
+<!-- prettier-ignore-end -->
+
 ## TypeScript types
 
 All public types are exported from `react-noti`:
@@ -184,6 +258,7 @@ import type {
   ToastItem,      // Shape of a toast in the internal store
   NotifyConfig,   // Shape of the global notify configuration
   RegisterOptions,// Argument to notify.register()
+  NotiClassNames, // Slot class names for ReactNoti classNames prop
   ToastType,      // Alias for MsgType (deprecated — prefer MsgType)
 } from 'react-noti'
 ```

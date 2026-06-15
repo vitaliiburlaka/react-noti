@@ -11,3 +11,4 @@ export type {
   NotifyConfig,
   RegisterOptions,
 } from './notify'
+export type { NotiClassNames } from './components/Toast'
