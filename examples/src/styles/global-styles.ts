@@ -76,7 +76,7 @@ const globalStyles = css`
     transition: all 0.2s ease;
 
     &:hover {
-      color: ${colors.deppPurple};
+      color: ${colors.deepPurple};
       box-shadow: 0 1px 0 0 currentColor;
     }
   }

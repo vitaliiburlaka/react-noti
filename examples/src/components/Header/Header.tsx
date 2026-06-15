@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { StyledHeader, StyledLogo } from './Header.styled'
 import { StyledLink } from '../../styled'
 

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import StyledFooter from './Footer.styled'
 import { StyledLink } from '../../styled'
 

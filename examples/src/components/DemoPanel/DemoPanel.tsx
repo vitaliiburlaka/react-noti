@@ -1,6 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { POSITION } from '../../../../src/index'
+import type { ChangeEvent } from 'react'
+import { POSITION, type Position } from '../../../../src/index'
 
 import Checkbox from '../Checkbox'
 import { StyledButton } from '../../styled'
@@ -11,7 +10,25 @@ import {
   StyledDemoProps,
 } from './DemoPanel.styled'
 
-import { MSG_TYPE } from '../../constants'
+import { MSG_TYPE, type MsgType } from '../../constants'
+
+interface DemoPanelProps {
+  position: Position
+  handlePositionChange: (event: ChangeEvent<HTMLSelectElement>) => void
+  timeOut: number
+  handleTimeOutChange: (event: ChangeEvent<HTMLInputElement>) => void
+  handleOnClick: (type: MsgType) => void
+  autoDismiss: boolean
+  handleAutoDismissChange: () => void
+  icons: boolean
+  handleIconsChange: () => void
+  isSingle: boolean
+  handleIsSingleChange: () => void
+  showProgress: boolean
+  handleShowProgressChange: () => void
+  pauseOnHover: boolean
+  handlePauseOnHoverChange: () => void
+}
 
 function DemoPanel({
   position,
@@ -29,7 +46,10 @@ function DemoPanel({
   handleShowProgressChange,
   pauseOnHover,
   handlePauseOnHoverChange,
-}) {
+}: DemoPanelProps) {
+  const msgTypeKeys = Object.keys(MSG_TYPE) as Array<keyof typeof MSG_TYPE>
+  const positionKeys = Object.keys(POSITION) as Array<keyof typeof POSITION>
+
   return (
     <StyledDemoPanel className="DemoPanel">
       <StyledDemoHeader>
@@ -39,7 +59,7 @@ function DemoPanel({
 
       <div className="DemoPanel__content">
         <StyledDemoButtons>
-          {Object.keys(MSG_TYPE).map((k) => (
+          {msgTypeKeys.map((k) => (
             <StyledButton
               key={MSG_TYPE[k]}
               type="button"
@@ -61,7 +81,7 @@ function DemoPanel({
                 value={position}
                 onChange={handlePositionChange}
               >
-                {Object.keys(POSITION).map((k) => (
+                {positionKeys.map((k) => (
                   <option key={POSITION[k]} value={POSITION[k]}>
                     {POSITION[k]}
                   </option>
@@ -77,7 +97,7 @@ function DemoPanel({
                 value={timeOut}
                 placeholder="Enter timeOut"
                 onChange={handleTimeOutChange}
-                maxLength="4"
+                maxLength={4}
               />
             </label>
           </section>
@@ -138,24 +158,6 @@ function DemoPanel({
       </div>
     </StyledDemoPanel>
   )
-}
-
-DemoPanel.propTypes = {
-  position: PropTypes.string.isRequired,
-  handleOnClick: PropTypes.func.isRequired,
-  timeOut: PropTypes.number.isRequired,
-  icons: PropTypes.bool.isRequired,
-  autoDismiss: PropTypes.bool.isRequired,
-  isSingle: PropTypes.bool.isRequired,
-  pauseOnHover: PropTypes.bool.isRequired,
-  showProgress: PropTypes.bool.isRequired,
-  handlePositionChange: PropTypes.func.isRequired,
-  handleTimeOutChange: PropTypes.func.isRequired,
-  handleIconsChange: PropTypes.func.isRequired,
-  handleAutoDismissChange: PropTypes.func.isRequired,
-  handleIsSingleChange: PropTypes.func.isRequired,
-  handlePauseOnHoverChange: PropTypes.func.isRequired,
-  handleShowProgressChange: PropTypes.func.isRequired,
 }
 
 export default DemoPanel

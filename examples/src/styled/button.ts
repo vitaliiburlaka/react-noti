@@ -23,7 +23,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   min-width: 8rem;
   transition: all 0.15s ease;
   background-color: ${({ kind }) =>
-    kind && colors[kind] ? colors[kind] : colors.deppPurple};
+    kind && colors[kind] ? colors[kind] : colors.deepPurple};
 
   &:hover {
     transform: scale(1.05);

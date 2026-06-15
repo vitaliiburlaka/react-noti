@@ -4,7 +4,7 @@ const colors = {
   offYellow: '#feefc4',
   coral: '#ed7571',
   blue: '#0a4280',
-  deppPurple: '#142965',
+  deepPurple: '#142965',
 
   defaultBg: '#fdfaf6',
 
