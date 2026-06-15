@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import Toast, { type NotiClassNames } from '../Toast'
 import notify, { type ToastItem } from '../../notify'
@@ -30,13 +30,16 @@ export function ReactNoti({
 }: ReactNotiProps) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
 
-  const handleStoreChange = (newToasts: ToastItem[]) => {
-    const [pos] = position.split('-')
-    const nextToasts =
-      pos === 'bottom' ? [...newToasts].reverse() : [...newToasts]
+  const handleStoreChange = useCallback(
+    (newToasts: ToastItem[]) => {
+      const [pos] = position.split('-')
+      const nextToasts =
+        pos === 'bottom' ? [...newToasts].reverse() : [...newToasts]
 
-    setToasts(nextToasts)
-  }
+      setToasts(nextToasts)
+    },
+    [position]
+  )
 
   notify.configure({
     autoDismiss,
@@ -50,8 +53,7 @@ export function ReactNoti({
     notify.register({
       handleStoreChange,
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleStoreChange])
 
   return (
     <StyledReactNoti className={className}>

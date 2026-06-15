@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
   useRef,
+  memo,
   type ReactNode,
   type ReactElement,
 } from 'react'
@@ -148,4 +149,4 @@ function Toast({
   )
 }
 
-export default Toast
+export default memo(Toast)
