@@ -9,10 +9,10 @@ import {
 import { Timer } from '../../utils/helpers'
 import type { MsgType } from '../../utils/constants'
 
-import { ReactComponent as SuccessIcon } from '../../assets/checked.svg'
-import { ReactComponent as InfoIcon } from '../../assets/info.svg'
-import { ReactComponent as WarningIcon } from '../../assets/warning.svg'
-import { ReactComponent as ErrorIcon } from '../../assets/cancel.svg'
+import SuccessIcon from '../../assets/checked.svg?react'
+import InfoIcon from '../../assets/info.svg?react'
+import WarningIcon from '../../assets/warning.svg?react'
+import ErrorIcon from '../../assets/cancel.svg?react'
 
 import {
   StyledToast,

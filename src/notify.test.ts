@@ -2,10 +2,16 @@ import notify from './notify'
 import { MSG_TYPE, defaultOptions } from './utils/constants'
 import { generateUID } from './utils/helpers'
 
-jest.mock('./utils/helpers')
+vi.mock('./utils/helpers')
+
+describe('notify before register', () => {
+  it('does not throw when called before register()', () => {
+    expect(() => notify.success('pre-register')).not.toThrow()
+  })
+})
 
 describe('notify', () => {
-  const handleStoreChangeMockFn = jest.fn()
+  const handleStoreChangeMockFn = vi.fn()
   const defaultToast = {
     title: '',
     autoDismiss: defaultOptions.autoDismiss,
@@ -21,7 +27,7 @@ describe('notify', () => {
   })
 
   beforeEach(() => {
-    ;(generateUID as jest.Mock).mockImplementation(() => 'aaa-bbb')
+    vi.mocked(generateUID).mockImplementation(() => 'aaa-bbb')
     notify.closeAll()
   })
   afterEach(() => {
