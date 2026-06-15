@@ -1,3 +1,5 @@
+import { type ReactNode } from 'react'
+
 import { MSG_TYPE, defaultOptions, type MsgType } from './utils/constants'
 import { generateUID } from './utils/helpers'
 
@@ -15,7 +17,7 @@ export interface ToastOptions {
 export interface ToastItem extends Required<ToastOptions> {
   id: string
   type: MsgType
-  content: string
+  content: ReactNode
 }
 
 export interface NotifyConfig {
@@ -45,7 +47,7 @@ class Notify {
 
   private createToast(
     type: MsgType,
-    content: string,
+    content: ReactNode,
     options: ToastOptions = {}
   ): ToastItem {
     const {
@@ -77,28 +79,27 @@ class Notify {
     this.onStoreChange(this.toasts)
   }
 
-  success = (content: string, options: ToastOptions = {}) => {
+  success = (content: ReactNode, options: ToastOptions = {}) => {
     const toast = this.createToast(MSG_TYPE.SUCCESS, content, options)
     this.addToast(toast)
   }
 
-  info = (content: string, options: ToastOptions = {}) => {
+  info = (content: ReactNode, options: ToastOptions = {}) => {
     const toast = this.createToast(MSG_TYPE.INFO, content, options)
     this.addToast(toast)
   }
 
-  warning = (content: string, options: ToastOptions = {}) => {
+  warning = (content: ReactNode, options: ToastOptions = {}) => {
     const toast = this.createToast(MSG_TYPE.WARNING, content, options)
     this.addToast(toast)
   }
 
-  error = (content: string, options: ToastOptions = {}) => {
+  error = (content: ReactNode, options: ToastOptions = {}) => {
     const toast = this.createToast(MSG_TYPE.ERROR, content, options)
     this.addToast(toast)
   }
 
-  dismiss = (id?: string) => {
-    if (!id) return
+  dismiss = (id: string) => {
     this.toasts = this.toasts.filter((item) => item.id !== id)
     this.onStoreChange(this.toasts)
   }

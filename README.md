@@ -268,6 +268,7 @@ import type {
   ToastItem, // Shape of a toast in the internal store
   NotifyConfig, // Shape of the global notify configuration
   RegisterOptions, // Argument to notify.register()
+  ReactNotiProps, // Props for the ReactNoti container component
   NotiClassNames, // Slot class names for ReactNoti classNames prop
   ToastType, // Alias for MsgType (deprecated — prefer MsgType)
 } from 'react-noti'

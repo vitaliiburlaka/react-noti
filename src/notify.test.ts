@@ -94,9 +94,14 @@ describe('notify', () => {
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
   })
 
-  it('should NOT remove toast notify.dismiss() was called without toast ID', () => {
-    notify.dismiss()
+  it('should NOT remove toast if ID does not match any toast', () => {
+    notify.success('Success')
+    handleStoreChangeMockFn.mockClear()
 
-    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
+    notify.dismiss('no-such-id')
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'aaa-bbb' }),
+    ])
   })
 })

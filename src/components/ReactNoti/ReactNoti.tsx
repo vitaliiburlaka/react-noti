@@ -5,7 +5,7 @@ import notify, { type ToastItem } from '../../notify'
 import { defaultOptions, type Position } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
-interface ReactNotiProps {
+export interface ReactNotiProps {
   position?: Position
   autoDismiss?: boolean
   timeOut?: number

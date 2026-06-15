@@ -4,7 +4,7 @@ import { css, type SerializedStyles } from '@emotion/react'
 import typography from '../../styles/typography'
 import breakpoints from '../../styles/breakpoints'
 import colors from '../../styles/colors'
-import { POSITION } from '../../utils/constants'
+import { POSITION, type Position } from '../../utils/constants'
 
 export const StyledReactNoti = styled.div`
   font-family: var(--react-noti-font-family, ${typography.fontFamily});
@@ -18,9 +18,7 @@ export const StyledReactNoti = styled.div`
   }
 `
 
-type PositionType = (typeof POSITION)[keyof typeof POSITION]
-
-function getPositionStyles(position?: PositionType): SerializedStyles | null {
+function getPositionStyles(position?: Position): SerializedStyles | null {
   switch (position) {
     case POSITION.TOP_CENTER:
       return css`
@@ -76,7 +74,7 @@ function getPositionStyles(position?: PositionType): SerializedStyles | null {
 }
 
 interface StyledTrayProps {
-  position?: PositionType
+  position?: Position
 }
 
 export const StyledTray = styled('div', {
