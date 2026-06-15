@@ -21,10 +21,13 @@
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [TypeScript](#typescript)
+  - [JavaScript](#javascript)
 - [API](#api)
   - [`ReactNoti` container](#reactnoti-container)
   - [`notify` toast options](#notify-toast-options)
     - [Optional `notify` methods parameters](#optional-notify-methods-parameters)
+- [TypeScript types](#typescript-types)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -36,51 +39,81 @@
 ## Installation
 
 ```bash
-$ npm install react-noti @emotion/react @emotion/styled
-$ yarn add react-noti @emotion/react @emotion/styled
+npm install react-noti @emotion/react @emotion/styled
 ```
 
-React 19 (or later) is required. TypeScript declarations ship with the
-package — the public types (`MsgType`, `Position`, `ToastItem`,
-`ToastOptions`, `NotifyConfig`, `ToastType`, `RegisterOptions`) can be
-imported from `react-noti` directly.
+**Requirements:**
+
+- React 19 or later
+- `@emotion/react` and `@emotion/styled` as peer dependencies
+
+TypeScript declarations are bundled in the package — no `@types/react-noti` needed.
 
 ## Usage
 
-```jsx
-// POSITION is a helper variable that provides available position values to avoid typos
+Place `<ReactNoti />` once near the root of your app. Call `notify.*` from anywhere.
+
+### TypeScript
+
+```tsx
 import { ReactNoti, notify, POSITION } from 'react-noti'
+import type { Position, ToastOptions } from 'react-noti'
 
 function App() {
-  const handleSuccessClick = () => {
-    notify.success('You can put almost anything here.')
+  const position: Position = POSITION.TOP_RIGHT
+
+  const handleSuccess = () => {
+    notify.success('Operation completed successfully.')
   }
-  const handleInfoClick = () => {
-    notify.info('Info message', { title: 'Title here' })
+
+  const handleInfo = () => {
+    const options: ToastOptions = { title: 'Heads up' }
+    notify.info('Here is some information.', options)
   }
-  const handleWarningClick = () => {
-    notify.warning('Warning message', {
-      title: 'Do not auto dismiss',
+
+  const handleWarning = () => {
+    notify.warning('This action cannot be undone.', {
+      title: 'Warning',
       autoDismiss: false,
     })
   }
-  const handleErrorClick = () => {
-    notify.error('Error message', {
-      title: 'Close after 9000ms',
+
+  const handleError = () => {
+    notify.error('Something went wrong.', {
+      title: 'Error',
       timeOut: 9000,
     })
   }
 
   return (
-    <div className="App">
+    <div>
+      <ReactNoti position={position} />
+
+      <button onClick={handleSuccess}>Success</button>
+      <button onClick={handleInfo}>Info</button>
+      <button onClick={handleWarning}>Warning</button>
+      <button onClick={handleError}>Error</button>
+    </div>
+  )
+}
+
+export default App
+```
+
+### JavaScript
+
+```jsx
+import { ReactNoti, notify, POSITION } from 'react-noti'
+
+function App() {
+  return (
+    <div>
       <ReactNoti position={POSITION.TOP_RIGHT} />
 
-      <div>
-        <button onClick={handleSuccessClick}>Success!</button>
-        <button onClick={handleInfoClick}>Info!</button>
-        <button onClick={handleWarningClick}>Warning!</button>
-        <button onClick={handleErrorClick}>Error!</button>
-      </div>
+      <button onClick={() => notify.success('Done!')}>Success</button>
+      <button onClick={() => notify.info('FYI', { title: 'Note' })}>Info</button>
+      <button onClick={() => notify.warning('Be careful', { autoDismiss: false })}>Warning</button>
+      <button onClick={() => notify.error('Oops', { timeOut: 9000 })}>Error</button>
     </div>
   )
 }
@@ -93,57 +126,90 @@ export default App
 ### `ReactNoti` container
 
 <!-- prettier-ignore-start -->
-| Props         | Type      | Default     | Required | Description                                                                                                         |
-| ------------- | --------- | ----------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
-| `position`    | `string`  | `top-right` | ✘        | Defines location of the ReactNoti component on the screen. Available options: `top-right, top-left, top-center, bottom-right, bottom-left, bottom-center`. |
-| `autoDismiss` | `boolean` | `true`      | ✘        | Auto dismisses notification after the `timeOut`. Can be overridden individually.                                    |
-| `timeOut`     | `number`  | `5000`      | ✘        | The default time in ms for the all toast notifications in the container tray. Can be overridden individually.       |
-| `single`      | `boolean` | `false`     | ✘        | Single notification mode. Show only the last notification.                                                          |
-| `icons`       | `boolean` | `true`      | ✘        | Show default toast notifications icons or not.                                                                      |
-| `pauseOnHover`| `boolean` | `true`      | ✘        | Pause auto-dismissing countdown on mouse hover. Can be overridden individually.                                     |
-| `showProgress`| `boolean` | `true`     | ✘        | Show countdown progress-bar on toast notifications. Can be overridden individually.                                 |
-| `className`   | `string`  | `undefined` | ✘        | Adds a class to the ReactNoti container for custom styling.                                                         |
+| Prop           | Type      | Default       | Required | Description |
+| -------------- | --------- | ------------- | -------- | ----------- |
+| `position`     | `Position` | `'top-right'` | ✘        | Screen position. One of: `top-right` `top-left` `top-center` `bottom-right` `bottom-left` `bottom-center`. Use the `POSITION` constant to avoid typos. |
+| `autoDismiss`  | `boolean` | `true`        | ✘        | Auto-dismiss all toasts after `timeOut`. Can be overridden per toast. |
+| `timeOut`      | `number`  | `5000`        | ✘        | Default dismiss delay in ms. Can be overridden per toast. |
+| `single`       | `boolean` | `false`       | ✘        | Show only the most recent toast (replaces older ones). |
+| `icons`        | `boolean` | `true`        | ✘        | Show built-in icons on each toast. |
+| `pauseOnHover` | `boolean` | `true`        | ✘        | Pause the dismiss timer while the cursor is over a toast. |
+| `showProgress` | `boolean` | `true`        | ✘        | Show a progress bar counting down to dismiss. |
+| `className`    | `string`  | `undefined`   | ✘        | Extra CSS class added to the container element. |
 
 ### `notify` toast options
 
-| Params        | Type                  | Default     | Required | Description                                                                       |
-| ------------- | ----------------------| ----------- | -------- | --------------------------------------------------------------------------------- |
-| `content`     | `string` \| `element` |      -      | ✓        | A text string or a component containing the content of the Toast notification.    |
-| `options`     | `object`              | `{}`        | ✘        | Options are listed bellow.                                                        |
+| Parameter | Type                    | Required | Description |
+| --------- | ----------------------- | -------- | ----------- |
+| `content` | `string \| ReactNode`   | ✓        | Toast body — a string or any React element. |
+| `options` | `ToastOptions`          | ✘        | Per-toast overrides (see below). |
 
 #### Optional `notify` methods parameters
-| Options       | Type      | Default     | Description                                                                                    |
-| ------------- | ----------| ----------- | ---------------------------------------------------------------------------------------------- |
-| `title`       | `string`  | `undefined` | Text string containing the title of the Toast notification.                                    |
-| `autoDismiss` | `boolean` | `true`      | Auto dismiss notification after the `timeOut`. Overrides global `ReactNoti` autoDismiss.       |
-| `timeOut`     | `number`  | `5000`      | Time in ms for individual Toast in the tray. Overrides global `ReactNoti` timeOut.             |
-| `pauseOnHover`| `boolean` | `true`      | Pause auto-dismissing countdown on mouse hover. Overrides global `ReactNoti` pauseOnHover.     |
-| `showProgress`| `boolean` | `true`      | Show countdown progress-bar on toast notifications. Overrides global `ReactNoti` showProgress. |
+
+| Option        | Type      | Default     | Description |
+| ------------- | --------- | ----------- | ----------- |
+| `title`       | `string`  | `undefined` | Title displayed above the toast body. |
+| `autoDismiss` | `boolean` | `true`      | Override the container `autoDismiss` for this toast. |
+| `timeOut`     | `number`  | `5000`      | Override the container `timeOut` for this toast. |
+| `pauseOnHover`| `boolean` | `true`      | Override the container `pauseOnHover` for this toast. |
+| `showProgress`| `boolean` | `true`      | Override the container `showProgress` for this toast. |
 <!-- prettier-ignore-end -->
 
-:warning:️ _Toast options supersede ReactNoti container props_ :warning:
+> Toast-level options take priority over `ReactNoti` container props.
 
-```js
-const Img = ({ src }) => <span><img width={48} src={src} /></span>
-const options = {
-  title: 'Toast title'
-  autoDismiss: true,
-  timeOut: 5000,
-  pauseOnHover: true,
-  showProgress: false
+```tsx
+// Pass a React element as content
+const Avatar = ({ src }: { src: string }) => (
+  <span><img width={48} src={src} alt="" /></span>
+)
+
+notify.success('Plain text toast')
+notify.info('With title and custom timeout', { title: 'Note', timeOut: 8000 })
+notify.warning(<Avatar src="/avatar.png" />, { autoDismiss: false })
+notify.error('Something failed', { title: 'Error', pauseOnHover: false })
+
+// Dismiss all toasts
+notify.closeAll()
+```
+
+## TypeScript types
+
+All public types are exported from `react-noti`:
+
+```ts
+import type {
+  Position,       // Union of all valid position strings
+  MsgType,        // 'success' | 'info' | 'warning' | 'error'
+  ToastOptions,   // Per-toast option overrides
+  ToastItem,      // Shape of a toast in the internal store
+  NotifyConfig,   // Shape of the global notify configuration
+  RegisterOptions,// Argument to notify.register()
+  ToastType,      // Alias for MsgType (deprecated — prefer MsgType)
+} from 'react-noti'
+```
+
+Use `Position` and `MsgType` to type your own state or props:
+
+```tsx
+import { POSITION } from 'react-noti'
+import type { Position, MsgType, ToastOptions } from 'react-noti'
+
+interface ToastButtonProps {
+  type: MsgType
+  message: string
+  options?: ToastOptions
 }
 
-// Success.
-notify.success('Hello')
-// Info. Pass optional params that overwrites the default ones
-notify.info('World', options)
-// Warning. Passes React Component as a message content
-notify.warning(<Img />)
-// Error. Passes optional param that disables toast auto dismiss
-notify.error('Oops!', { autoDismiss: false })
+function ToastButton({ type, message, options }: ToastButtonProps) {
+  return (
+    <button onClick={() => notify[type](message, options)}>
+      {type}
+    </button>
+  )
+}
 
-// Removes all toasts!
-notify.closeAll()
+// Position values are strongly typed
+const position: Position = POSITION.BOTTOM_LEFT
 ```
 
 ## License
@@ -151,8 +217,8 @@ notify.closeAll()
 [MIT](LICENSE)
 
 <!-- prettier-ignore-start -->
-[build-badge]: https://github.com/vitaliiburlaka/react-noti/actions/workflows/validate.yml/badge.svg
-[build]: https://github.com/vitaliiburlaka/react-noti/actions/workflows/validate.yml
+[build-badge]: https://github.com/vitaliiburlaka/react-noti/actions/workflows/ci.yml/badge.svg
+[build]: https://github.com/vitaliiburlaka/react-noti/actions/workflows/ci.yml
 [coverage-badge]: https://img.shields.io/codecov/c/github/vitaliiburlaka/react-noti.svg
 [coverage]: https://codecov.io/github/vitaliiburlaka/react-noti
 [version-badge]: https://img.shields.io/npm/v/react-noti.svg
