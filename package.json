@@ -5,6 +5,14 @@
   "main": "dist/react-noti.cjs.js",
   "module": "dist/react-noti.esm.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/react-noti.esm.js",
+      "require": "./dist/react-noti.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "sideEffects": false,
   "scripts": {
     "start": "vite --config examples/vite.config.ts",
     "test": "vitest run",
@@ -94,8 +102,7 @@
   "peerDependencies": {
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -108,17 +115,11 @@
       "doctoc --maxlevel 4 --notitle"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run coverage"
-    }
-  },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 2 years",
+      ">0.5%",
+      "not dead"
     ],
     "development": [
       "last 1 chrome version",

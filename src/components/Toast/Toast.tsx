@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
   useRef,
+  memo,
   type ReactNode,
   type ReactElement,
 } from 'react'
@@ -30,6 +31,15 @@ const iconsMap: Record<MsgType, ReactElement> = {
   error: <ErrorIcon />,
 }
 
+export interface NotiClassNames {
+  toast?: string
+  body?: string
+  title?: string
+  content?: string
+  dismiss?: string
+  progress?: string
+}
+
 interface ToastProps {
   id: string
   content: ReactNode
@@ -41,6 +51,7 @@ interface ToastProps {
   icons: boolean
   pauseOnHover: boolean
   showProgress: boolean
+  classNames?: NotiClassNames
 }
 
 function Toast({
@@ -54,14 +65,10 @@ function Toast({
   icons,
   pauseOnHover,
   showProgress,
+  classNames = {},
 }: ToastProps) {
   const timer = useRef<Timer | null>(null)
   const [isRunning, setIsRunning] = useState(autoDismiss)
-  // TODO: Remove class names in a future major; obsolete now that styles come from emotion.
-  const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`
-  const bodyCls = `ReactNoti__Toast__body ${!icons ? 'no-icon' : ''}`.trim()
-  const typeIconCls = `RN-icon icon-${type}`
-  const progressCls = `ReactNoti__Toast__progress ReactNoti__Toast__progress--${type}`
 
   const handleDismiss = () => {
     onDismiss(id)
@@ -101,40 +108,37 @@ function Toast({
 
   return (
     <StyledToast
-      className={cls}
-      data-testid="ReactNoti-Toast"
+      className={classNames.toast}
+      data-testid="react-noti-toast"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       type={type}
     >
       {icons && (
-        <StyledType
-          className="ReactNoti__Toast__type"
-          role="img"
-          aria-label={`alert ${type}`}
-        >
-          <StyledIcon className={typeIconCls}>{iconsMap[type]}</StyledIcon>
+        <StyledType role="img" aria-label={`alert ${type}`}>
+          <StyledIcon aria-hidden="true">{iconsMap[type]}</StyledIcon>
         </StyledType>
       )}
 
-      <StyledBody className={bodyCls} icons={icons}>
-        {title && <strong className="ReactNoti__Toast__title">{title}</strong>}
-        <section className="ReactNoti__Toast__content">{content}</section>
+      <StyledBody className={classNames.body} icons={icons}>
+        {title && <strong className={classNames.title}>{title}</strong>}
+        <section className={classNames.content}>{content}</section>
       </StyledBody>
 
       <StyledBtnDismiss
-        className="ReactNoti__Toast__btn-dismiss"
+        className={classNames.dismiss}
         type="button"
+        aria-label="Dismiss notification"
         onClick={handleDismiss}
-        data-testid="btn-dismiss"
+        data-testid="react-noti-dismiss"
       >
-        <StyledIcon className="RN-icon icon-close" />
+        <StyledIcon aria-hidden="true" />
       </StyledBtnDismiss>
 
       {autoDismiss && showProgress === true && (
         <StyledProgress
-          className={progressCls}
-          data-testid="ReactNoti-Toast-progress"
+          className={classNames.progress}
+          data-testid="react-noti-progress"
           kind={type}
           duration={timeOut}
           style={{
@@ -146,4 +150,4 @@ function Toast({
   )
 }
 
-export default Toast
+export default memo(Toast)

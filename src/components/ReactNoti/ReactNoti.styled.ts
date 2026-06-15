@@ -4,10 +4,10 @@ import { css, type SerializedStyles } from '@emotion/react'
 import typography from '../../styles/typography'
 import breakpoints from '../../styles/breakpoints'
 import colors from '../../styles/colors'
-import { POSITION } from '../../utils/constants'
+import { POSITION, type Position } from '../../utils/constants'
 
 export const StyledReactNoti = styled.div`
-  font-family: ${typography.fontFamily};
+  font-family: var(--react-noti-font-family, ${typography.fontFamily});
   font-weight: ${typography.fontWeight};
   line-height: ${typography.lineHeight};
 
@@ -18,9 +18,7 @@ export const StyledReactNoti = styled.div`
   }
 `
 
-type PositionType = (typeof POSITION)[keyof typeof POSITION]
-
-function getPositionStyles(position?: PositionType): SerializedStyles | null {
+function getPositionStyles(position?: Position): SerializedStyles | null {
   switch (position) {
     case POSITION.TOP_CENTER:
       return css`
@@ -76,7 +74,7 @@ function getPositionStyles(position?: PositionType): SerializedStyles | null {
 }
 
 interface StyledTrayProps {
-  position?: PositionType
+  position?: Position
 }
 
 export const StyledTray = styled('div', {
@@ -85,11 +83,11 @@ export const StyledTray = styled('div', {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  color: ${colors.primary};
+  color: var(--react-noti-color, ${colors.primary});
   text-align: left;
   padding: 8px;
   width: calc(100% - 32px);
-  z-index: 4000;
+  z-index: var(--react-noti-z-index, 4000);
 
   @media screen and (min-width: ${breakpoints.medium}px) {
     width: 360px;

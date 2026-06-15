@@ -94,9 +94,36 @@ describe('notify', () => {
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
   })
 
-  it('should NOT remove toast notify.dismiss() was called without toast ID', () => {
-    notify.dismiss()
+  it('should NOT remove toast if ID does not match any toast', () => {
+    notify.success('Success')
+    handleStoreChangeMockFn.mockClear()
+
+    notify.dismiss('no-such-id')
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'aaa-bbb' }),
+    ])
+  })
+
+  it('should clear all toasts and call handleStoreChange on notify.closeAll()', () => {
+    notify.success('A')
+    notify.success('B')
+    handleStoreChangeMockFn.mockClear()
+
+    notify.closeAll()
 
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
+  })
+
+  it('should apply configure() options to subsequently created toasts', () => {
+    notify.configure({ timeOut: 1000 })
+
+    notify.success('Configured')
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({ timeOut: 1000 }),
+    ])
+
+    notify.configure({ timeOut: defaultOptions.timeOut })
   })
 })

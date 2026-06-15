@@ -24,19 +24,12 @@ export const StyledToast = styled('div', {
   width: 100%;
   min-height: 48px;
   max-height: 600px;
-  color: ${colors.primary};
-  background-color: ${({ type }) => (type ? colors[type] : '#fff')};
-  border-radius: 4px;
+  color: var(--react-noti-color, ${colors.primary});
+  background-color: ${({ type }) =>
+    type ? `var(--react-noti-bg-${type}, ${colors[type]})` : '#fff'};
+  border-radius: var(--react-noti-radius, 4px);
   overflow: hidden;
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.175);
-
-  /* IE 11 min-height bug workaround */
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    &::after {
-      content: '';
-      min-height: inherit;
-    }
-  }
+  box-shadow: var(--react-noti-shadow, 0 3px 9px rgba(0, 0, 0, 0.175));
 
   &:not(:last-child) {
     margin-bottom: 8px;
@@ -69,7 +62,7 @@ export const StyledBody = styled('div', {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 14px;
+  font-size: var(--react-noti-font-size, 14px);
   font-weight: 200;
   padding: ${({ icons }) => (icons ? '8px' : '8px 12px')};
   margin-right: 22px;
@@ -117,6 +110,9 @@ export const StyledProgress = styled('div', {
   left: 0;
   height: 4px;
   width: 100%;
-  background-color: ${({ kind }) => (kind ? colors[`${kind}Dark`] : '#fff')};
+  background-color: ${({ kind }) =>
+    kind
+      ? `var(--react-noti-progress-${kind}, ${colors[`${kind}Dark`]})`
+      : '#fff'};
   animation: ${rnShrinkWidth} ${({ duration }) => duration}ms linear;
 `

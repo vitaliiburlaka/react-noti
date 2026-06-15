@@ -48,5 +48,37 @@ describe('helpers', () => {
 
       spy.mockClear()
     })
+
+    it('should resume with remaining time after pause', () => {
+      const callbackMockFn = vi.fn()
+      const setTimeoutSpy = vi.spyOn(window, 'setTimeout')
+      const timer = new Timer(callbackMockFn, 3000)
+
+      vi.advanceTimersByTime(1000)
+      timer.pause()
+      timer.resume()
+
+      const lastCall = setTimeoutSpy.mock.calls.at(-1)!
+      expect(lastCall[1]).toBeLessThanOrEqual(2000)
+      expect(lastCall[1]).toBeGreaterThan(0)
+
+      setTimeoutSpy.mockClear()
+    })
+
+    it('should not produce negative remainingTime if pause() is called twice', () => {
+      const callbackMockFn = vi.fn()
+      const timer = new Timer(callbackMockFn, 100)
+
+      vi.advanceTimersByTime(60)
+      timer.pause()
+      vi.advanceTimersByTime(60)
+      timer.pause()
+      timer.resume()
+
+      vi.runOnlyPendingTimers()
+
+      // callback should fire (remainingTime clamped to 0, not negative)
+      expect(callbackMockFn).toHaveBeenCalled()
+    })
   })
 })

@@ -1,5 +1,5 @@
 export function generateUID(): string {
-  const first = (Math.random() * 46656).toString(36).slice(-3)
+  const first = (Math.random() * 46656).toString(36).slice(-3) // 46656 = 36^3
   const second = Date.now().toString(36)
 
   return `${first}-${second}`
@@ -30,7 +30,10 @@ export class Timer {
 
   pause = (): void => {
     clearTimeout(this.timerId)
-    this.remainingTime -= Date.now() - this.startTime
+    this.remainingTime = Math.max(
+      0,
+      this.remainingTime - (Date.now() - this.startTime)
+    )
   }
 
   resume = (): void => {

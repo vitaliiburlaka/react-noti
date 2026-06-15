@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import Toast from '../Toast'
+import Toast, { type NotiClassNames } from '../Toast'
 import notify, { type ToastItem } from '../../notify'
 import { defaultOptions, type Position } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
-interface ReactNotiProps {
+export interface ReactNotiProps {
   position?: Position
   autoDismiss?: boolean
   timeOut?: number
@@ -14,6 +14,7 @@ interface ReactNotiProps {
   pauseOnHover?: boolean
   showProgress?: boolean
   className?: string
+  classNames?: NotiClassNames
 }
 
 export function ReactNoti({
@@ -25,39 +26,43 @@ export function ReactNoti({
   pauseOnHover = defaultOptions.pauseOnHover,
   showProgress = defaultOptions.showProgress,
   className,
+  classNames,
 }: ReactNotiProps) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
-  // TODO: Remove class names in a future major; obsolete now that styles come from emotion.
-  const cls = `ReactNoti ${className || ''}`.trim()
-  const trayCls = `ReactNoti__Tray ReactNoti__Tray--${position}`
 
-  const handleStoreChange = (newToasts: ToastItem[]) => {
-    const [pos] = position.split('-')
-    const nextToasts =
-      pos === 'bottom' ? [...newToasts].reverse() : [...newToasts]
+  const handleStoreChange = useCallback(
+    (newToasts: ToastItem[]) => {
+      const [pos] = position.split('-')
+      const nextToasts =
+        pos === 'bottom' ? [...newToasts].reverse() : [...newToasts]
 
-    setToasts(nextToasts)
-  }
-
-  notify.configure({
-    autoDismiss,
-    timeOut,
-    single,
-    pauseOnHover,
-    showProgress,
-  })
+      setToasts(nextToasts)
+    },
+    [position]
+  )
 
   useEffect(() => {
-    notify.register({
-      handleStoreChange,
+    notify.configure({
+      autoDismiss,
+      timeOut,
+      single,
+      pauseOnHover,
+      showProgress,
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [autoDismiss, timeOut, single, pauseOnHover, showProgress])
+
+  useEffect(() => {
+    notify.register({ handleStoreChange })
+  }, [handleStoreChange])
 
   return (
-    <StyledReactNoti className={cls}>
+    <StyledReactNoti
+      className={className}
+      aria-live="polite"
+      aria-atomic="false"
+    >
       {toasts.length > 0 && (
-        <StyledTray className={trayCls} position={position}>
+        <StyledTray position={position}>
           {toasts.map((t) => (
             <Toast
               key={t.id}
@@ -71,6 +76,7 @@ export function ReactNoti({
               pauseOnHover={t.pauseOnHover}
               showProgress={showProgress}
               onDismiss={notify.dismiss}
+              classNames={classNames}
             />
           ))}
         </StyledTray>

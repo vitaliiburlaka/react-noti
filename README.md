@@ -27,6 +27,9 @@
   - [`ReactNoti` container](#reactnoti-container)
   - [`notify` toast options](#notify-toast-options)
     - [Optional `notify` methods parameters](#optional-notify-methods-parameters)
+- [Customization](#customization)
+  - [CSS custom properties](#css-custom-properties)
+  - [className props](#classname-props)
 - [TypeScript types](#typescript-types)
 - [License](#license)
 
@@ -111,9 +114,17 @@ function App() {
       <ReactNoti position={POSITION.TOP_RIGHT} />
 
       <button onClick={() => notify.success('Done!')}>Success</button>
-      <button onClick={() => notify.info('FYI', { title: 'Note' })}>Info</button>
-      <button onClick={() => notify.warning('Be careful', { autoDismiss: false })}>Warning</button>
-      <button onClick={() => notify.error('Oops', { timeOut: 9000 })}>Error</button>
+      <button onClick={() => notify.info('FYI', { title: 'Note' })}>
+        Info
+      </button>
+      <button
+        onClick={() => notify.warning('Be careful', { autoDismiss: false })}
+      >
+        Warning
+      </button>
+      <button onClick={() => notify.error('Oops', { timeOut: 9000 })}>
+        Error
+      </button>
     </div>
   )
 }
@@ -136,6 +147,7 @@ export default App
 | `pauseOnHover` | `boolean` | `true`        | ✘        | Pause the dismiss timer while the cursor is over a toast. |
 | `showProgress` | `boolean` | `true`        | ✘        | Show a progress bar counting down to dismiss. |
 | `className`    | `string`  | `undefined`   | ✘        | Extra CSS class added to the container element. |
+| `classNames`   | `NotiClassNames` | `undefined` | ✘   | Per-slot CSS classes for toast internals (see [Customization](#customization)). |
 
 ### `notify` toast options
 
@@ -160,7 +172,9 @@ export default App
 ```tsx
 // Pass a React element as content
 const Avatar = ({ src }: { src: string }) => (
-  <span><img width={48} src={src} alt="" /></span>
+  <span>
+    <img width={48} src={src} alt="" />
+  </span>
 )
 
 notify.success('Plain text toast')
@@ -172,19 +186,91 @@ notify.error('Something failed', { title: 'Error', pauseOnHover: false })
 notify.closeAll()
 ```
 
+## Customization
+
+### CSS custom properties
+
+All design tokens are exposed as CSS custom properties. Override them in plain CSS — no Emotion knowledge required.
+
+```css
+/* global */
+:root {
+  --react-noti-bg-success: #1a7f4b;
+  --react-noti-bg-error: #9c1c1c;
+  --react-noti-radius: 8px;
+}
+
+/* scoped to part of your app */
+.dark-theme {
+  --react-noti-bg-success: #1a7f4b;
+  --react-noti-color: #f0f0f0;
+}
+```
+
+<!-- prettier-ignore-start -->
+| Variable | Default | Description |
+| -------- | ------- | ----------- |
+| `--react-noti-color` | `#1e1f20` | Toast text colour |
+| `--react-noti-bg-success` | `#daf5e5` | Success toast background |
+| `--react-noti-bg-info` | `#d9eaf1` | Info toast background |
+| `--react-noti-bg-warning` | `#fff0de` | Warning toast background |
+| `--react-noti-bg-error` | `#ffe7e2` | Error toast background |
+| `--react-noti-progress-success` | `#8adfad` | Success progress bar colour |
+| `--react-noti-progress-info` | `#8ec1d6` | Info progress bar colour |
+| `--react-noti-progress-warning` | `#ffc278` | Warning progress bar colour |
+| `--react-noti-progress-error` | `#ff937c` | Error progress bar colour |
+| `--react-noti-radius` | `4px` | Toast border-radius |
+| `--react-noti-shadow` | `0 3px 9px rgba(0,0,0,.175)` | Toast box-shadow |
+| `--react-noti-font-family` | `'Open Sans', sans-serif` | Font family |
+| `--react-noti-font-size` | `14px` | Toast body font size |
+| `--react-noti-z-index` | `4000` | Tray stacking order |
+<!-- prettier-ignore-end -->
+
+### className props
+
+Apply your own CSS classes to the container or every toast:
+
+```tsx
+<ReactNoti
+  className="my-container"
+  classNames={{
+    toast: 'my-toast',
+    body: 'my-body',
+    title: 'my-title',
+    content: 'my-content',
+    dismiss: 'my-dismiss',
+    progress: 'my-progress',
+  }}
+/>
+```
+
+<!-- prettier-ignore-start -->
+| Prop | Slot |
+| ---- | ---- |
+| `className` | Root wrapper `<div>` |
+| `classNames.toast` | Individual toast element |
+| `classNames.body` | Toast body (text area) |
+| `classNames.title` | Toast title `<strong>` |
+| `classNames.content` | Toast content `<section>` |
+| `classNames.dismiss` | Dismiss button |
+| `classNames.progress` | Progress bar |
+<!-- prettier-ignore-end -->
+
 ## TypeScript types
 
 All public types are exported from `react-noti`:
 
 ```ts
 import type {
-  Position,       // Union of all valid position strings
-  MsgType,        // 'success' | 'info' | 'warning' | 'error'
-  ToastOptions,   // Per-toast option overrides
-  ToastItem,      // Shape of a toast in the internal store
-  NotifyConfig,   // Shape of the global notify configuration
-  RegisterOptions,// Argument to notify.register()
-  ToastType,      // Alias for MsgType (deprecated — prefer MsgType)
+  Position, // Union of all valid position strings
+  MsgType, // 'success' | 'info' | 'warning' | 'error'
+  ToastOptions, // Per-toast option overrides
+  ToastItem, // Shape of a toast in the internal store
+  NotifyConfig, // Shape of the global notify configuration
+  RegisterOptions, // Argument to notify.register()
+  ReactNotiProps, // Props for the ReactNoti container component
+  NotiClassNames, // Slot class names for ReactNoti classNames prop
+  ToastType, // Alias for MsgType (deprecated — prefer MsgType)
 } from 'react-noti'
 ```
 
@@ -201,11 +287,7 @@ interface ToastButtonProps {
 }
 
 function ToastButton({ type, message, options }: ToastButtonProps) {
-  return (
-    <button onClick={() => notify[type](message, options)}>
-      {type}
-    </button>
-  )
+  return <button onClick={() => notify[type](message, options)}>{type}</button>
 }
 
 // Position values are strongly typed
