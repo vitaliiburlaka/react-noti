@@ -2,11 +2,22 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import Toast from '../Toast'
-import notify from '../../notify'
+import notify, { ToastItem } from '../../notify'
 import { POSITION, defaultOptions } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
-function ReactNoti({
+interface ReactNotiProps {
+  position?: string // POSITION
+  autoDismiss?: boolean
+  timeOut?: number
+  single?: boolean
+  icons?: boolean
+  pauseOnHover?: boolean
+  showProgress?: boolean
+  className?: string
+}
+
+export function ReactNoti({
   position = defaultOptions.position,
   autoDismiss = defaultOptions.autoDismiss,
   timeOut = defaultOptions.timeOut,
@@ -15,13 +26,13 @@ function ReactNoti({
   pauseOnHover = defaultOptions.pauseOnHover,
   showProgress = defaultOptions.showProgress,
   className,
-}) {
-  const [toasts, setToasts] = useState([])
+}: ReactNotiProps) {
+  const [toasts, setToasts] = useState<ToastItem[]>([])
   // TODO: Remove class names in future versions as those are obsolete now with styled-components
   const cls = `ReactNoti ${className || ''}`.trim()
   const trayCls = `ReactNoti__Tray ReactNoti__Tray--${position}`
 
-  const handleStoreChange = (newToasts) => {
+  const handleStoreChange = (newToasts: ToastItem[]) => {
     const [pos] = position.split('-')
     const nextToasts =
       pos === 'bottom' ? [...newToasts].reverse() : [...newToasts]

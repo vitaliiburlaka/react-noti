@@ -2,8 +2,12 @@ import styled, { css } from 'styled-components'
 
 import colors from '../../styles/colors'
 
+interface StyledCheckboxProps {
+  checked?: boolean
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export const StyledCheckbox = styled.span`
+export const StyledCheckbox = styled.span<StyledCheckboxProps>`
   display: inline-block;
   position: relative;
   /* top: 5px; */

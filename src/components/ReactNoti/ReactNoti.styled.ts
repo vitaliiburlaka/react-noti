@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import FlattenSimpleInterpolation from 'styled-components'
 
 import typography from '../../styles/typography'
 import breakpoints from '../../styles/breakpoints'
@@ -17,7 +18,9 @@ export const StyledReactNoti = styled.div`
   }
 `
 
-function getPositionStyles(position) {
+type PositionType = (typeof POSITION)[keyof typeof POSITION]
+
+function getPositionStyles(position?: PositionType): FlattenSimpleInterpolation | {} {
   switch (position) {
     case POSITION.TOP_CENTER:
       return css`
@@ -72,7 +75,11 @@ function getPositionStyles(position) {
   }
 }
 
-export const StyledTray = styled.div`
+interface StyledTrayProps {
+  position?: PositionType
+}
+
+export const StyledTray = styled.div<StyledTrayProps>`
   position: fixed;
   left: 50%;
   transform: translateX(-50%);

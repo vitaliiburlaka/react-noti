@@ -16,7 +16,7 @@ const publicPath = process.env.PUBLIC_URL || ''
 const appBuild = path.resolve(__dirname, 'examples/build')
 const appSrc = path.resolve(__dirname, './examples/src')
 const libSrc = path.resolve(__dirname, './src')
-const appIndexJs = './examples/src/index.js'
+const appIndexJs = './examples/src/index.tsx'
 const appIndexHtml = 'examples/public/index.html'
 const isEnvProduction = process.env.NODE_ENV === 'production'
 const isEnvDevelopment = process.env.NODE_ENV === 'development'
@@ -33,6 +33,8 @@ const moduleFileExtensions = [
   'json',
   'web.jsx',
   'jsx',
+  'ts',
+  'tsx',
 ]
 
 // Style files regexes

@@ -24,6 +24,19 @@ const iconsMap = {
   error: <ErrorIcon />,
 }
 
+interface ToastProps {
+  id: string
+  content: string | number | React.ReactElement
+  title?: string
+  type: string
+  autoDismiss: boolean
+  timeOut: number
+  onDismiss: (id: string) => void
+  icons: boolean
+  pauseOnHover: boolean
+  showProgress: boolean
+}
+
 function Toast({
   id,
   content,
@@ -35,8 +48,8 @@ function Toast({
   icons,
   pauseOnHover,
   showProgress,
-}) {
-  const timer = useRef()
+}: ToastProps) {
+  const timer = useRef<any>(null)
   const [isRunning, setIsRunning] = useState(autoDismiss)
   // TODO: Remove class names in future versions as those are obsolete now with styled-components
   const cls = `ReactNoti__Toast ReactNoti__Toast--${type}`

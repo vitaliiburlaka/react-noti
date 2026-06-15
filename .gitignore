@@ -11,3 +11,4 @@ fixtures/
 .vscode
 .idea
 .eslintcache
+.claude

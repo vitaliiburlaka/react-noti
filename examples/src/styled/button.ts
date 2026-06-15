@@ -1,7 +1,14 @@
 import styled from 'styled-components'
 import colors from '../styles/colors'
 
-const StyledButton = styled.button`
+type ColorKind = keyof typeof colors;
+
+interface StyledButtonProps {
+  kind?: ColorKind
+}
+
+
+const StyledButton = styled.button<StyledButtonProps>`
   display: inline-block;
   cursor: pointer;
   color: #fff;
@@ -17,7 +24,7 @@ const StyledButton = styled.button`
   min-width: 8rem;
   transition: all 0.15s ease;
   background-color: ${({ kind }) =>
-    colors[kind] ? colors[kind] : colors.deppPurple};
+    kind && colors[kind] ? colors[kind] : colors.deppPurple};
 
   &:hover {
     transform: scale(1.05);

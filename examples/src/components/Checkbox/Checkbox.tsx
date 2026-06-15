@@ -1,10 +1,13 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import PropTypes from 'prop-types'
 
 import { StyledCheckbox } from './Checkbox.styled'
 
-function Checkbox({ checked, ...rest }) {
+interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  checked?: boolean
+}
+
+function Checkbox({ checked, ...rest }: CheckboxProps) {
   return (
     <StyledCheckbox checked={checked}>
       <input type="checkbox" checked={checked} {...rest} />
