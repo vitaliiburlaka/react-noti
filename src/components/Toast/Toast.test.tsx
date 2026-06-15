@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import Toast from './Toast'
 import { MSG_TYPE, defaultOptions } from '../../utils/constants'
 
-jest.useFakeTimers()
+vi.useFakeTimers()
 
 describe('<Toast />', () => {
   const defaultProps = {
@@ -31,31 +31,31 @@ describe('<Toast />', () => {
   })
 
   it('should call onDismiss() on button Dismiss click', () => {
-    const onDismissMockFn = jest.fn()
+    const onDismissMockFn = vi.fn()
     const props = { ...defaultProps, onDismiss: onDismissMockFn }
 
     const { getByTestId } = render(<Toast {...props} />)
 
     fireEvent.click(getByTestId('btn-dismiss'))
 
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalledWith(props.id)
   })
 
   it('should call onDismiss() after timeout if autoDismiss if TRUE', () => {
-    const onDismissMockFn = jest.fn()
+    const onDismissMockFn = vi.fn()
     const props = { ...defaultProps, onDismiss: onDismissMockFn }
 
     render(<Toast {...props} />)
 
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalledWith(props.id)
   })
 
   it('should NOT call onDismiss() after timeout if autoDismiss if FALSE', () => {
-    const onDismissMockFn = jest.fn()
+    const onDismissMockFn = vi.fn()
     const props = {
       ...defaultProps,
       onDismiss: onDismissMockFn,
@@ -64,7 +64,7 @@ describe('<Toast />', () => {
 
     render(<Toast {...props} />)
 
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).not.toHaveBeenCalled()
   })
@@ -92,7 +92,7 @@ describe('<Toast />', () => {
   })
 
   it('should not dismiss Toast when mouse hovered on', () => {
-    const onDismissMockFn = jest.fn()
+    const onDismissMockFn = vi.fn()
     const props = {
       ...defaultProps,
       showProgress: true,
@@ -101,13 +101,13 @@ describe('<Toast />', () => {
     const { getByTestId } = render(<Toast {...props} />)
 
     fireEvent.mouseEnter(getByTestId('ReactNoti-Toast'))
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).not.toHaveBeenCalled()
   })
 
   it('should dismiss Toast when mouse hover off', () => {
-    const onDismissMockFn = jest.fn()
+    const onDismissMockFn = vi.fn()
     const props = {
       ...defaultProps,
       showProgress: true,
@@ -116,15 +116,15 @@ describe('<Toast />', () => {
     const { getByTestId } = render(<Toast {...props} />)
 
     fireEvent.mouseEnter(getByTestId('ReactNoti-Toast'))
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
     fireEvent.mouseLeave(getByTestId('ReactNoti-Toast'))
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalled()
   })
 
   it('should dismiss Toast when mouse hovered if pauseOnHover is FALSE', () => {
-    const onDismissMockFn = jest.fn()
+    const onDismissMockFn = vi.fn()
     const props = {
       ...defaultProps,
       pauseOnHover: false,
@@ -133,9 +133,9 @@ describe('<Toast />', () => {
     const { getByTestId } = render(<Toast {...props} />)
 
     fireEvent.mouseEnter(getByTestId('ReactNoti-Toast'))
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
     fireEvent.mouseLeave(getByTestId('ReactNoti-Toast'))
-    jest.runOnlyPendingTimers()
+    vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalled()
   })
