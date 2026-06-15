@@ -41,7 +41,6 @@ class Notify {
     showProgress: defaultOptions.showProgress,
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private onStoreChange: (toasts: ToastItem[]) => void = () => {}
 
   private createToast(

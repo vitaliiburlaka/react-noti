@@ -108,7 +108,6 @@ module.exports = function (env) {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
-    // eslint-disable-next-line no-nested-ternary
     devtool: isEnvProduction
       ? shouldUseSourceMap
         ? 'source-map'
