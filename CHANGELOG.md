@@ -1,3 +1,21 @@
+# [3.0.0](https://github.com/vitaliiburlaka/react-noti/compare/v2.0.0...v3.0.0) (2026-06-15)
+
+
+* feat(build)!: replace Rollup+Webpack+Babel+Jest with Vite+Vitest ([d2bad68](https://github.com/vitaliiburlaka/react-noti/commit/d2bad686d4348c0aa9a635f32165a3eb14fef783))
+
+
+### Bug Fixes
+
+* **build:** remove babel option from @vitejs/plugin-react v6; add missing types ([90bfd6e](https://github.com/vitaliiburlaka/react-noti/commit/90bfd6e8eca7d8786abcfc46d46dc4a9b78d94e0))
+* **test:** add jsdom as explicit devDependency for Vitest jsdom environment ([8e3d3b8](https://github.com/vitaliiburlaka/react-noti/commit/8e3d3b89eb7aa28673e6827100029b6bb79cbb50))
+
+
+### BREAKING CHANGES
+
+* UMD bundle is no longer produced. Use the ESM
+(dist/react-noti.esm.js) or CJS (dist/react-noti.cjs.js) output.
+Type declarations are now included in the package (dist/index.d.ts).
+
 # [2.0.0](https://github.com/vitaliiburlaka/react-noti/compare/v1.0.0...v2.0.0) (2026-06-15)
 
 
