@@ -52,11 +52,13 @@ examples/          # Vite demo app (not part of the published package)
   vite.config.ts
 
 dist/              # built library output (git-ignored)
-  react-noti.esm.js
-  react-noti.cjs.js
-  react-noti.esm.js.map
-  react-noti.cjs.js.map
-  src/index.d.ts
+  react-noti.mjs   # ESM bundle
+  react-noti.cjs   # CommonJS bundle
+  react-noti.mjs.map
+  react-noti.cjs.map
+  index.d.ts       # types (legacy / node10)
+  index.d.mts      # types (ESM resolution)
+  index.d.cts      # types (CJS resolution)
 ```
 
 ---
