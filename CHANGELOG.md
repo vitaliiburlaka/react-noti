@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.0...v4.0.1) (2026-06-16)
+
+
+### Bug Fixes
+
+* **pkg:** resolve types correctly and ship proper dual ESM/CJS ([0e10f28](https://github.com/vitaliiburlaka/react-noti/commit/0e10f2860d8d89c0c67782cde2f018b9d7f8cb44))
+
 # [4.0.0](https://github.com/vitaliiburlaka/react-noti/compare/v3.0.0...v4.0.0) (2026-06-15)
 
 
