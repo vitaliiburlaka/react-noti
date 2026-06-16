@@ -9,7 +9,18 @@ export default defineConfig({
     react(),
     dts({
       include: ['src'],
-      insertTypesEntry: true,
+      exclude: ['**/*.test.{ts,tsx}', '**/__mocks__/**', 'src/setupTests.ts'],
+      compilerOptions: { rootDir: 'src' },
+      // Emit declarations for every consumer resolution mode:
+      // .d.ts for legacy (node10), .d.mts for ESM, .d.cts for CJS.
+      outDirs: [
+        { dir: 'dist' },
+        { dir: 'dist', moduleFormat: 'esm' },
+        { dir: 'dist', moduleFormat: 'cjs' },
+      ],
+      // Roll the declarations up into one self-contained file per format so
+      // there are no extensionless relative imports for node16 ESM to choke on.
+      bundleTypes: true,
     }),
   ],
   build: {
@@ -19,7 +30,7 @@ export default defineConfig({
       name: 'ReactNoti',
       formats: ['es', 'cjs'],
       fileName: (format) =>
-        format === 'es' ? 'react-noti.esm.js' : 'react-noti.cjs.js',
+        format === 'es' ? 'react-noti.mjs' : 'react-noti.cjs',
     },
     rollupOptions: {
       external: [

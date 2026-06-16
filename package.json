@@ -2,14 +2,20 @@
   "name": "react-noti",
   "version": "4.0.0",
   "description": "react-noti - Toast Notifications made easy",
-  "main": "dist/react-noti.cjs.js",
-  "module": "dist/react-noti.esm.js",
+  "type": "commonjs",
+  "main": "dist/react-noti.cjs",
+  "module": "dist/react-noti.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/react-noti.esm.js",
-      "require": "./dist/react-noti.cjs.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/react-noti.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/react-noti.cjs"
+      }
     }
   },
   "sideEffects": false,
@@ -24,6 +30,7 @@
     "lint:format": "prettier \"**/*.{md,json,yml,css}\" --check",
     "lint:format:fix": "prettier \"**/*.{md,json,yml,css}\" --write",
     "typecheck": "tsc --noEmit",
+    "validate:package": "publint && attw --pack",
     "build": "npm run clean && vite build",
     "examples:build": "vite build --config examples/vite.config.ts",
     "examples:deploy": "gh-pages -d ./examples/build",
@@ -57,9 +64,11 @@
     "alert"
   ],
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@eslint/js": "^9.39.4",
+    "@microsoft/api-extractor": "^7.58.9",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
@@ -88,6 +97,7 @@
     "jsdom": "^29.1.1",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.4",
+    "publint": "^0.3.21",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "rimraf": "^6.0.1",
