@@ -14,6 +14,7 @@ import SuccessIcon from '../../assets/checked.svg?react'
 import InfoIcon from '../../assets/info.svg?react'
 import WarningIcon from '../../assets/warning.svg?react'
 import ErrorIcon from '../../assets/cancel.svg?react'
+import CloseIcon from '../../assets/close-16.svg?react'
 
 import {
   StyledToast,
@@ -132,7 +133,9 @@ function Toast({
         onClick={handleDismiss}
         data-testid="react-noti-dismiss"
       >
-        <StyledIcon aria-hidden="true" />
+        <StyledIcon aria-hidden="true">
+          <CloseIcon />
+        </StyledIcon>
       </StyledBtnDismiss>
 
       {autoDismiss && showProgress === true && (

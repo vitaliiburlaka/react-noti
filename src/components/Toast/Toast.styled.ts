@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 
 import colors from '../../styles/colors'
-import closeIconSrc from '../../assets/close-16.svg'
 import type { MsgType } from '../../utils/constants'
 
 const rnShrinkWidth = keyframes`
@@ -94,9 +93,12 @@ export const StyledBtnDismiss = styled.button`
   > span {
     width: 9px;
     height: 9px;
-    background-image: url(${closeIconSrc});
-    background-repeat: no-repeat;
-    background-position: center;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 `
 
