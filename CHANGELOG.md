@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.1...v4.0.2) (2026-07-01)
+
+
+### Bug Fixes
+
+* **toast:** render close icon as inline SVG so it displays ([bc1a649](https://github.com/vitaliiburlaka/react-noti/commit/bc1a6491aea5f864b389003623657c327ae3c33b))
+
 ## [4.0.1](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.0...v4.0.1) (2026-06-16)
 
 
