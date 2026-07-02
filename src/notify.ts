@@ -7,6 +7,8 @@ import { generateUID } from './utils/helpers'
 export type ToastType = MsgType
 
 export interface ToastOptions {
+  /** Supply your own id to target this toast later (e.g. dismiss or update). */
+  id?: string
   title?: string
   autoDismiss?: boolean
   timeOut?: number
@@ -51,6 +53,7 @@ class Notify {
     options: ToastOptions = {}
   ): ToastItem {
     const {
+      id = generateUID(),
       title = '',
       autoDismiss = this.config.autoDismiss,
       timeOut = this.config.timeOut,
@@ -58,7 +61,7 @@ class Notify {
       showProgress = this.config.showProgress,
     } = options
     return {
-      id: generateUID(),
+      id,
       type,
       content,
       title,
@@ -79,24 +82,28 @@ class Notify {
     this.onStoreChange(this.toasts)
   }
 
-  success = (content: ReactNode, options: ToastOptions = {}) => {
+  success = (content: ReactNode, options: ToastOptions = {}): string => {
     const toast = this.createToast(MSG_TYPE.SUCCESS, content, options)
     this.addToast(toast)
+    return toast.id
   }
 
-  info = (content: ReactNode, options: ToastOptions = {}) => {
+  info = (content: ReactNode, options: ToastOptions = {}): string => {
     const toast = this.createToast(MSG_TYPE.INFO, content, options)
     this.addToast(toast)
+    return toast.id
   }
 
-  warning = (content: ReactNode, options: ToastOptions = {}) => {
+  warning = (content: ReactNode, options: ToastOptions = {}): string => {
     const toast = this.createToast(MSG_TYPE.WARNING, content, options)
     this.addToast(toast)
+    return toast.id
   }
 
-  error = (content: ReactNode, options: ToastOptions = {}) => {
+  error = (content: ReactNode, options: ToastOptions = {}): string => {
     const toast = this.createToast(MSG_TYPE.ERROR, content, options)
     this.addToast(toast)
+    return toast.id
   }
 
   dismiss = (id: string) => {

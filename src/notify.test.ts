@@ -86,6 +86,30 @@ describe('notify', () => {
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([newToast])
   })
 
+  it('should return the generated id from a trigger', () => {
+    const id = notify.success('Success')
+
+    expect(id).toBe('aaa-bbb')
+  })
+
+  it('should use a caller-supplied id and return it', () => {
+    const id = notify.success('Success', { id: 'my-id' })
+
+    expect(id).toBe('my-id')
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'my-id' }),
+    ])
+  })
+
+  it('should allow dismissing a toast by its returned id', () => {
+    const id = notify.info('Info', { id: 'info-1' })
+    handleStoreChangeMockFn.mockClear()
+
+    notify.dismiss(id)
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
+  })
+
   it('should remove toast and call handleStoreChange if notify.dismiss() was called with toast ID', () => {
     notify.success('Success')
 
