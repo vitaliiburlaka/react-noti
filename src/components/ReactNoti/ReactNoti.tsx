@@ -74,7 +74,7 @@ export function ReactNoti({
               timeOut={t.timeOut}
               icons={icons}
               pauseOnHover={t.pauseOnHover}
-              showProgress={showProgress}
+              showProgress={t.showProgress}
               onDismiss={notify.dismiss}
               classNames={classNames}
             />
