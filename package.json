@@ -1,6 +1,6 @@
 {
   "name": "react-noti",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "react-noti - Toast Notifications made easy",
   "type": "commonjs",
   "main": "dist/react-noti.cjs",

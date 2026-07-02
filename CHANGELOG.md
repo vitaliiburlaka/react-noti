@@ -1,3 +1,11 @@
+## [4.0.3](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.2...v4.0.3) (2026-07-02)
+
+
+### Bug Fixes
+
+* **helpers:** guarantee unique toast ids under rapid fire ([2dd60da](https://github.com/vitaliiburlaka/react-noti/commit/2dd60dab9d3910b44ab211cbb0a3e3e852088ed4))
+* **toast:** honor per-toast showProgress option ([c920029](https://github.com/vitaliiburlaka/react-noti/commit/c920029ee7310d791b3014276f76c106eb4433df))
+
 ## [4.0.2](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.1...v4.0.2) (2026-07-01)
 
 
