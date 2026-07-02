@@ -98,6 +98,13 @@ jobs:
     if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/master' && github.repository == 'vitaliiburlaka/react-noti' }}
     runs-on: ubuntu-latest
 
+    # Serialize Pages deployments so back-to-back releases don't collide
+    # ("in progress deployment" 400). Queue rather than cancel so every
+    # release still publishes its demo.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+
     permissions:
       pages: write
       id-token: write
