@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.1.0...v4.2.0) (2026-07-02)
+
+
+### Features
+
+* **store:** rewrite store on useSyncExternalStore ([7ca1d8e](https://github.com/vitaliiburlaka/react-noti/commit/7ca1d8e3b3063654eeffc87579327ddcbfdfb969))
+
 # [4.1.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.3...v4.1.0) (2026-07-02)
 
 
