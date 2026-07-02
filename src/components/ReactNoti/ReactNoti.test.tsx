@@ -45,4 +45,15 @@ describe('<ReactNoti />', () => {
       MSG_TYPE.INFO
     )
   })
+
+  it('should honor the per-toast showProgress option over the container prop', () => {
+    const { queryByTestId } = render(<ReactNoti showProgress />)
+
+    act(() => {
+      notify.closeAll()
+      notify.success(MSG_TYPE.SUCCESS, { showProgress: false })
+    })
+
+    expect(queryByTestId('react-noti-progress')).toBeNull()
+  })
 })

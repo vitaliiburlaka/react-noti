@@ -1,8 +1,14 @@
-export function generateUID(): string {
-  const first = (Math.random() * 46656).toString(36).slice(-3) // 46656 = 36^3
-  const second = Date.now().toString(36)
+// Monotonic counter so IDs generated within the same millisecond can never collide.
+let seq = 0
 
-  return `${first}-${second}`
+export function generateUID(): string {
+  const time = Date.now().toString(36)
+  const count = (seq++).toString(36) // strictly increasing, guarantees per-session uniqueness
+  const rand = Math.floor(Math.random() * 46656) // 46656 = 36^3
+    .toString(36)
+    .padStart(3, '0')
+
+  return `${time}-${count}-${rand}`
 }
 
 type TimerCallback = () => void
