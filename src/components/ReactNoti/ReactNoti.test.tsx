@@ -1,10 +1,16 @@
-import { render, act } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 
 import ReactNoti from './ReactNoti'
 import notify from '../../notify'
 import { POSITION, MSG_TYPE } from '../../utils/constants'
 
 describe('<ReactNoti />', () => {
+  afterEach(() => {
+    act(() => {
+      notify.closeAll()
+    })
+  })
+
   it('renders without crashing', () => {
     render(<ReactNoti />)
   })
@@ -30,7 +36,7 @@ describe('<ReactNoti />', () => {
     expect(queryByText(MSG_TYPE.SUCCESS)).not.toBeTruthy()
   })
 
-  it('should render notification in reverse order if position is BOTTOM', () => {
+  it('should render the newest toast last when position is BOTTOM', () => {
     const { getAllByTestId } = render(
       <ReactNoti position={POSITION.BOTTOM_RIGHT} />
     )
@@ -40,8 +46,9 @@ describe('<ReactNoti />', () => {
       notify.success(MSG_TYPE.INFO)
     })
 
-    const [firstToast] = getAllByTestId('react-noti-toast')
-    expect(firstToast.querySelector('section')?.textContent).toEqual(
+    const toasts = getAllByTestId('react-noti-toast')
+    const lastToast = toasts[toasts.length - 1]
+    expect(lastToast.querySelector('section')?.textContent).toEqual(
       MSG_TYPE.INFO
     )
   })
@@ -50,10 +57,20 @@ describe('<ReactNoti />', () => {
     const { queryByTestId } = render(<ReactNoti showProgress />)
 
     act(() => {
-      notify.closeAll()
       notify.success(MSG_TYPE.SUCCESS, { showProgress: false })
     })
 
     expect(queryByTestId('react-noti-progress')).toBeNull()
+  })
+
+  it('should render the same toast in every mounted container', () => {
+    render(<ReactNoti />)
+    render(<ReactNoti />)
+
+    act(() => {
+      notify.success('shared')
+    })
+
+    expect(screen.getAllByText('shared')).toHaveLength(2)
   })
 })

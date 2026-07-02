@@ -34,6 +34,9 @@ export interface RegisterOptions {
   handleStoreChange: (toasts: ToastItem[]) => void
 }
 
+// Stable reference for the server snapshot (useSyncExternalStore requires it).
+const EMPTY_TOASTS: ToastItem[] = []
+
 class Notify {
   private toasts: ToastItem[] = []
 
@@ -45,7 +48,14 @@ class Notify {
     showProgress: defaultOptions.showProgress,
   }
 
-  private onStoreChange: (toasts: ToastItem[]) => void = () => {}
+  private listeners = new Set<() => void>()
+
+  // A single legacy subscription backing the deprecated register() API.
+  private legacyUnsubscribe: (() => void) | null = null
+
+  private emit() {
+    this.listeners.forEach((listener) => listener())
+  }
 
   private createToast(
     type: MsgType,
@@ -73,13 +83,8 @@ class Notify {
   }
 
   private addToast(toast: ToastItem) {
-    if (this.config.single) {
-      this.toasts.length = 0
-      this.toasts.push(toast)
-    } else {
-      this.toasts.unshift(toast)
-    }
-    this.onStoreChange(this.toasts)
+    this.toasts = this.config.single ? [toast] : [toast, ...this.toasts]
+    this.emit()
   }
 
   success = (content: ReactNode, options: ToastOptions = {}): string => {
@@ -108,12 +113,12 @@ class Notify {
 
   dismiss = (id: string) => {
     this.toasts = this.toasts.filter((item) => item.id !== id)
-    this.onStoreChange(this.toasts)
+    this.emit()
   }
 
   closeAll = () => {
-    this.toasts.length = 0
-    this.onStoreChange(this.toasts)
+    this.toasts = []
+    this.emit()
   }
 
   configure({
@@ -133,8 +138,33 @@ class Notify {
     }
   }
 
-  register({ handleStoreChange }: RegisterOptions) {
-    this.onStoreChange = handleStoreChange
+  /**
+   * Subscribe to store changes. Returns an unsubscribe function.
+   * Designed for React's `useSyncExternalStore`, but usable standalone.
+   */
+  subscribe = (listener: () => void): (() => void) => {
+    this.listeners.add(listener)
+    return () => {
+      this.listeners.delete(listener)
+    }
+  }
+
+  /** Current toast list. Reference changes only when the store changes. */
+  getSnapshot = (): ToastItem[] => this.toasts
+
+  /** Server render always starts empty — toasts are ephemeral client state. */
+  getServerSnapshot = (): ToastItem[] => EMPTY_TOASTS
+
+  /**
+   * @deprecated Use `subscribe` + `getSnapshot` (via `useSyncExternalStore`)
+   * instead. Kept for backward compatibility; supports a single listener.
+   */
+  register = ({ handleStoreChange }: RegisterOptions) => {
+    if (this.legacyUnsubscribe) this.legacyUnsubscribe()
+    this.legacyUnsubscribe = this.subscribe(() =>
+      handleStoreChange(this.getSnapshot())
+    )
+    handleStoreChange(this.getSnapshot())
   }
 }
 

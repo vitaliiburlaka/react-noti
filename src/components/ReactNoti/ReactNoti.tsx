@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useMemo, useSyncExternalStore } from 'react'
 
 import Toast, { type NotiClassNames } from '../Toast'
-import notify, { type ToastItem } from '../../notify'
+import notify from '../../notify'
 import { defaultOptions, type Position } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
 
@@ -28,18 +28,17 @@ export function ReactNoti({
   className,
   classNames,
 }: ReactNotiProps) {
-  const [toasts, setToasts] = useState<ToastItem[]>([])
-
-  const handleStoreChange = useCallback(
-    (newToasts: ToastItem[]) => {
-      const [pos] = position.split('-')
-      const nextToasts =
-        pos === 'bottom' ? [...newToasts].reverse() : [...newToasts]
-
-      setToasts(nextToasts)
-    },
-    [position]
+  const toasts = useSyncExternalStore(
+    notify.subscribe,
+    notify.getSnapshot,
+    notify.getServerSnapshot
   )
+
+  // Bottom positions render newest-last so it sits closest to the screen edge.
+  const orderedToasts = useMemo(() => {
+    const [pos] = position.split('-')
+    return pos === 'bottom' ? [...toasts].reverse() : toasts
+  }, [toasts, position])
 
   useEffect(() => {
     notify.configure({
@@ -51,19 +50,15 @@ export function ReactNoti({
     })
   }, [autoDismiss, timeOut, single, pauseOnHover, showProgress])
 
-  useEffect(() => {
-    notify.register({ handleStoreChange })
-  }, [handleStoreChange])
-
   return (
     <StyledReactNoti
       className={className}
       aria-live="polite"
       aria-atomic="false"
     >
-      {toasts.length > 0 && (
+      {orderedToasts.length > 0 && (
         <StyledTray position={position}>
-          {toasts.map((t) => (
+          {orderedToasts.map((t) => (
             <Toast
               key={t.id}
               id={t.id}
