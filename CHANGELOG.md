@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.3...v4.1.0) (2026-07-02)
+
+
+### Features
+
+* **notify:** return the toast id from triggers and accept a custom id ([cae9c8f](https://github.com/vitaliiburlaka/react-noti/commit/cae9c8fd1b364e91d4fcb6950a88cad50f014b57))
+
 ## [4.0.3](https://github.com/vitaliiburlaka/react-noti/compare/v4.0.2...v4.0.3) (2026-07-02)
 
 
