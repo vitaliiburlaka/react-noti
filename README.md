@@ -160,6 +160,7 @@ export default App
 
 | Option        | Type      | Default     | Description |
 | ------------- | --------- | ----------- | ----------- |
+| `id`          | `string`  | auto        | Supply your own id to target this toast later. Defaults to an auto-generated unique id. |
 | `title`       | `string`  | `undefined` | Title displayed above the toast body. |
 | `autoDismiss` | `boolean` | `true`      | Override the container `autoDismiss` for this toast. |
 | `timeOut`     | `number`  | `5000`      | Override the container `timeOut` for this toast. |
@@ -181,6 +182,11 @@ notify.success('Plain text toast')
 notify.info('With title and custom timeout', { title: 'Note', timeOut: 8000 })
 notify.warning(<Avatar src="/avatar.png" />, { autoDismiss: false })
 notify.error('Something failed', { title: 'Error', pauseOnHover: false })
+
+// Every trigger returns the toast id, so you can dismiss it programmatically
+const id = notify.info('Uploading…', { autoDismiss: false })
+// …later
+notify.dismiss(id)
 
 // Dismiss all toasts
 notify.closeAll()
