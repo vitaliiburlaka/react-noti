@@ -8,6 +8,17 @@ describe('helpers', () => {
 
       expect(firstID).not.toEqual(secondID)
     })
+
+    it('should generate unique IDs when called rapidly within the same millisecond', () => {
+      const now = 1_700_000_000_000
+      const dateSpy = vi.spyOn(Date, 'now').mockReturnValue(now)
+
+      const ids = Array.from({ length: 1000 }, () => generateUID())
+
+      expect(new Set(ids).size).toBe(ids.length)
+
+      dateSpy.mockRestore()
+    })
   })
 
   describe('Timer', () => {
