@@ -110,6 +110,48 @@ describe('notify', () => {
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
   })
 
+  it('should update an existing toast in place and return true', () => {
+    notify.success('Original', { id: 'up-1' })
+    handleStoreChangeMockFn.mockClear()
+
+    const result = notify.update('up-1', 'Updated', { title: 'New' })
+
+    expect(result).toBe(true)
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({
+        id: 'up-1',
+        type: MSG_TYPE.SUCCESS,
+        content: 'Updated',
+        title: 'New',
+      }),
+    ])
+  })
+
+  it('should return false and not emit when updating a non-existent toast', () => {
+    notify.success('Original', { id: 'up-2' })
+    handleStoreChangeMockFn.mockClear()
+
+    const result = notify.update('missing', 'Nope')
+
+    expect(result).toBe(false)
+    expect(handleStoreChangeMockFn).not.toHaveBeenCalled()
+  })
+
+  it('should replace a toast in place when an id is reused', () => {
+    notify.info('First', { id: 'dup' })
+    notify.success('Second', { id: 'dup' })
+
+    const lastCall = handleStoreChangeMockFn.mock.calls.at(-1)![0]
+    expect(lastCall).toHaveLength(1)
+    expect(lastCall[0]).toEqual(
+      expect.objectContaining({
+        id: 'dup',
+        type: MSG_TYPE.SUCCESS,
+        content: 'Second',
+      })
+    )
+  })
+
   it('should remove toast and call handleStoreChange if notify.dismiss() was called with toast ID', () => {
     notify.success('Success')
 
