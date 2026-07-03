@@ -188,6 +188,15 @@ const id = notify.info('Uploading…', { autoDismiss: false })
 // …later
 notify.dismiss(id)
 
+// Update a toast in place (keeps its type and position). Returns `false`
+// if no toast with that id exists.
+notify.update(id, 'Upload complete', { autoDismiss: true, timeOut: 4000 })
+
+// Re-using an id replaces that toast in place — handy for progress that
+// changes type, e.g. loading → success
+notify.info('Saving…', { id: 'save', autoDismiss: false })
+notify.success('Saved', { id: 'save' })
+
 // Dismiss all toasts
 notify.closeAll()
 ```

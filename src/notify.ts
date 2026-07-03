@@ -83,7 +83,16 @@ class Notify {
   }
 
   private addToast(toast: ToastItem) {
-    this.toasts = this.config.single ? [toast] : [toast, ...this.toasts]
+    if (this.config.single) {
+      this.toasts = [toast]
+    } else {
+      const index = this.toasts.findIndex((t) => t.id === toast.id)
+      this.toasts =
+        index === -1
+          ? [toast, ...this.toasts]
+          : // Re-using an existing id replaces that toast in place.
+            this.toasts.map((t, i) => (i === index ? toast : t))
+    }
     this.emit()
   }
 
@@ -109,6 +118,33 @@ class Notify {
     const toast = this.createToast(MSG_TYPE.ERROR, content, options)
     this.addToast(toast)
     return toast.id
+  }
+
+  /**
+   * Update an existing toast in place, preserving its type and position.
+   * Returns `true` if a toast with the given id was found, otherwise `false`.
+   */
+  update = (
+    id: string,
+    content: ReactNode,
+    options: Omit<ToastOptions, 'id'> = {}
+  ): boolean => {
+    const index = this.toasts.findIndex((t) => t.id === id)
+    if (index === -1) return false
+
+    const prev = this.toasts[index]
+    const next: ToastItem = {
+      ...prev,
+      content,
+      title: options.title ?? prev.title,
+      autoDismiss: options.autoDismiss ?? prev.autoDismiss,
+      timeOut: options.timeOut ?? prev.timeOut,
+      pauseOnHover: options.pauseOnHover ?? prev.pauseOnHover,
+      showProgress: options.showProgress ?? prev.showProgress,
+    }
+    this.toasts = this.toasts.map((t, i) => (i === index ? next : t))
+    this.emit()
+    return true
   }
 
   dismiss = (id: string) => {
