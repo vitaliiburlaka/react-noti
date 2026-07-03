@@ -1,3 +1,10 @@
+# [4.3.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.2.0...v4.3.0) (2026-07-03)
+
+
+### Features
+
+* **notify:** add update() and in-place upsert by id ([9a0a463](https://github.com/vitaliiburlaka/react-noti/commit/9a0a46371d341872ff43907c71960eeb3e0680e1))
+
 # [4.2.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.1.0...v4.2.0) (2026-07-02)
 
 
