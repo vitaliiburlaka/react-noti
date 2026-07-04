@@ -111,7 +111,7 @@ jobs:
 
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url || steps.deploy-retry.outputs.page_url }}
 
     steps:
       - name: Checkout repo
@@ -135,6 +135,19 @@ jobs:
         with:
           path: examples/build
 
+      # The Pages backend intermittently returns "Deployment failed, try
+      # again later." even when the artifact is fine. Allow one retry after a
+      # short pause before failing the job.
       - name: Deploy to GitHub Pages
         id: deploy
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Wait before retrying deploy
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 30
+
+      - name: Deploy to GitHub Pages (retry)
+        id: deploy-retry
+        if: steps.deploy.outcome == 'failure'
         uses: actions/deploy-pages@v4
