@@ -13,6 +13,23 @@ const rnShrinkWidth = keyframes`
   }
 `
 
+const rnSpin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+// Loading spinner (rendered in place of a type icon for the `loading` type)
+export const StyledSpinner = styled.span`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ${rnSpin} 0.7s linear infinite;
+`
+
 // Root
 export const StyledToast = styled('div', {
   shouldForwardProp: (prop) => prop !== 'type',

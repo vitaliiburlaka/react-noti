@@ -110,6 +110,63 @@ describe('notify', () => {
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
   })
 
+  it('should create a non-dismissing loading toast', () => {
+    notify.loading('Loading', { id: 'load-1' })
+
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({
+        id: 'load-1',
+        type: MSG_TYPE.LOADING,
+        autoDismiss: false,
+        showProgress: false,
+      }),
+    ])
+  })
+
+  it('should turn a promise into a loading toast that resolves to success', async () => {
+    const promise = Promise.resolve('done')
+
+    notify.promise(promise, {
+      loading: 'Loading',
+      success: 'Success',
+      error: 'Error',
+    })
+
+    expect(handleStoreChangeMockFn).toHaveBeenLastCalledWith([
+      expect.objectContaining({ type: MSG_TYPE.LOADING, content: 'Loading' }),
+    ])
+
+    await promise
+    await Promise.resolve()
+
+    const toasts = handleStoreChangeMockFn.mock.calls.at(-1)![0]
+    expect(toasts).toHaveLength(1)
+    expect(toasts[0]).toEqual(
+      expect.objectContaining({ type: MSG_TYPE.SUCCESS, content: 'Success' })
+    )
+  })
+
+  it('should update the promise toast to error on rejection', async () => {
+    const promise = Promise.reject(new Error('boom'))
+
+    await notify
+      .promise(promise, {
+        loading: 'Loading',
+        success: 'Success',
+        error: (err) => `Failed: ${(err as Error).message}`,
+      })
+      .catch(() => {})
+    await Promise.resolve()
+
+    const toasts = handleStoreChangeMockFn.mock.calls.at(-1)![0]
+    expect(toasts[0]).toEqual(
+      expect.objectContaining({
+        type: MSG_TYPE.ERROR,
+        content: 'Failed: boom',
+      })
+    )
+  })
+
   it('should update an existing toast in place and return true', () => {
     notify.success('Original', { id: 'up-1' })
     handleStoreChangeMockFn.mockClear()

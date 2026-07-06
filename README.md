@@ -197,6 +197,17 @@ notify.update(id, 'Upload complete', { autoDismiss: true, timeOut: 4000 })
 notify.info('Saving…', { id: 'save', autoDismiss: false })
 notify.success('Saved', { id: 'save' })
 
+// A pending "loading" toast with an animated spinner (no auto-dismiss)
+notify.loading('Working on it…')
+
+// Or drive it from a promise: shows loading, then swaps to success/error
+// in place. Success/error messages may be functions of the resolved value.
+notify.promise(saveUser(), {
+  loading: 'Saving…',
+  success: (user) => `Saved ${user.name}`,
+  error: (err) => `Save failed: ${err.message}`,
+})
+
 // Dismiss all toasts
 notify.closeAll()
 ```

@@ -23,6 +23,7 @@ import {
   StyledIcon,
   StyledBtnDismiss,
   StyledProgress,
+  StyledSpinner,
 } from './Toast.styled'
 
 const iconsMap: Record<MsgType, ReactElement> = {
@@ -30,6 +31,7 @@ const iconsMap: Record<MsgType, ReactElement> = {
   info: <InfoIcon />,
   warning: <WarningIcon />,
   error: <ErrorIcon />,
+  loading: <StyledSpinner data-testid="react-noti-spinner" />,
 }
 
 export interface NotiClassNames {
@@ -69,31 +71,28 @@ function Toast({
   classNames = {},
 }: ToastProps) {
   const timer = useRef<Timer | null>(null)
-  const [isRunning, setIsRunning] = useState(autoDismiss)
+  const [isRunning, setIsRunning] = useState(false)
 
   const handleDismiss = () => {
     onDismiss(id)
   }
 
-  const startTimer = () => {
-    if (!autoDismiss || timeOut <= 0) return
-
-    timer.current = new Timer(handleDismiss, timeOut)
-    setIsRunning(true)
-  }
-
-  const clearTimer = () => {
-    if (timer.current) timer.current.clear()
-  }
-
+  // (Re)start the auto-dismiss timer whenever the timing props change — this
+  // is what lets an in-place update (e.g. loading -> success) begin dismissing.
   useEffect(() => {
-    startTimer()
+    if (!autoDismiss || timeOut <= 0) {
+      setIsRunning(false)
+      return undefined
+    }
+
+    timer.current = new Timer(() => onDismiss(id), timeOut)
+    setIsRunning(true)
 
     return () => {
-      clearTimer()
+      timer.current?.clear()
+      timer.current = null
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [autoDismiss, timeOut, id, onDismiss])
 
   const onMouseEnter = () => {
     if (!pauseOnHover || !timer.current) return

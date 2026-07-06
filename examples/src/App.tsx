@@ -56,6 +56,25 @@ function App() {
     }
   }
 
+  const handlePromiseClick = () => {
+    const request = new Promise<string>((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() > 0.3) resolve('data')
+        else reject(new Error('Request failed'))
+      }, 2000)
+    })
+
+    notify.promise(
+      request,
+      {
+        loading: 'Processing your request…',
+        success: 'All done!',
+        error: (err) => (err as Error).message,
+      },
+      { title: 'Promise' }
+    )
+  }
+
   return (
     <StyledApp className="App">
       <ReactNoti
@@ -77,6 +96,7 @@ function App() {
           timeOut={timeOut}
           handleTimeOutChange={handleTimeOutChange}
           handleOnClick={handleOnClick}
+          handlePromiseClick={handlePromiseClick}
           autoDismiss={autoDismiss}
           handleAutoDismissChange={handleAutoDismissChange}
           icons={icons}
