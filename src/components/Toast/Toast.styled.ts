@@ -19,6 +19,28 @@ const rnSpin = keyframes`
   }
 `
 
+const rnEnter = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`
+
+const rnLeave = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+`
+
 // Loading spinner (rendered in place of a type icon for the `loading` type)
 export const StyledSpinner = styled.span`
   display: inline-block;
@@ -32,8 +54,8 @@ export const StyledSpinner = styled.span`
 
 // Root
 export const StyledToast = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'type',
-})<{ type?: MsgType }>`
+  shouldForwardProp: (prop) => prop !== 'type' && prop !== 'isLeaving',
+})<{ type?: MsgType; isLeaving?: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -49,6 +71,12 @@ export const StyledToast = styled('div', {
 
   &:not(:last-child) {
     margin-bottom: 8px;
+  }
+
+  /* Enter/exit motion is opt-in for users who don't ask to reduce motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${({ isLeaving }) => (isLeaving ? rnLeave : rnEnter)}
+      ${({ isLeaving }) => (isLeaving ? '0.2s' : '0.25s')} ease both;
   }
 `
 // Icon

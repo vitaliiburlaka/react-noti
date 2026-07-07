@@ -7,8 +7,8 @@ import {
   type ReactElement,
 } from 'react'
 
-import { Timer } from '../../utils/helpers'
-import type { MsgType } from '../../utils/constants'
+import { Timer, prefersReducedMotion } from '../../utils/helpers'
+import { TOAST_EXIT_MS, type MsgType } from '../../utils/constants'
 
 import SuccessIcon from '../../assets/checked.svg?react'
 import InfoIcon from '../../assets/info.svg?react'
@@ -51,6 +51,8 @@ interface ToastProps {
   autoDismiss: boolean
   timeOut: number
   onDismiss: (id: string) => void
+  isLeaving: boolean
+  onExited: (id: string) => void
   icons: boolean
   pauseOnHover: boolean
   showProgress: boolean
@@ -65,6 +67,8 @@ function Toast({
   autoDismiss,
   timeOut,
   onDismiss,
+  isLeaving,
+  onExited,
   icons,
   pauseOnHover,
   showProgress,
@@ -79,8 +83,9 @@ function Toast({
 
   // (Re)start the auto-dismiss timer whenever the timing props change — this
   // is what lets an in-place update (e.g. loading -> success) begin dismissing.
+  // Skip once the toast is leaving so it isn't dismissed twice.
   useEffect(() => {
-    if (!autoDismiss || timeOut <= 0) {
+    if (isLeaving || !autoDismiss || timeOut <= 0) {
       setIsRunning(false)
       return undefined
     }
@@ -92,7 +97,20 @@ function Toast({
       timer.current?.clear()
       timer.current = null
     }
-  }, [autoDismiss, timeOut, id, onDismiss])
+  }, [autoDismiss, timeOut, id, onDismiss, isLeaving])
+
+  // Once removed from the store the toast is retained to play its exit
+  // animation; drop it after the animation window (immediately if the user
+  // prefers reduced motion).
+  useEffect(() => {
+    if (!isLeaving) return undefined
+
+    timer.current?.clear()
+    const delay = prefersReducedMotion() ? 0 : TOAST_EXIT_MS
+    const timeoutId = window.setTimeout(() => onExited(id), delay)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [isLeaving, id, onExited])
 
   const onMouseEnter = () => {
     if (!pauseOnHover || !timer.current) return
@@ -113,6 +131,7 @@ function Toast({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       type={type}
+      isLeaving={isLeaving}
     >
       {icons && (
         <StyledType role="img" aria-label={`alert ${type}`}>

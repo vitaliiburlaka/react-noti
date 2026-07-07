@@ -11,6 +11,14 @@ export function generateUID(): string {
   return `${time}-${count}-${rand}`
 }
 
+export function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+}
+
 type TimerCallback = () => void
 
 export class Timer {

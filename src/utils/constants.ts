@@ -28,3 +28,7 @@ export const defaultOptions = {
   pauseOnHover: true,
   showProgress: true,
 } as const
+
+// Duration of the toast exit animation (ms). Kept in sync with the `rnLeave`
+// animation in Toast.styled.ts; the toast unmounts after this delay.
+export const TOAST_EXIT_MS = 200

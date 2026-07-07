@@ -4,6 +4,7 @@ import Toast, { type NotiClassNames } from '../Toast'
 import notify from '../../notify'
 import { defaultOptions, type Position } from '../../utils/constants'
 import { StyledReactNoti, StyledTray } from './ReactNoti.styled'
+import { useToastPresence } from './useToastPresence'
 
 export interface ReactNotiProps {
   position?: Position
@@ -40,6 +41,9 @@ export function ReactNoti({
     return pos === 'bottom' ? [...toasts].reverse() : toasts
   }, [toasts, position])
 
+  // Retain toasts through their exit animation after they leave the store.
+  const [renderedToasts, onExited] = useToastPresence(orderedToasts)
+
   useEffect(() => {
     notify.configure({
       autoDismiss,
@@ -56,9 +60,9 @@ export function ReactNoti({
       aria-live="polite"
       aria-atomic="false"
     >
-      {orderedToasts.length > 0 && (
+      {renderedToasts.length > 0 && (
         <StyledTray position={position}>
-          {orderedToasts.map((t) => (
+          {renderedToasts.map((t) => (
             <Toast
               key={t.id}
               id={t.id}
@@ -71,6 +75,8 @@ export function ReactNoti({
               pauseOnHover={t.pauseOnHover}
               showProgress={t.showProgress}
               onDismiss={notify.dismiss}
+              isLeaving={t.leaving}
+              onExited={onExited}
               classNames={classNames}
             />
           ))}

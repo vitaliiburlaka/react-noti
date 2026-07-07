@@ -63,6 +63,32 @@ describe('<ReactNoti />', () => {
     expect(queryByTestId('react-noti-progress')).toBeNull()
   })
 
+  it('should keep a dismissed toast mounted until its exit window finishes', () => {
+    vi.useFakeTimers()
+    try {
+      const { queryByText } = render(<ReactNoti />)
+      let id = ''
+      act(() => {
+        id = notify.success('bye')
+      })
+      expect(queryByText('bye')).toBeTruthy()
+
+      // Removed from the store, but retained on screen while it animates out.
+      act(() => {
+        notify.dismiss(id)
+      })
+      expect(queryByText('bye')).toBeTruthy()
+
+      // After the exit window it is unmounted.
+      act(() => {
+        vi.advanceTimersByTime(200)
+      })
+      expect(queryByText('bye')).toBeNull()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('should render the same toast in every mounted container', () => {
     render(<ReactNoti />)
     render(<ReactNoti />)
