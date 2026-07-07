@@ -19,6 +19,7 @@ interface DemoPanelProps {
   handleTimeOutChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleOnClick: (type: MsgType) => void
   handlePromiseClick: () => void
+  handleCustomClick: () => void
   autoDismiss: boolean
   handleAutoDismissChange: () => void
   icons: boolean
@@ -38,6 +39,7 @@ function DemoPanel({
   handleTimeOutChange,
   handleOnClick,
   handlePromiseClick,
+  handleCustomClick,
   autoDismiss,
   handleAutoDismissChange,
   icons,
@@ -77,6 +79,13 @@ function DemoPanel({
             onClick={handlePromiseClick}
           >
             promise
+          </StyledButton>
+          <StyledButton
+            type="button"
+            kind={MSG_TYPE.SUCCESS}
+            onClick={handleCustomClick}
+          >
+            custom
           </StyledButton>
         </StyledDemoButtons>
 

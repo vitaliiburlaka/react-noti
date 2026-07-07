@@ -1,4 +1,4 @@
-import { render, screen, act } from '@testing-library/react'
+import { render, screen, act, fireEvent } from '@testing-library/react'
 
 import ReactNoti from './ReactNoti'
 import notify from '../../notify'
@@ -84,6 +84,36 @@ describe('<ReactNoti />', () => {
         vi.advanceTimersByTime(200)
       })
       expect(queryByText('bye')).toBeNull()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('should render headless custom content and dismiss via the api', () => {
+    vi.useFakeTimers()
+    try {
+      const { getByText, queryByText } = render(<ReactNoti />)
+
+      act(() => {
+        notify.custom(
+          ({ dismiss }) => (
+            <button type="button" onClick={dismiss}>
+              close me
+            </button>
+          ),
+          { autoDismiss: false }
+        )
+      })
+      expect(getByText('close me')).toBeTruthy()
+
+      act(() => {
+        fireEvent.click(getByText('close me'))
+      })
+      act(() => {
+        vi.advanceTimersByTime(200)
+      })
+
+      expect(queryByText('close me')).toBeNull()
     } finally {
       vi.useRealTimers()
     }

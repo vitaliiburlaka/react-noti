@@ -77,6 +77,7 @@ export function ReactNoti({
               onDismiss={notify.dismiss}
               isLeaving={t.leaving}
               onExited={onExited}
+              render={t.render}
               classNames={classNames}
             />
           ))}

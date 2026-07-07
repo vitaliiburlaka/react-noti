@@ -54,20 +54,30 @@ export const StyledSpinner = styled.span`
 
 // Root
 export const StyledToast = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'type' && prop !== 'isLeaving',
-})<{ type?: MsgType; isLeaving?: boolean }>`
+  shouldForwardProp: (prop) =>
+    prop !== 'type' && prop !== 'isLeaving' && prop !== 'headless',
+})<{ type?: MsgType; isLeaving?: boolean; headless?: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
   width: 100%;
-  min-height: 48px;
-  max-height: 600px;
   color: var(--react-noti-color, ${colors.primary});
-  background-color: ${({ type }) =>
-    type ? `var(--react-noti-bg-${type}, ${colors[type]})` : '#fff'};
-  border-radius: var(--react-noti-radius, 4px);
-  overflow: hidden;
-  box-shadow: var(--react-noti-shadow, 0 3px 9px rgba(0, 0, 0, 0.175));
+
+  /* Headless (custom render) toasts drop all default chrome; the caller styles
+     the content themselves. They keep only the stacking gap and animation. */
+  ${({ headless, type }) =>
+    headless
+      ? 'background-color: transparent;'
+      : `
+    min-height: 48px;
+    max-height: 600px;
+    background-color: ${
+      type ? `var(--react-noti-bg-${type}, ${colors[type]})` : '#fff'
+    };
+    border-radius: var(--react-noti-radius, 4px);
+    overflow: hidden;
+    box-shadow: var(--react-noti-shadow, 0 3px 9px rgba(0, 0, 0, 0.175));
+  `}
 
   &:not(:last-child) {
     margin-bottom: 8px;

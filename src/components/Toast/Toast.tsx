@@ -9,6 +9,7 @@ import {
 
 import { Timer, prefersReducedMotion } from '../../utils/helpers'
 import { TOAST_EXIT_MS, type MsgType } from '../../utils/constants'
+import type { ToastRender } from '../../notify'
 
 import SuccessIcon from '../../assets/checked.svg?react'
 import InfoIcon from '../../assets/info.svg?react'
@@ -56,6 +57,7 @@ interface ToastProps {
   icons: boolean
   pauseOnHover: boolean
   showProgress: boolean
+  render?: ToastRender
   classNames?: NotiClassNames
 }
 
@@ -72,6 +74,7 @@ function Toast({
   icons,
   pauseOnHover,
   showProgress,
+  render,
   classNames = {},
 }: ToastProps) {
   const timer = useRef<Timer | null>(null)
@@ -122,6 +125,22 @@ function Toast({
     if (!pauseOnHover || !timer.current) return
     timer.current.resume()
     setIsRunning(true)
+  }
+
+  // Headless toast: the caller's render controls everything inside the slot.
+  if (render) {
+    return (
+      <StyledToast
+        className={classNames.toast}
+        data-testid="react-noti-toast"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        isLeaving={isLeaving}
+        headless
+      >
+        {render({ id, dismiss: handleDismiss })}
+      </StyledToast>
+    )
   }
 
   return (
