@@ -11,6 +11,8 @@ describe('<Toast />', () => {
     content: 'Hello',
     type: MSG_TYPE.SUCCESS,
     onDismiss: () => {},
+    isLeaving: false,
+    onExited: () => {},
     autoDismiss: defaultOptions.autoDismiss,
     timeOut: defaultOptions.timeOut,
     icons: defaultOptions.icons,
@@ -168,6 +170,33 @@ describe('<Toast />', () => {
     vi.runOnlyPendingTimers()
 
     expect(onDismissMockFn).toHaveBeenCalledWith(props.id)
+  })
+
+  it('should call onExited after the exit window when leaving', () => {
+    const onExitedMockFn = vi.fn()
+    const props = { ...defaultProps, isLeaving: true, onExited: onExitedMockFn }
+
+    render(<Toast {...props} />)
+
+    expect(onExitedMockFn).not.toHaveBeenCalled()
+
+    vi.advanceTimersByTime(200)
+
+    expect(onExitedMockFn).toHaveBeenCalledWith(props.id)
+  })
+
+  it('should not auto-dismiss while leaving', () => {
+    const onDismissMockFn = vi.fn()
+    const props = {
+      ...defaultProps,
+      isLeaving: true,
+      onDismiss: onDismissMockFn,
+    }
+
+    render(<Toast {...props} />)
+    vi.runOnlyPendingTimers()
+
+    expect(onDismissMockFn).not.toHaveBeenCalled()
   })
 
   it('should apply classNames to toast slots', () => {

@@ -214,6 +214,9 @@ notify.closeAll()
 
 ## Customization
 
+> **Motion:** toasts animate in and out, and both animations are automatically
+> disabled for users who set `prefers-reduced-motion: reduce`.
+
 ### CSS custom properties
 
 All design tokens are exposed as CSS custom properties. Override them in plain CSS — no Emotion knowledge required.

@@ -1,6 +1,24 @@
-import { generateUID, Timer } from './helpers'
+import { generateUID, Timer, prefersReducedMotion } from './helpers'
 
 describe('helpers', () => {
+  describe('prefersReducedMotion()', () => {
+    afterEach(() => {
+      vi.unstubAllGlobals()
+    })
+
+    it('returns false when the media query does not match', () => {
+      vi.stubGlobal('matchMedia', () => ({ matches: false }))
+
+      expect(prefersReducedMotion()).toBe(false)
+    })
+
+    it('returns true when the user prefers reduced motion', () => {
+      vi.stubGlobal('matchMedia', () => ({ matches: true }))
+
+      expect(prefersReducedMotion()).toBe(true)
+    })
+  })
+
   describe('generateUID()', () => {
     it('should generate unique ID', () => {
       const firstID = generateUID()
