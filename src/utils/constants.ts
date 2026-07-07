@@ -27,6 +27,7 @@ export const defaultOptions = {
   icons: true,
   pauseOnHover: true,
   showProgress: true,
+  maxVisible: 0, // 0 = unlimited
 } as const
 
 // Duration of the toast exit animation (ms). Kept in sync with the `rnLeave`
