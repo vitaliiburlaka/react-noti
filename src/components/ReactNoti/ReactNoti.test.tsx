@@ -119,6 +119,39 @@ describe('<ReactNoti />', () => {
     }
   })
 
+  it('should show at most maxVisible toasts and queue the rest', () => {
+    vi.useFakeTimers()
+    try {
+      const { getByText, queryByText } = render(
+        <ReactNoti maxVisible={2} autoDismiss={false} />
+      )
+
+      act(() => {
+        notify.success('A', { id: 'a' })
+        notify.success('B', { id: 'b' })
+        notify.success('C', { id: 'c' })
+      })
+
+      // The two oldest are shown; the newest waits in the queue.
+      expect(getByText('A')).toBeTruthy()
+      expect(getByText('B')).toBeTruthy()
+      expect(queryByText('C')).toBeNull()
+
+      // Dismissing one frees a slot for the queued toast.
+      act(() => {
+        notify.dismiss('a')
+      })
+      expect(getByText('C')).toBeTruthy()
+
+      act(() => {
+        vi.advanceTimersByTime(200)
+      })
+      expect(queryByText('A')).toBeNull()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('should render the same toast in every mounted container', () => {
     render(<ReactNoti />)
     render(<ReactNoti />)

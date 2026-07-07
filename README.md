@@ -146,6 +146,7 @@ export default App
 | `icons`        | `boolean` | `true`        | ✘        | Show built-in icons on each toast. |
 | `pauseOnHover` | `boolean` | `true`        | ✘        | Pause the dismiss timer while the cursor is over a toast. |
 | `showProgress` | `boolean` | `true`        | ✘        | Show a progress bar counting down to dismiss. |
+| `maxVisible`   | `number`  | `0`           | ✘        | Max toasts shown at once; extras queue until a slot frees. `0` means unlimited. |
 | `className`    | `string`  | `undefined`   | ✘        | Extra CSS class added to the container element. |
 | `classNames`   | `NotiClassNames` | `undefined` | ✘   | Per-slot CSS classes for toast internals (see [Customization](#customization)). |
 
