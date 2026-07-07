@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.3.0...v4.4.0) (2026-07-07)
+
+
+### Features
+
+* **notify:** add promise toasts and a loading type ([be0c9ea](https://github.com/vitaliiburlaka/react-noti/commit/be0c9eae43ed895a53bc0c12d08e3bf2aa98d8ee))
+
 # [4.3.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.2.0...v4.3.0) (2026-07-03)
 
 
