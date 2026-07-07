@@ -1,3 +1,10 @@
+# [4.6.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.5.0...v4.6.0) (2026-07-07)
+
+
+### Features
+
+* **notify:** add notify.custom for headless toasts ([3817fbd](https://github.com/vitaliiburlaka/react-noti/commit/3817fbd7a867b3dfb8952f138538f72ace7fba85))
+
 # [4.5.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.4.0...v4.5.0) (2026-07-07)
 
 
