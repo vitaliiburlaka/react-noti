@@ -34,6 +34,19 @@ export interface RegisterOptions {
   handleStoreChange: (toasts: ToastItem[]) => void
 }
 
+/** A message that is either static content or derived from the resolved value. */
+type PromiseMessage<T> = ReactNode | ((value: T) => ReactNode)
+
+export interface PromiseMessages<T> {
+  loading: ReactNode
+  success: PromiseMessage<T>
+  error: PromiseMessage<unknown>
+}
+
+function resolveMessage<T>(message: PromiseMessage<T>, value: T): ReactNode {
+  return typeof message === 'function' ? message(value) : message
+}
+
 // Stable reference for the server snapshot (useSyncExternalStore requires it).
 const EMPTY_TOASTS: ToastItem[] = []
 
@@ -118,6 +131,43 @@ class Notify {
     const toast = this.createToast(MSG_TYPE.ERROR, content, options)
     this.addToast(toast)
     return toast.id
+  }
+
+  loading = (content: ReactNode, options: ToastOptions = {}): string => {
+    // Loading toasts are pending by default: no auto-dismiss, no progress bar.
+    const toast = this.createToast(MSG_TYPE.LOADING, content, {
+      autoDismiss: false,
+      showProgress: false,
+      ...options,
+    })
+    this.addToast(toast)
+    return toast.id
+  }
+
+  /**
+   * Show a loading toast that resolves to a success or error toast in place.
+   * Returns the original promise so callers can still await/chain it.
+   */
+  promise = <T>(
+    promise: Promise<T>,
+    messages: PromiseMessages<T>,
+    options: Omit<ToastOptions, 'id'> = {}
+  ): Promise<T> => {
+    const id = this.loading(messages.loading, options)
+
+    promise.then(
+      (value) => {
+        this.success(resolveMessage(messages.success, value), {
+          ...options,
+          id,
+        })
+      },
+      (error: unknown) => {
+        this.error(resolveMessage(messages.error, error), { ...options, id })
+      }
+    )
+
+    return promise
   }
 
   /**

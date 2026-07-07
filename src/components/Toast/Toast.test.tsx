@@ -141,6 +141,35 @@ describe('<Toast />', () => {
     expect(onDismissMockFn).toHaveBeenCalledWith(props.id)
   })
 
+  it('should render a spinner for the loading type', () => {
+    const props = { ...defaultProps, type: MSG_TYPE.LOADING }
+
+    const { getByTestId } = render(<Toast {...props} />)
+
+    expect(getByTestId('react-noti-spinner')).toBeInTheDocument()
+  })
+
+  it('should (re)start the auto-dismiss timer when autoDismiss turns on', () => {
+    const onDismissMockFn = vi.fn()
+    const props = {
+      ...defaultProps,
+      type: MSG_TYPE.LOADING,
+      autoDismiss: false,
+      onDismiss: onDismissMockFn,
+    }
+
+    const { rerender } = render(<Toast {...props} />)
+    vi.runOnlyPendingTimers()
+    expect(onDismissMockFn).not.toHaveBeenCalled()
+
+    rerender(
+      <Toast {...props} type={MSG_TYPE.SUCCESS} autoDismiss timeOut={5000} />
+    )
+    vi.runOnlyPendingTimers()
+
+    expect(onDismissMockFn).toHaveBeenCalledWith(props.id)
+  })
+
   it('should apply classNames to toast slots', () => {
     const props = {
       ...defaultProps,

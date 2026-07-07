@@ -3,6 +3,7 @@ export const MSG_TYPE = {
   INFO: 'info',
   WARNING: 'warning',
   ERROR: 'error',
+  LOADING: 'loading',
 } as const
 
 export type MsgType = (typeof MSG_TYPE)[keyof typeof MSG_TYPE]
