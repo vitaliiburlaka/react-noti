@@ -1,3 +1,10 @@
+# [4.5.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.4.0...v4.5.0) (2026-07-07)
+
+
+### Features
+
+* **toast:** animate toast enter/exit, respecting reduced motion ([4867dd6](https://github.com/vitaliiburlaka/react-noti/commit/4867dd636e905b522ed1a37d7857a5174d3268d0))
+
 # [4.4.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.3.0...v4.4.0) (2026-07-07)
 
 
