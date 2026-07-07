@@ -110,6 +110,17 @@ describe('notify', () => {
     expect(handleStoreChangeMockFn).toHaveBeenCalledWith([])
   })
 
+  it('should create a headless toast carrying a render function', () => {
+    const render = vi.fn(() => null)
+
+    const id = notify.custom(render)
+
+    expect(id).toBe('aaa-bbb')
+    expect(handleStoreChangeMockFn).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'aaa-bbb', render, content: null }),
+    ])
+  })
+
   it('should create a non-dismissing loading toast', () => {
     notify.loading('Loading', { id: 'load-1' })
 

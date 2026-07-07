@@ -75,6 +75,46 @@ function App() {
     )
   }
 
+  const handleCustomClick = () => {
+    notify.custom(
+      ({ dismiss }) => (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            width: '100%',
+            padding: 12,
+            color: '#fff',
+            background: '#1e1f20',
+            borderRadius: 8,
+          }}
+        >
+          <span role="img" aria-label="party">
+            🎉
+          </span>
+          <span>A fully custom, headless toast</span>
+          <button
+            type="button"
+            onClick={dismiss}
+            style={{
+              marginLeft: 'auto',
+              padding: '2px 10px',
+              color: '#fff',
+              background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.5)',
+              borderRadius: 4,
+              cursor: 'pointer',
+            }}
+          >
+            Close
+          </button>
+        </div>
+      ),
+      { autoDismiss: false }
+    )
+  }
+
   return (
     <StyledApp className="App">
       <ReactNoti
@@ -97,6 +137,7 @@ function App() {
           handleTimeOutChange={handleTimeOutChange}
           handleOnClick={handleOnClick}
           handlePromiseClick={handlePromiseClick}
+          handleCustomClick={handleCustomClick}
           autoDismiss={autoDismiss}
           handleAutoDismissChange={handleAutoDismissChange}
           icons={icons}

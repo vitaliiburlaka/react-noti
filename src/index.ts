@@ -11,6 +11,8 @@ export type {
   NotifyConfig,
   RegisterOptions,
   PromiseMessages,
+  ToastRender,
+  ToastRenderApi,
 } from './notify'
 export type { NotiClassNames } from './components/Toast'
 export type { ReactNotiProps } from './components/ReactNoti'

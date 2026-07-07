@@ -16,10 +16,21 @@ export interface ToastOptions {
   showProgress?: boolean
 }
 
+/** Handle passed to a custom render function. */
+export interface ToastRenderApi {
+  id: string
+  dismiss: () => void
+}
+
+/** Renders fully custom (headless) toast content. */
+export type ToastRender = (api: ToastRenderApi) => ReactNode
+
 export interface ToastItem extends Required<ToastOptions> {
   id: string
   type: MsgType
   content: ReactNode
+  /** When set, the toast is headless: this replaces all default chrome. */
+  render?: ToastRender
 }
 
 export interface NotifyConfig {
@@ -168,6 +179,33 @@ class Notify {
     )
 
     return promise
+  }
+
+  /**
+   * Show a headless toast whose content is fully controlled by `render`, which
+   * receives the toast id and a `dismiss` callback. No icon, title, progress
+   * bar, or default dismiss button is rendered.
+   */
+  custom = (render: ToastRender, options: ToastOptions = {}): string => {
+    const {
+      id = generateUID(),
+      autoDismiss = this.config.autoDismiss,
+      timeOut = this.config.timeOut,
+      pauseOnHover = this.config.pauseOnHover,
+    } = options
+    const toast: ToastItem = {
+      id,
+      type: MSG_TYPE.INFO, // unused: custom render bypasses type-based chrome
+      content: null,
+      title: '',
+      autoDismiss,
+      timeOut,
+      pauseOnHover,
+      showProgress: false,
+      render,
+    }
+    this.addToast(toast)
+    return id
   }
 
   /**

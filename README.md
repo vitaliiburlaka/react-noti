@@ -208,6 +208,19 @@ notify.promise(saveUser(), {
   error: (err) => `Save failed: ${err.message}`,
 })
 
+// Fully custom, headless toast — you control the entire content. The render
+// function receives the toast id and a `dismiss` callback (no icon, title,
+// progress bar, or default close button are rendered).
+notify.custom(
+  ({ dismiss }) => (
+    <div className="my-toast">
+      <span>Custom content</span>
+      <button onClick={dismiss}>Close</button>
+    </div>
+  ),
+  { autoDismiss: false }
+)
+
 // Dismiss all toasts
 notify.closeAll()
 ```
