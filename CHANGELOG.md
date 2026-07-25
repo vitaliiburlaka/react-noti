@@ -1,3 +1,10 @@
+# [4.7.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.6.0...v4.7.0) (2026-07-25)
+
+
+### Features
+
+* **react-noti:** add maxVisible to cap and queue toasts ([45915f9](https://github.com/vitaliiburlaka/react-noti/commit/45915f95ca5cc0a133b428cb8a662f2bd0a12689))
+
 # [4.6.0](https://github.com/vitaliiburlaka/react-noti/compare/v4.5.0...v4.6.0) (2026-07-07)
 
 
