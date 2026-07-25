@@ -18,11 +18,14 @@ function App() {
   const [timeOut, setTimeOut] = useState<number>(5000)
   const [pauseOnHover, setPauseOnHover] = useState<boolean>(true)
   const [showProgress, setShowProgress] = useState<boolean>(true)
+  const [maxVisible, setMaxVisible] = useState<number>(0)
 
   const handlePositionChange = ({ target }: ChangeEvent<HTMLSelectElement>) =>
     setPosition(target.value as Position)
   const handleTimeOutChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setTimeOut(Number(target.value) || 0)
+  const handleMaxVisibleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
+    setMaxVisible(Number(target.value) || 0)
   const handleAutoDismissChange = () => setAutoDismiss(!autoDismiss)
   const handleIconsChange = () => setIcons(!icons)
   const handleIsSingleChange = () => setIsSingle(!isSingle)
@@ -125,6 +128,7 @@ function App() {
         timeOut={timeOut}
         pauseOnHover={pauseOnHover}
         showProgress={showProgress}
+        maxVisible={maxVisible}
       />
 
       <Header />
@@ -135,6 +139,8 @@ function App() {
           handlePositionChange={handlePositionChange}
           timeOut={timeOut}
           handleTimeOutChange={handleTimeOutChange}
+          maxVisible={maxVisible}
+          handleMaxVisibleChange={handleMaxVisibleChange}
           handleOnClick={handleOnClick}
           handlePromiseClick={handlePromiseClick}
           handleCustomClick={handleCustomClick}

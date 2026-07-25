@@ -17,6 +17,8 @@ interface DemoPanelProps {
   handlePositionChange: (event: ChangeEvent<HTMLSelectElement>) => void
   timeOut: number
   handleTimeOutChange: (event: ChangeEvent<HTMLInputElement>) => void
+  maxVisible: number
+  handleMaxVisibleChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleOnClick: (type: MsgType) => void
   handlePromiseClick: () => void
   handleCustomClick: () => void
@@ -37,6 +39,8 @@ function DemoPanel({
   handlePositionChange,
   timeOut,
   handleTimeOutChange,
+  maxVisible,
+  handleMaxVisibleChange,
   handleOnClick,
   handlePromiseClick,
   handleCustomClick,
@@ -116,6 +120,18 @@ function DemoPanel({
                 placeholder="Enter timeOut"
                 onChange={handleTimeOutChange}
                 maxLength={4}
+              />
+            </label>
+            <label htmlFor="maxVisible">
+              <code>maxVisible</code>{' '}
+              <input
+                id="maxVisible"
+                type="text"
+                name="maxVisible"
+                value={maxVisible}
+                placeholder="0 = ∞"
+                onChange={handleMaxVisibleChange}
+                maxLength={2}
               />
             </label>
           </section>

@@ -14,6 +14,8 @@ export interface ReactNotiProps {
   icons?: boolean
   pauseOnHover?: boolean
   showProgress?: boolean
+  /** Max toasts shown at once; extras queue until a slot frees. 0 = unlimited. */
+  maxVisible?: number
   className?: string
   classNames?: NotiClassNames
 }
@@ -26,6 +28,7 @@ export function ReactNoti({
   icons = defaultOptions.icons,
   pauseOnHover = defaultOptions.pauseOnHover,
   showProgress = defaultOptions.showProgress,
+  maxVisible = defaultOptions.maxVisible,
   className,
   classNames,
 }: ReactNotiProps) {
@@ -35,11 +38,21 @@ export function ReactNoti({
     notify.getServerSnapshot
   )
 
+  // Cap the number shown; extras wait in the store (unrendered, so their
+  // timers don't start) until an older toast leaves. Toasts are newest-first,
+  // so the oldest `maxVisible` stay visible and newer ones queue.
+  const visibleToasts = useMemo(() => {
+    if (!maxVisible || maxVisible <= 0 || toasts.length <= maxVisible) {
+      return toasts
+    }
+    return toasts.slice(-maxVisible)
+  }, [toasts, maxVisible])
+
   // Bottom positions render newest-last so it sits closest to the screen edge.
   const orderedToasts = useMemo(() => {
     const [pos] = position.split('-')
-    return pos === 'bottom' ? [...toasts].reverse() : toasts
-  }, [toasts, position])
+    return pos === 'bottom' ? [...visibleToasts].reverse() : visibleToasts
+  }, [visibleToasts, position])
 
   // Retain toasts through their exit animation after they leave the store.
   const [renderedToasts, onExited] = useToastPresence(orderedToasts)
